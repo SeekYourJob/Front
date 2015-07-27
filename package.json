@@ -1,5 +1,5 @@
 {
-  "name": "cvsfront",
+  "name": "cvs",
   "private": true,
   "devDependencies": {
     "grunt": "^0.4.5",

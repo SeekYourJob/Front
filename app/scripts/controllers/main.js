@@ -1,13 +1,6 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name cvsFrontApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the cvsFrontApp
- */
-angular.module('cvsFrontApp')
+angular.module('cvsApp')
   .controller('MainCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

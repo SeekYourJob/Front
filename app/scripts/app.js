@@ -1,12 +1,17 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name cvsFrontApp
- * @description
- * # cvsFrontApp
- *
- * Main module of the application.
- */
-angular
-  .module('cvsFrontApp', []);
+var cvsApp = angular.module('cvsApp', ['ui.router']);
+
+cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
+  $urlRouterProvider.otherwise('/');
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: 'views/home.html'
+    })
+    .state('about', {
+      url: '/about',
+      templateUrl: 'views/about.html'
+    });
+});
