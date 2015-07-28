@@ -71,7 +71,7 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        hostname: 'localhost',
+        hostname: 'cvs.dev',
         livereload: 35729
       },
       livereload: {
