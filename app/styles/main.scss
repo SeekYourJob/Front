@@ -1,11 +1,15 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
 @import "variables";
-@import "bootstrap_overrides";
 
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+
+@import "retina.js/src/_retina.scss";
+
+// Fonts
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700);
 
 html {
   position: relative;
@@ -15,6 +19,27 @@ html {
 body {
   padding: 0;
   margin-bottom: 280px;
+}
+
+h1 {
+  font-size: 44px;
+  font-weight: 600;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.navbar-default .navbar-brand {
+  color: $customDarkBlue;
+  &:hover {
+    color: $customLightBlue;
+  }
+}
+.navbar-brand {
+  font-size: 24px !important;
+  font-weight: 700;
 }
 
 footer {
@@ -63,5 +88,61 @@ footer {
     padding-top: 21px;
     font-size: 24px;
     line-height: 40px;
+  }
+}
+
+
+
+
+
+
+#profiles {
+  @extend .row;
+  margin-top: 35px;
+
+  .profile {
+    @extend .col-md-4, .text-center;
+    &:first-child {
+      @extend .col-md-offset-2;
+      margin-right: 15px;
+    }
+    &:last-child {
+      margin-left: 15px;
+    }
+
+    border: solid 1px $customDarkBlue;
+    padding: 20px;
+    .icon {
+      width: 210px;
+      height: 180px;
+      margin: 10px auto 0 auto;
+    }
+
+    &:hover {
+      cursor: pointer;
+      border-color: $customLightBlue;
+    }
+  }
+
+  #recruiter-profile {
+    .icon {
+      @include at2x('/images/recruiter-black', png, 210px, 180px);
+    }
+    &:hover {
+      .icon {
+        @include at2x('/images/recruiter-white', png, 210px, 180px);
+      }
+    }
+  }
+
+  #candidate-profile {
+    .icon {
+      @include at2x('/images/candidate-black', png, 210px, 180px);
+    }
+    &:hover {
+      .icon {
+        @include at2x('/images/candidate-white', png, 210px, 180px);
+      }
+    }
   }
 }
