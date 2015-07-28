@@ -3,7 +3,7 @@
 var cvsApp = angular.module('cvsApp', ['ui.router']);
 
 cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-  $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode(false);
   $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('home', {
