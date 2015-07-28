@@ -175,3 +175,26 @@ footer {
   margin-top: 30px;
   font-size: 20px;
 }
+
+#login-box {
+  @extend .row;
+
+  h2 {
+    text-align: center;
+    margin: 30px 0 15px 0;
+  }
+
+  #login-icon {
+    @extend .col-md-2, .col-md-offset-3;
+    margin-right: 25px;
+  }
+
+  #login-form {
+    @extend .col-md-4;
+    margin-top: 24px;
+
+    button {
+      margin-top: 15px;
+    }
+  }
+}
