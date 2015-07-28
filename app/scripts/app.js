@@ -1,8 +1,10 @@
 'use strict';
 
-var cvsApp = angular.module('cvsApp', ['ui.router']);
+var cvsApp = angular.module('cvsApp', ['ui.router', 'satellizer']);
 
-cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider) {
+  $authProvider.loginUrl = 'http://cvs.dev:80/api/authenticate';
+
   $locationProvider.html5Mode(false);
   $urlRouterProvider.otherwise('/');
   $stateProvider

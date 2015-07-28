@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cvsApp').controller('LoginCtrl', ['$scope', function($scope) {
+angular.module('cvsApp').controller('LoginCtrl', ['$scope', '$auth', '$state', function($scope, $auth) {
 
-  $scope.auth = {
+  $scope.credentials = {
     email: '',
     password: ''
   };
@@ -12,5 +12,11 @@ angular.module('cvsApp').controller('LoginCtrl', ['$scope', function($scope) {
   };
 
   $scope.init();
+
+  $scope.login = function() {
+    $auth.login($scope.credentials).then(function(data) {
+      console.log('HOORAY!', data);
+    });
+  };
 
 }]);
