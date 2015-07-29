@@ -21,11 +21,4 @@ angular.module('cvsApp').service('AuthService', ['$auth', '$http', '$rootScope',
       return $auth.isAuthenticated();
     };
 
-    this.needsAccess = function() {
-      if (!$auth.isAuthenticated()) {
-        $state.go('login');
-        return;
-      }
-    };
-
 }]);

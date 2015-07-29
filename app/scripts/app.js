@@ -12,6 +12,17 @@ cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $a
   $locationProvider.html5Mode(false);
   $urlRouterProvider.otherwise('/');
   $stateProvider
+    .state('session', {
+      resolve: {
+        authentication: ['AuthService', '$q', function (AuthService, $q) {
+          if (!AuthService.check()) {
+            return $q.reject({
+              notAuthenticated: true
+            });
+          }
+        }]
+      }
+    })
     .state('home', {
       url: '/',
       templateUrl: 'views/home.html'
@@ -22,14 +33,10 @@ cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $a
       templateUrl: 'views/login.html'
     })
     .state('account', {
+      parent: 'session',
       url: '/account',
       controller: 'AccountCtrl',
       templateUrl: 'views/account.html',
-      resolve: {
-        authentication: function(AuthService) {
-          return AuthService.check();
-        }
-      }
     })
     .state('registerCandidate', {
       url: '/register-candidate',
@@ -49,6 +56,12 @@ cvsApp.run(['$rootScope', '$state', 'AuthService', function($rootScope, $state) 
         event.preventDefault();
         $state.go('account');
       }
+    }
+  });
+
+  $rootScope.$on('$stateChangeError', function (_0, _1, _2, _3, _4, error) {
+    if (error.notAuthenticated) {
+      $state.go('login');
     }
   });
 }]);
