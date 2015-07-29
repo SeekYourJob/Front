@@ -24,7 +24,12 @@ cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $a
     .state('account', {
       url: '/account',
       controller: 'AccountCtrl',
-      templateUrl: 'views/account.html'
+      templateUrl: 'views/account.html',
+      resolve: {
+        authentication: function(AuthService) {
+          return AuthService.check();
+        }
+      }
     })
     .state('registerCandidate', {
       url: '/register-candidate',
@@ -33,7 +38,7 @@ cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $a
     });
 });
 
-cvsApp.run(function($rootScope, $state) {
+cvsApp.run(['$rootScope', '$state', 'AuthService', function($rootScope, $state) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     var user = JSON.parse(localStorage.getItem('user'));
     if (user) {
@@ -46,4 +51,4 @@ cvsApp.run(function($rootScope, $state) {
       }
     }
   });
-});
+}]);

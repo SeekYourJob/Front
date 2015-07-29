@@ -11,9 +11,8 @@
                 <a class="navbar-brand" href="#/">Conférences, Visites & Simulations</a>
             </div>
             <div class="collapse navbar-collapse" id="js-navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li ng-if="authenticated">Connecté en tant que {{ user.firstname }}</li>
-                    <li>Test</li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-if="authenticated"><a ui-sref="account">Connecté(e) en tant que {{ user.firstname }} {{ user.lastname }}</a></li>
                 </ul>
             </div>
         </div>
