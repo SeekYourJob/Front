@@ -2,8 +2,12 @@
 
 var cvsApp = angular.module('cvsApp', ['ui.router', 'satellizer']);
 
-cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider) {
-  $authProvider.loginUrl = 'http://cvs.dev:80/api/authenticate';
+cvsApp.constant('constants', {
+  urlAPI: 'http://api.cvs.dev'
+});
+
+cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider, constants) {
+  $authProvider.loginUrl = constants.urlAPI + '/authenticate';
 
   $locationProvider.html5Mode(false);
   $urlRouterProvider.otherwise('/');
@@ -17,9 +21,29 @@ cvsApp.config(function($stateProvider, $urlRouterProvider, $locationProvider, $a
       controller: 'LoginCtrl',
       templateUrl: 'views/login.html'
     })
+    .state('account', {
+      url: '/account',
+      controller: 'AccountCtrl',
+      templateUrl: 'views/account.html'
+    })
     .state('registerCandidate', {
       url: '/register-candidate',
       controller: 'RegisterCandidateCtrl',
       templateUrl: 'views/register-candidate.html'
     });
+});
+
+cvsApp.run(function($rootScope, $state) {
+  $rootScope.$on('$stateChangeStart', function(event, toState) {
+    var user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      $rootScope.authenticated = true;
+      $rootScope.user = user;
+
+      if (toState.name === 'login') {
+        event.preventDefault();
+        $state.go('account');
+      }
+    }
+  });
 });

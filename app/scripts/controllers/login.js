@@ -1,21 +1,23 @@
 'use strict';
 
-angular.module('cvsApp').controller('LoginCtrl', ['$scope', '$auth', '$state', function($scope, $auth) {
+angular.module('cvsApp').controller('LoginCtrl', ['$rootScope', '$scope', '$auth', '$state', '$http', 'constants', function($rootScope, $scope, $auth, $state, $http, constants) {
 
   $scope.credentials = {
     email: '',
     password: ''
   };
 
-  $scope.init = function() {
-    console.log('Triggered from Login!');
-  };
-
-  $scope.init();
-
   $scope.login = function() {
-    $auth.login($scope.credentials).then(function(data) {
-      console.log('HOORAY!', data);
+    $auth.login($scope.credentials, '/account').then(function() {
+      return $http.get(constants.urlAPI + '/me');
+    }, function(error) {
+      console.log(error);
+    }).then(function(response) {
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      $rootScope.authenticated = true;
+      $rootScope.user = response.data.user;
+
+      //$state.go('account');
     });
   };
 
