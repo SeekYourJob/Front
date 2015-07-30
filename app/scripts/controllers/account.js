@@ -1,11 +1,15 @@
 'use strict';
 
-angular.module('cvsApp').controller('AccountCtrl', ['$scope', 'AuthService', '$state', function($scope) {
+angular.module('cvsApp').controller('AccountCtrl', ['$scope', '$http', 'constants', function($scope, $http, constants) {
 
-  $scope.init = function() {
-    console.log('Triggered from AccountCtrl!');
-  };
+  $scope.me = {};
 
-  $scope.init();
+  $http.get(constants.urlAPI + '/me')
+    .success(function(response) {
+      $scope.me = response.user;
+    })
+    .error(function(response) {
+      console.log('ERR', response);
+    });
 
 }]);

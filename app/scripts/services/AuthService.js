@@ -1,24 +1,42 @@
 'use strict';
 
-angular.module('cvsApp').service('AuthService', ['$auth', '$http', '$rootScope', '$state', 'constants',
-  function($auth, $http, $rootScope, $state, constants) {
+angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelper', '$q', '$window', 'constants',
+  function($http, $rootScope, jwtHelper, $q, $window, constants) {
 
-    this.login = function(credentials) {
-      $auth.login(credentials, '/account').then(function() {
-        return $http.get(constants.urlAPI + '/me');
-      }, function(error) {
-        console.log(error);
-      }).then(function(response) {
-        if (typeof response !== 'undefined') {
-          localStorage.setItem('user', JSON.stringify(response.data.user));
+    var self = this;
+
+    self.login = function(credentials) {
+      console.log('AuthService.login');
+
+      return $http({
+        method: 'POST',
+        url: constants.urlAPI + '/authenticate',
+        skipAuthorization: true,
+        data: credentials
+      }).success(function(data) {
+          localStorage.setItem('token', data.token);
           $rootScope.authenticated = true;
-          $rootScope.user = response.data.user;
-        }
-      });
+          return self.getUser();
+        }).error(function() {
+          return false;
+        });
+
     };
 
-    this.check = function() {
-      return $auth.isAuthenticated();
+    self.getUser = function() {
+      return $http.get(constants.urlAPI + '/me').
+        success(function(data) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+          $rootScope.user = data.user;
+          return data.user;
+        }).
+        error(function() {
+          return false;
+        });
+    };
+
+    self.check = function() {
+      return localStorage.getItem('token');
     };
 
 }]);

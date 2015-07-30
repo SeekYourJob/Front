@@ -9,7 +9,15 @@ angular.module('cvsApp').controller('LoginCtrl', ['$rootScope', '$scope', '$stat
     };
 
     $scope.login = function() {
-      AuthService.login($scope.credentials);
+      AuthService.login($scope.credentials).then(
+        function(success) {
+          console.log('SUCCESS !!!', success);
+          $state.go('account');
+        },
+        function(error) {
+          console.log('ERROR !!!', error);
+        }
+      );
     };
 
 }]);
