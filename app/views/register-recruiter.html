@@ -1,1 +1,119 @@
-<p>This is the <strong>register-recruiter.html</strong> page!</p>
+<div id="register-recruiter" class="register-page">
+
+    <pre>
+            {{ newRecruiter || json }}
+        </pre>
+
+    <div class="register-icon">
+        <div class="icon"></div>
+    </div>
+
+    <div class="register-form">
+
+        <h2>S'inscrire en tant que recruteur</h2>
+        <p>Vous souhaitez vous inscrire à notre journée de simulation des entretiens et nous vous en remercions. Merci de bien vouloir compléter ce formulaire afin de pouvoir vous enregister.</p>
+
+        <form novalidate>
+
+            <!-- Identifiants -->
+            <div class="form-block">
+                <h4>Identifiants</h4>
+                <p>Ces identifiants sont importants, ils vous permettront <strong>d'accéder au planning de vos entretiens ainsi qu'aux curriculums des candidats</strong>.</p>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="form-group col-md-6">
+                        <label for="email">Adresse email</label>
+                        <input type="email" class="form-control" id="email"
+                               ng-model="newRecruiter.user.email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" class="form-control" id="password"
+                               ng-model="newRecruiter.user.password">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coordonnées -->
+            <div class="form-block">
+                <h4>Coordonnées</h4>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="company">Société</label>
+                        <input type="text" class="form-control" id="company" ng-model="newRecruiter.recruiter.company">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="firstname">Prénom</label>
+                        <input type="text" class="form-control" id="firstname" ng-model="newRecruiter.user.firstname">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastname">Nom</label>
+                        <input type="text" class="form-control" id="lastname" ng-model="newRecruiter.user.lastname">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disponibilités -->
+            <div class="form-block">
+                <h4>Disponibilités</h4>
+                <p>Cet évènement se déroule sur toute une journée mais peut-être ne disposez-vous pas d'une telle disponibilité ! Ce n'est pas un problème, indiquez ci-dessous vos créneaux disponibles :</p>
+                <div class="row">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="availability" id="all" value="all" ng-model="newRecruiter.recruiter.availability">
+                            Je serai présent(e) <strong>toute la journée</strong> !
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="availability" id="am" value="am" ng-model="newRecruiter.recruiter.availability">
+                            Je serai présent(e) <strong>le matin uniquement</strong>.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="availability" id="pm" value="pm" ng-model="newRecruiter.recruiter.availability">
+                            Je serai présent(e) <strong>l'après-midi uniquement</strong>.
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Options -->
+            <div class="form-block">
+                <h4>Options</h4>
+                <p>Peut-être aurez-vous besoin d'une <strong>place de parking</strong> ou encore de <strong>manger en notre compagnie le midi</strong> ? Si tel était le cas, indiquez le ici :</p>
+                <div class="row">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="parking" ng-model="newRecruiter.recruiter.parkingOption">
+                            Je souhaite disposer d'une place de parking.
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="lunch" ng-model="newRecruiter.recruiter.lunchOption">
+                            Je souhaite profiter d'un repas avec l'équipe organisatrice.
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Coordonnées -->
+            <div class="form-block">
+                <h4>Collaborateurs</h4>
+                <p><strong>Vous souhaitez venir à plusieurs ? Aucun problème, bien au contraire !</strong></p>
+                <div class="row">
+                </div>
+            </div>
+        </form>
+
+        <p class="register-submit">
+            <button type="button" class="btn btn-lg btn-success" ng-click="register()"><i class="fa fa-chevron-right fa-fw"></i> Je m'inscris !</button>
+        </p>
+
+    </div>
+</div>
