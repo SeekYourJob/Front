@@ -9,6 +9,7 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     .state('session', {
       resolve: {
         authentication: ['AuthService', '$q', function (AuthService, $q) {
+          // The authentication fails if no Token exists
           if (!AuthService.check()) {
             return $q.reject({
               notAuthenticated: true

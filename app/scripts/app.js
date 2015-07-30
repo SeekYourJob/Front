@@ -11,7 +11,7 @@ cvsApp.constant('constants', {
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
 
-  jwtInterceptorProvider.tokenGetter = function(jwtHelper, $http, config, constants) {
+  jwtInterceptorProvider.tokenGetter = function(jwtHelper, $http, config, $window, constants) {
 
     var token = localStorage.getItem('token');
 
@@ -25,7 +25,7 @@ cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
     }
 
     else if (jwtHelper.isTokenExpired(token)) {
-      console.log('EXPIRED TOKEN, NEEDS REFRESH');
+      console.log('TOKEN EXPIRED, REFRESHING...');
 
       return $http({
         method: 'POST',
@@ -39,21 +39,21 @@ cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
         localStorage.setItem('token', response.data.token);
         return response.data.token;
       }, function () {
-        console.log('ERROR WHILE REFRESHING TOKEN');
+        console.log('TOKEN NOT REFRESHED, RELOADING');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        return;
+        $window.location.reload();
       });
     }
 
     else {
+      console.log('TOKEN AVAILABLE, USING');
       return token;
     }
 
   };
 
   $httpProvider.interceptors.push('jwtInterceptor');
-
 });
 
 
