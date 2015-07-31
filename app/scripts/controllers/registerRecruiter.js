@@ -5,14 +5,14 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
   $scope.newRecruiter = {
     user: {},
     recruiter: {
-      availability: 'all'
+      availability: ''
     },
     recruitersEmails: [],
     recruitersData: []
   };
 
   $scope.form = {
-    others: 'withData',
+    others: '',
     emailRecruiterToAdd: '',
     dataRecruiterToAdd: {}
   };

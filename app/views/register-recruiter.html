@@ -1,10 +1,5 @@
 <div id="register-recruiter" class="register-page">
 
-    <pre>
-        {{ newRecruiter || json }}
-        {{ form || json }}
-    </pre>
-
     <div class="register-icon">
         <div class="icon"></div>
     </div>
@@ -14,246 +9,261 @@
         <h2>S'inscrire en tant que recruteur</h2>
         <p>Vous souhaitez vous inscrire à notre journée de simulation des entretiens et nous vous en remercions. Merci de bien vouloir compléter ce formulaire afin de pouvoir vous enregister.</p>
 
-        <form novalidate>
-
-            <!-- Identifiants -->
-            <div class="form-block">
-                <h4>Identifiants</h4>
-                <p>Ces identifiants sont importants, ils vous permettront <strong>d'accéder au planning de vos entretiens ainsi qu'aux curriculums des candidats</strong>.</p>
-                <div class="row" style="margin-top: 15px;">
-                    <div class="form-group col-md-6">
-                        <label for="email">Adresse email</label>
-                        <input type="email" class="form-control" id="email"
-                               ng-model="newRecruiter.user.email" ng-change="checkDuplicateEmail()" ng-model-options="{debounce: 500}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" class="form-control" id="password"
-                               ng-model="newRecruiter.user.password">
-                    </div>
+        <!-- Identifiants -->
+        <form name="credentialPartForm" class="form-block" novalidate
+              ng-class="{'valid': credentialPartForm.$valid}">
+            <h4>Identifiants</h4>
+            <p>Ces identifiants sont importants, ils vous permettront <strong>d'accéder au planning de vos entretiens ainsi qu'aux curriculums des candidats</strong>.</p>
+            <div class="row" style="margin-top: 15px;">
+                <div class="form-group col-md-6">
+                    <label for="email">Adresse email</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           ng-model="newRecruiter.user.email" ng-change="checkDuplicateEmail()" ng-model-options="{debounce: 500}" ng-required="true">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                           ng-model="newRecruiter.user.password" ng-required="true" ng-minlength="6">
+                    <span class="help-block">6 caractères minimum (et c'est tout :))</span>
                 </div>
             </div>
+        </form>
 
-            <!-- Coordonnées -->
-            <div class="form-block">
-                <h4>Coordonnées</h4>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="firstname">Prénom</label>
-                        <input type="text" class="form-control" id="firstname" ng-model="newRecruiter.user.firstname">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="lastname">Nom</label>
-                        <input type="text" class="form-control" id="lastname" ng-model="newRecruiter.user.lastname">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="company">Société</label>
-                        <input type="text" class="form-control" id="company" ng-model="newRecruiter.recruiter.company">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="phone">Téléphone</label>
-                        <input type="text" class="form-control" id="phone" ng-model="newRecruiter.user.phone">
-                    </div>
+        <!-- Coordonnées -->
+        <form name="contactInfoPartForm" class="form-block" novalidate
+              ng-class="{'valid': contactInfoPartForm.$valid}">
+            <h4>Coordonnées</h4>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="firstname">Prénom</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname"
+                           ng-model="newRecruiter.user.firstname" ng-required="true">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lastname">Nom</label>
+                    <input type="text" class="form-control" id="lastname" name="lastname"
+                           ng-model="newRecruiter.user.lastname" ng-required="true">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="company">Société</label>
+                    <input type="text" class="form-control" id="company" name="company"
+                           ng-model="newRecruiter.recruiter.company" ng-required="true">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="phone">Téléphone</label>
+                    <input type="text" class="form-control" id="phone" name="phone"
+                           ng-model="newRecruiter.user.phone" ng-required="true" ng-pattern="/^[0-9 ]+$/" ng-minlength="10">
                 </div>
             </div>
+        </form>
 
-            <!-- Disponibilités -->
-            <div class="form-block">
-                <h4>Disponibilités</h4>
-                <p>Cet évènement se déroule sur toute une journée mais peut-être ne disposez-vous pas d'une telle disponibilité ! Ce n'est pas un problème, indiquez ci-dessous vos créneaux disponibles :</p>
-                <div class="row">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="availability" id="all" value="all" ng-model="newRecruiter.recruiter.availability">
-                            Je serai présent(e) <strong>toute la journée</strong> !
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="availability" id="am" value="am" ng-model="newRecruiter.recruiter.availability">
-                            Je serai présent(e) <strong>le matin uniquement</strong>.
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="availability" id="pm" value="pm" ng-model="newRecruiter.recruiter.availability">
-                            Je serai présent(e) <strong>l'après-midi uniquement</strong>.
-                        </label>
-                    </div>
+        <!-- Disponibilités -->
+        <form name="availabilityPartForm" class="form-block" novalidate
+                ng-class="{'valid': availabilityPartForm.$valid}">
+            <h4>Disponibilités</h4>
+            <p>Cet évènement se déroule sur toute une journée mais peut-être ne disposez-vous pas d'une telle disponibilité ! Ce n'est pas un problème, indiquez ci-dessous vos créneaux disponibles :</p>
+            <div class="row">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="availability" id="all" value="all"
+                               ng-model="newRecruiter.recruiter.availability" ng-required="true">
+                        Je serai présent(e) <strong>toute la journée</strong> !
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="availability" id="am" value="am"
+                               ng-model="newRecruiter.recruiter.availability" ng-required="true">
+                        Je serai présent(e) <strong>le matin uniquement</strong>.
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="availability" id="pm" value="pm"
+                               ng-model="newRecruiter.recruiter.availability" ng-required="true">
+                        Je serai présent(e) <strong>l'après-midi uniquement</strong>.
+                    </label>
                 </div>
             </div>
+        </form>
 
 
-            <!-- Options -->
-            <div class="form-block">
-                <h4>Options</h4>
-                <p>Peut-être aurez-vous besoin d'une <strong>place de parking</strong> ou encore de <strong>manger en notre compagnie le midi</strong> ? Si tel était le cas, indiquez le ici :</p>
-                <div class="row">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="parking" ng-model="newRecruiter.recruiter.parkingOption">
-                            Je souhaite disposer d'une <strong>place de parking</strong>.
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="lunch" ng-model="newRecruiter.recruiter.lunchOption">
-                            Je souhaite profiter d'un <strong>repas avec l'équipe</strong>.
-                        </label>
-                    </div>
+        <!-- Options -->
+        <form name="optionsPartForm" class="form-block" novalidate
+                ng-class="{'valid': optionsPartForm.$valid}">
+            <h4>Options</h4>
+            <p>Peut-être aurez-vous besoin d'une <strong>place de parking</strong> ou encore de <strong>manger en notre compagnie le midi</strong> ? Si tel était le cas, indiquez le ici :</p>
+            <div class="row">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="parking"
+                               ng-model="newRecruiter.recruiter.parkingOption">
+                        Je souhaite disposer d'une <strong>place de parking</strong>.
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="lunch"
+                               ng-model="newRecruiter.recruiter.lunchOption">
+                        Je souhaite profiter d'un <strong>repas avec l'équipe</strong>.
+                    </label>
                 </div>
             </div>
+        </form>
 
 
-            <!-- Coordonnées -->
-            <div class="form-block">
-                <h4>Collaborateurs</h4>
-                <p><strong>Vous souhaitez venir à plusieurs ? Aucun problème, avec plaisir !</strong> Mais avant toute chose...</p>
-                <div class="row">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="others" value="none" ng-model="form.others">
-                            Je participerai <strong>seul(e)</strong>.
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="others" value="withData" ng-model="form.others">
-                            Je viendrai accompagné(e) et me charge de <strong>renseigner les informations de mes collaborateurs</strong> dès maintenant.
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="others" value="withEmails" ng-model="form.others">
-                            Je viendrai accompagné(e) et <strong>indique l'adresse email de mes collaborateurs</strong> afin de les inviter à s'inscrire eux-mêmes.
-                        </label>
-                    </div>
+        <!-- Collaborateurs -->
+        <div class="form-block"
+                ng-class="{'valid': othersPartForm.$valid}">
+            <h4>Collaborateurs</h4>
+            <p><strong>Vous souhaitez venir à plusieurs ? Aucun problème, avec plaisir !</strong> Mais avant toute chose...</p>
+            <form name="othersPartForm" class="row" novalidate>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="others" value="none"
+                               ng-model="form.others" ng-required="true">
+                        Je participerai <strong>seul(e)</strong>.
+                    </label>
                 </div>
-                <div class="row" ng-if="form.others !== 'none'">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="others" value="withData"
+                               ng-model="form.others" ng-required="true">
+                        Je viendrai accompagné(e) et me charge de <strong>renseigner les informations de mes collaborateurs</strong> dès maintenant.
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="others" value="withEmails"
+                               ng-model="form.others" ng-required="true">
+                        Je viendrai accompagné(e) et <strong>indique l'adresse email de mes collaborateurs</strong> afin de les inviter à s'inscrire eux-mêmes.
+                    </label>
+                </div>
+            </form>
+            <div class="row" ng-if="form.others !== '' && form.others !== 'none'">
+                <hr>
+                <div ng-if="form.others == 'withData'">
+                    <p>Saisissez une à une les informations des collaborateurs qui vous accompagneront :</p>
+                    <div class="row" style="margin-top: 24px">
+                        <div class="form-group col-md-4">
+                            <label for="collabFirstname">Prénom</label>
+                            <input type="text" class="form-control" id="collabFirstname"
+                                   ng-model="form.dataRecruiterToAdd.firstname" ng-required="true">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="collabLastname">Nom</label>
+                            <input type="text" class="form-control" id="collabLastname"
+                                   ng-model="form.dataRecruiterToAdd.lastname" ng-required="true">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="collabEmail">Adresse email</label>
+                            <input type="email" class="form-control" id="collabEmail"
+                                   ng-model="form.dataRecruiterToAdd.email" ng-required="true">
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 10px">
+                        <div class="form-group col-md-5">
+                            <label>Disponibilités</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="collabAvailability" id="collabAvailability-all" value="all" checked
+                                            ng-model="form.dataRecruiterToAdd.availability">
+                                    Toute la journée
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="collabAvailability" id="collabAvailability-am" value="am"
+                                           ng-model="form.dataRecruiterToAdd.availability">
+                                    Le matin uniquement
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="collabAvailability" id="collabAvailability-pm" value="pm"
+                                           ng-model="form.dataRecruiterToAdd.availability">
+                                    L'après-midi uniquement
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-7">
+                            <label>Options</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="parkingOption" ng-model="form.dataRecruiterToAdd.parkingOption">
+                                    Souhaitera une place de parking
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="lunchOption" ng-model="form.dataRecruiterToAdd.lunchOption">
+                                    Participera au repas avec l'équipe
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <p class="text-center">
+                            <button class="btn btn-primary" ng-click="addRecruiterData()"><i class="fa fa-plus fa-fw"></i> Ajouter un collaborateur</button>
+                        </p>
+                    </div>
+
                     <hr>
 
-                    <div ng-if="form.others == 'withData'">
-                        <p>Saisissez une à une les informations des collaborateurs qui vous accompagneront :</p>
-                        <div class="row" style="margin-top: 24px">
-                            <div class="form-group col-md-4">
-                                <label for="collabFirstname">Prénom</label>
-                                <input type="text" class="form-control" id="collabFirstname"
-                                       ng-model="form.dataRecruiterToAdd.firstname" ng-required="true">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="collabLastname">Nom</label>
-                                <input type="text" class="form-control" id="collabLastname"
-                                       ng-model="form.dataRecruiterToAdd.lastname" ng-required="true">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="collabEmail">Adresse email</label>
-                                <input type="email" class="form-control" id="collabEmail"
-                                       ng-model="form.dataRecruiterToAdd.email" ng-required="true">
-                            </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Collaborateur(s) ajouté(s)</label>
+                        <div class="col-md-7">
+                            <ul id="recruitersDataAdded">
+                                <li ng-if="!newRecruiter.recruitersData.length">Aucun collaborateur</li>
+                                <li ng-if="newRecruiter.recruitersData.length" ng-repeat="collab in newRecruiter.recruitersData">
+                                    <strong>{{ collab.firstname }} {{ collab.lastname }}</strong> - {{ collab.email }}<br>
+                                    <strong>Disponibilité</strong> :
+                                        <span ng-switch="collab.availability">
+                                            <span ng-switch-when="all">toute la journée</span>
+                                            <span ng-switch-when="am">le matin uniquement</span>
+                                            <span ng-switch-when="pm">l'après-midi uniquement</span>
+                                        </span>
+                                    <br>
+                                    <strong>Options</strong> :
+                                        <span ng-if="!collab.parkingOption && !collab.lunchOption" class="label label-default">AUCUNE</span>
+                                        <span ng-if="collab.parkingOption" class="label label-success">PARKING</span>
+                                        <span ng-if="collab.lunchOption" class="label label-default">REPAS</span>
+                                    <br>
+                                    <a class="text-danger" ng-click="deleteRecruiterData(collab)">Supprimer</a>
+                                </li>
+                            </ul>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="row" style="margin-top: 10px">
-                            <div class="form-group col-md-5">
-                                <label>Disponibilités</label>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="collabAvailability" id="collabAvailability-all" value="all" checked
-                                                ng-model="form.dataRecruiterToAdd.availability">
-                                        Toute la journée
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="collabAvailability" id="collabAvailability-am" value="am"
-                                               ng-model="form.dataRecruiterToAdd.availability">
-                                        Le matin uniquement
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="collabAvailability" id="collabAvailability-pm" value="pm"
-                                               ng-model="form.dataRecruiterToAdd.availability">
-                                        L'après-midi uniquement
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-7">
-                                <label>Options</label>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="parkingOption" ng-model="form.dataRecruiterToAdd.parkingOption">
-                                        Souhaitera une place de parking
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="lunchOption" ng-model="form.dataRecruiterToAdd.lunchOption">
-                                        Participera au repas avec l'équipe
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <p class="text-center">
-                                <button class="btn btn-success" ng-click="addRecruiterData()"><i class="fa fa-plus fa-fw"></i> Ajouter un collaborateur</button>
-                            </p>
-                        </div>
-
-                        <hr>
-
+                <div ng-if="form.others == 'withEmails'">
+                    <p>Saisissez une à une les adresses emails des collaborateurs à prévenir :</p>
+                    <div class="form-horizontal" style="margin-top: 24px">
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Collaborateur(s) ajouté(s)</label>
+                            <label class="col-md-4 control-label">Adresse email</label>
                             <div class="col-md-7">
-                                <ul id="recruitersDataAdded">
-                                    <li ng-if="!newRecruiter.recruitersData.length">Aucun collaborateur</li>
-                                    <li ng-if="newRecruiter.recruitersData.length" ng-repeat="collab in newRecruiter.recruitersData">
-                                        <strong>{{ collab.firstname }} {{ collab.lastname }}</strong> - {{ collab.email }}<br>
-                                        <strong>Disponibilité</strong> :
-                                            <span ng-switch="collab.availability">
-                                                <span ng-switch-when="all">toute la journée</span>
-                                                <span ng-switch-when="am">le matin uniquement</span>
-                                                <span ng-switch-when="pm">l'après-midi uniquement</span>
-                                            </span>
-                                        <br>
-                                        <strong>Options</strong> :
-                                            <span ng-if="collab.parkingOption" class="label label-default">PARKING</span>
-                                            <span ng-if="collab.lunchOption" class="label label-default">REPAS</span>
-                                        <br>
-                                        <a class="text-danger" ng-click="deleteRecruiterData(collab)">Supprimer</a>
-                                    </li>
+                                <input type="email" class="form-control" placeholder="Saisir l'adresse email puis valider avec Entrée..."
+                                       ng-model="form.emailRecruiterToAdd" ng-keydown="$event.which === 13 && addRecruiterEmail()">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Adresse(s) ajoutée(s)</label>
+                            <div class="col-md-7">
+                                <ul id="recruitersEmailsAdded">
+                                    <li ng-if="!newRecruiter.recruitersEmails.length">Aucune adresse</li>
+                                    <li ng-if="newRecruiter.recruitersEmails.length" ng-repeat="email in newRecruiter.recruitersEmails">{{ email }} - <i class="fa fa-trash-o fa-fw" title="Supprimer cette adresse email" ng-click="deleteRecruiterEmail(email)"></i></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-                    <div ng-if="form.others == 'withEmails'">
-                        <p>Saisissez une à une les adresses emails des collaborateurs à prévenir :</p>
-                        <div class="form-horizontal" style="margin-top: 24px">
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Adresse email</label>
-                                <div class="col-md-7">
-                                    <input type="email" class="form-control" placeholder="Saisir l'adresse email puis valider avec Entrée..."
-                                           ng-model="form.emailRecruiterToAdd" ng-keydown="$event.which === 13 && addRecruiterEmail()">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Adresse(s) ajoutée(s)</label>
-                                <div class="col-md-7">
-                                    <ul id="recruitersEmailsAdded">
-                                        <li ng-if="!newRecruiter.recruitersEmails.length">Aucune adresse</li>
-                                        <li ng-if="newRecruiter.recruitersEmails.length" ng-repeat="email in newRecruiter.recruitersEmails">{{ email }} - <i class="fa fa-trash-o fa-fw" title="Supprimer cette adresse email" ng-click="deleteRecruiterEmail(email)"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
                 </div>
+
+
+
             </div>
-        </form>
+        </div>
 
         <p class="register-submit">
             <button type="button" class="btn btn-lg btn-success" ng-click="register()"><i class="fa fa-chevron-right fa-fw"></i> Je m'inscris !</button>

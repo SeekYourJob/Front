@@ -219,8 +219,12 @@ footer {
   }
   .register-form {
     @extend .col-md-7;
-    form {
-      margin-top: 20px;
+
+    margin-top: 20px;
+    .form-block {
+      border: 1px solid $customLightBlue;
+      padding-bottom: 5px;
+      margin-bottom: 20px;
       h4 {
         background: $customLightBlue;
         color: white;
@@ -232,17 +236,18 @@ footer {
       p {
         margin: 6px 16px;
       }
-      .form-block {
-        border: 1px solid $customLightBlue;
-        padding-bottom: 5px;
-        margin-bottom: 20px;
-        .row {
-          margin: 0 6px;
-        }
-        .radio, .checkbox {
-          margin-left: 30px;
-          margin-bottom: 14px;
-        }
+      .row {
+        margin: 0 6px;
+      }
+      .radio, .checkbox {
+        margin-left: 30px;
+        margin-bottom: 14px;
+      }
+    }
+    .form-block.ng-valid, .form-block.valid {
+      border-color: $valid-color;
+      h4 {
+        background: $valid-color;
       }
     }
   }
