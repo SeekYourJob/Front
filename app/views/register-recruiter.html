@@ -1,8 +1,9 @@
 <div id="register-recruiter" class="register-page">
 
     <pre>
-            {{ newRecruiter || json }}
-        </pre>
+        {{ newRecruiter || json }}
+        {{ form || json }}
+    </pre>
 
     <div class="register-icon">
         <div class="icon"></div>
@@ -131,9 +132,100 @@
                 <div class="row" ng-if="form.others !== 'none'">
                     <hr>
 
-                    <p ng-if="form.others == 'withData'">
-                        Saisie des données ici...
-                    </p>
+                    <div ng-if="form.others == 'withData'">
+                        <p>Saisissez une à une les informations des collaborateurs qui vous accompagneront :</p>
+                        <div class="row" style="margin-top: 24px">
+                            <div class="form-group col-md-4">
+                                <label for="collabFirstname">Prénom</label>
+                                <input type="text" class="form-control" id="collabFirstname"
+                                       ng-model="form.dataRecruiterToAdd.firstname" ng-required="true">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="collabLastname">Nom</label>
+                                <input type="text" class="form-control" id="collabLastname"
+                                       ng-model="form.dataRecruiterToAdd.lastname" ng-required="true">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="collabEmail">Adresse email</label>
+                                <input type="email" class="form-control" id="collabEmail"
+                                       ng-model="form.dataRecruiterToAdd.email" ng-required="true">
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 10px">
+                            <div class="form-group col-md-5">
+                                <label>Disponibilités</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="collabAvailability" id="collabAvailability-all" value="all" checked
+                                                ng-model="form.dataRecruiterToAdd.availability">
+                                        Toute la journée
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="collabAvailability" id="collabAvailability-am" value="am"
+                                               ng-model="form.dataRecruiterToAdd.availability">
+                                        Le matin uniquement
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="collabAvailability" id="collabAvailability-pm" value="pm"
+                                               ng-model="form.dataRecruiterToAdd.availability">
+                                        L'après-midi uniquement
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-7">
+                                <label>Options</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="parkingOption" ng-model="form.dataRecruiterToAdd.parkingOption">
+                                        Souhaitera une place de parking
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="lunchOption" ng-model="form.dataRecruiterToAdd.lunchOption">
+                                        Participera au repas avec l'équipe
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <p class="text-center">
+                                <button class="btn btn-success" ng-click="addRecruiterData()"><i class="fa fa-plus fa-fw"></i> Ajouter un collaborateur</button>
+                            </p>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Collaborateur(s) ajouté(s)</label>
+                            <div class="col-md-7">
+                                <ul id="recruitersDataAdded">
+                                    <li ng-if="!newRecruiter.recruitersData.length">Aucun collaborateur</li>
+                                    <li ng-if="newRecruiter.recruitersData.length" ng-repeat="collab in newRecruiter.recruitersData">
+                                        <strong>{{ collab.firstname }} {{ collab.lastname }}</strong> - {{ collab.email }}<br>
+                                        <strong>Disponibilité</strong> :
+                                            <span ng-switch="collab.availability">
+                                                <span ng-switch-when="all">toute la journée</span>
+                                                <span ng-switch-when="am">le matin uniquement</span>
+                                                <span ng-switch-when="pm">l'après-midi uniquement</span>
+                                            </span>
+                                        <br>
+                                        <strong>Options</strong> :
+                                            <span ng-if="collab.parkingOption" class="label label-default">PARKING</span>
+                                            <span ng-if="collab.lunchOption" class="label label-default">REPAS</span>
+                                        <br>
+                                        <a class="text-danger" ng-click="deleteRecruiterData(collab)">Supprimer</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
                     <div ng-if="form.others == 'withEmails'">
                         <p>Saisissez une à une les adresses emails des collaborateurs à prévenir :</p>

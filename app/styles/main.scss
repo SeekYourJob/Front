@@ -278,4 +278,19 @@ footer {
     }
   }
 
+  #recruitersDataAdded {
+    margin-top: -1px;
+    padding-left: 0;
+    list-style-type: none;
+
+    li {
+      padding-bottom: 12px;
+      border-bottom: 1px solid $customLightBlue;
+      margin-bottom: 10px;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
 }

@@ -7,12 +7,14 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
     recruiter: {
       availability: 'all'
     },
-    recruitersEmails: []
+    recruitersEmails: [],
+    recruitersData: []
   };
 
   $scope.form = {
-    others: 'none',
-    emailRecruiterToAdd: ''
+    others: 'withData',
+    emailRecruiterToAdd: '',
+    dataRecruiterToAdd: {}
   };
 
   $scope.checkDuplicateEmail = function() {
@@ -38,6 +40,31 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
   $scope.deleteRecruiterEmail = function(email) {
     $scope.newRecruiter.recruitersEmails.splice($scope.newRecruiter.recruitersEmails.indexOf(email), 1);
   };
+
+  $scope.addRecruiterData = function() {
+    var toValidate = $scope.form.dataRecruiterToAdd;
+    if (toValidate.firstname !== '' && toValidate.lastname !== '' && toValidate.email !== '') {
+      $scope.newRecruiter.recruitersData.push($scope.form.dataRecruiterToAdd);
+      $scope.resetDataRecruiterToAdd();
+    }
+  };
+
+  $scope.deleteRecruiterData = function(data) {
+    $scope.newRecruiter.recruitersData.splice($scope.newRecruiter.recruitersData.indexOf(data), 1);
+  };
+
+  $scope.resetDataRecruiterToAdd = function() {
+    $scope.form.dataRecruiterToAdd = {
+      firstname: '',
+      lastname: '',
+      email: '',
+      availability: 'all',
+      parkingOption: false,
+      lunchOption: false
+    };
+  };
+
+  $scope.resetDataRecruiterToAdd();
 
   $scope.register = function() {
     console.log('we need to register this new recruiter!');
