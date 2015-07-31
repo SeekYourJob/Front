@@ -23,7 +23,7 @@
                     <div class="form-group col-md-6">
                         <label for="email">Adresse email</label>
                         <input type="email" class="form-control" id="email"
-                               ng-model="newRecruiter.user.email">
+                               ng-model="newRecruiter.user.email" ng-change="checkDuplicateEmail()" ng-model-options="{debounce: 500}">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="password">Mot de passe</label>
@@ -38,18 +38,20 @@
                 <h4>Coordonnées</h4>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="company">Société</label>
-                        <input type="text" class="form-control" id="company" ng-model="newRecruiter.recruiter.company">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
                         <label for="firstname">Prénom</label>
                         <input type="text" class="form-control" id="firstname" ng-model="newRecruiter.user.firstname">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastname">Nom</label>
                         <input type="text" class="form-control" id="lastname" ng-model="newRecruiter.user.lastname">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="company">Société</label>
+                        <input type="text" class="form-control" id="company" ng-model="newRecruiter.recruiter.company">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="phone">Téléphone</label>
+                        <input type="text" class="form-control" id="phone" ng-model="newRecruiter.user.phone">
                     </div>
                 </div>
             </div>
@@ -89,13 +91,13 @@
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" value="parking" ng-model="newRecruiter.recruiter.parkingOption">
-                            Je souhaite disposer d'une place de parking.
+                            Je souhaite disposer d'une <strong>place de parking</strong>.
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" value="lunch" ng-model="newRecruiter.recruiter.lunchOption">
-                            Je souhaite profiter d'un repas avec l'équipe organisatrice.
+                            Je souhaite profiter d'un <strong>repas avec l'équipe</strong>.
                         </label>
                     </div>
                 </div>
@@ -105,8 +107,58 @@
             <!-- Coordonnées -->
             <div class="form-block">
                 <h4>Collaborateurs</h4>
-                <p><strong>Vous souhaitez venir à plusieurs ? Aucun problème, bien au contraire !</strong></p>
+                <p><strong>Vous souhaitez venir à plusieurs ? Aucun problème, avec plaisir !</strong> Mais avant toute chose...</p>
                 <div class="row">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="others" value="none" ng-model="form.others">
+                            Je participerai <strong>seul(e)</strong>.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="others" value="withData" ng-model="form.others">
+                            Je viendrai accompagné(e) et me charge de <strong>renseigner les informations de mes collaborateurs</strong> dès maintenant.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="others" value="withEmails" ng-model="form.others">
+                            Je viendrai accompagné(e) et <strong>indique l'adresse email de mes collaborateurs</strong> afin de les inviter à s'inscrire eux-mêmes.
+                        </label>
+                    </div>
+                </div>
+                <div class="row" ng-if="form.others !== 'none'">
+                    <hr>
+
+                    <p ng-if="form.others == 'withData'">
+                        Saisie des données ici...
+                    </p>
+
+                    <div ng-if="form.others == 'withEmails'">
+                        <p>Saisissez une à une les adresses emails des collaborateurs à prévenir :</p>
+                        <div class="form-horizontal" style="margin-top: 24px">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Adresse email</label>
+                                <div class="col-md-7">
+                                    <input type="email" class="form-control" placeholder="Saisir l'adresse email puis valider avec Entrée..."
+                                           ng-model="form.emailRecruiterToAdd" ng-keydown="$event.which === 13 && addRecruiterEmail()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Adresse(s) ajoutée(s)</label>
+                                <div class="col-md-7">
+                                    <ul id="recruitersEmailsAdded">
+                                        <li ng-if="!newRecruiter.recruitersEmails.length">Aucune adresse</li>
+                                        <li ng-if="newRecruiter.recruitersEmails.length" ng-repeat="email in newRecruiter.recruitersEmails">{{ email }} - <i class="fa fa-trash-o fa-fw" title="Supprimer cette adresse email" ng-click="deleteRecruiterEmail(email)"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
         </form>

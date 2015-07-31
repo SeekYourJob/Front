@@ -10,7 +10,6 @@ cvsApp.constant('constants', {
 
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
-
   jwtInterceptorProvider.tokenGetter = function(jwtHelper, $http, config, $window, constants) {
 
     var token = localStorage.getItem('token');
