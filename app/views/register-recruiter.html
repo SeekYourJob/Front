@@ -24,7 +24,7 @@
                     <label for="password">Mot de passe</label>
                     <input type="password" class="form-control" id="password" name="password"
                            ng-model="newRecruiter.user.password" ng-required="true" ng-minlength="6">
-                    <span class="help-block">6 caractères minimum (et c'est tout :))</span>
+                    <span class="help-block">On demande juste 6 caractères au moins :)</span>
                 </div>
             </div>
         </form>
@@ -87,7 +87,6 @@
             </div>
         </form>
 
-
         <!-- Options -->
         <form name="optionsPartForm" class="form-block" novalidate
                 ng-class="{'valid': optionsPartForm.$valid}">
@@ -111,12 +110,16 @@
             </div>
         </form>
 
-
         <!-- Collaborateurs -->
         <div class="form-block"
-                ng-class="{'valid': othersPartForm.$valid}">
+                ng-class="{'valid': othersPartForm.$valid
+                    && (form.others === 'none'
+                        || (form.others === 'withEmails' && newRecruiter.participantsEmails.length)
+                        || (form.others === 'withData' && newRecruiter.participantsData.length)
+                    )}">
             <h4>Collaborateurs</h4>
             <p><strong>Vous souhaitez venir à plusieurs ? Aucun problème, avec plaisir !</strong> Mais avant toute chose...</p>
+
             <form name="othersPartForm" class="row" novalidate>
                 <div class="radio">
                     <label>
@@ -140,6 +143,7 @@
                     </label>
                 </div>
             </form>
+
             <div class="row" ng-if="form.others !== '' && form.others !== 'none'">
                 <hr>
                 <div ng-if="form.others == 'withData'">
@@ -216,8 +220,8 @@
                         <label class="col-md-4 control-label">Collaborateur(s) ajouté(s)</label>
                         <div class="col-md-7">
                             <ul id="recruitersDataAdded">
-                                <li ng-if="!newRecruiter.recruitersData.length">Aucun collaborateur</li>
-                                <li ng-if="newRecruiter.recruitersData.length" ng-repeat="collab in newRecruiter.recruitersData">
+                                <li ng-if="!newRecruiter.participantsData.length">Aucun collaborateur</li>
+                                <li ng-if="newRecruiter.participantsData.length" ng-repeat="collab in newRecruiter.participantsData">
                                     <strong>{{ collab.firstname }} {{ collab.lastname }}</strong> - {{ collab.email }}<br>
                                     <strong>Disponibilité</strong> :
                                         <span ng-switch="collab.availability">
@@ -244,29 +248,34 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Adresse email</label>
                             <div class="col-md-7">
-                                <input type="email" class="form-control" placeholder="Saisir l'adresse email puis valider avec Entrée..."
-                                       ng-model="form.emailRecruiterToAdd" ng-keydown="$event.which === 13 && addRecruiterEmail()">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="Saisir une adresse email..."
+                                           ng-model="form.emailRecruiterToAdd" ng-keydown="$event.which === 13 && addRecruiterEmail()">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button"
+                                                ng-click="addRecruiterEmail()">Ajouter</button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label">Adresse(s) ajoutée(s)</label>
                             <div class="col-md-7">
                                 <ul id="recruitersEmailsAdded">
-                                    <li ng-if="!newRecruiter.recruitersEmails.length">Aucune adresse</li>
-                                    <li ng-if="newRecruiter.recruitersEmails.length" ng-repeat="email in newRecruiter.recruitersEmails">{{ email }} - <i class="fa fa-trash-o fa-fw" title="Supprimer cette adresse email" ng-click="deleteRecruiterEmail(email)"></i></li>
+                                    <li ng-if="!newRecruiter.participantsEmails.length">Aucune adresse</li>
+                                    <li ng-if="newRecruiter.participantsEmails.length" ng-repeat="email in newRecruiter.participantsEmails">
+                                        {{ email }} - <i class="fa fa-trash-o fa-fw" title="Supprimer cette adresse email" ng-click="deleteRecruiterEmail(email)"></i>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
 
         <p class="register-submit">
-            <button type="button" class="btn btn-lg btn-success" ng-click="register()"><i class="fa fa-chevron-right fa-fw"></i> Je m'inscris !</button>
+            <button type="button" class="btn btn-lg btn-success" ng-click="register()">Je m'inscris <i class="fa fa-chevron-right fa-fw"></i></button>
         </p>
 
     </div>

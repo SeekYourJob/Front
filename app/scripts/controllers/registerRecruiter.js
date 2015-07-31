@@ -7,8 +7,8 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
     recruiter: {
       availability: ''
     },
-    recruitersEmails: [],
-    recruitersData: []
+    participantsEmails: [],
+    participantsData: []
   };
 
   $scope.form = {
@@ -32,25 +32,25 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
 
   $scope.addRecruiterEmail = function() {
     if (typeof $scope.form.emailRecruiterToAdd !== 'undefined') {
-      $scope.newRecruiter.recruitersEmails.push($scope.form.emailRecruiterToAdd);
+      $scope.newRecruiter.participantsEmails.push($scope.form.emailRecruiterToAdd);
       $scope.form.emailRecruiterToAdd = '';
     }
   };
 
   $scope.deleteRecruiterEmail = function(email) {
-    $scope.newRecruiter.recruitersEmails.splice($scope.newRecruiter.recruitersEmails.indexOf(email), 1);
+    $scope.newRecruiter.participantsEmails.splice($scope.newRecruiter.participantsEmails.indexOf(email), 1);
   };
 
   $scope.addRecruiterData = function() {
     var toValidate = $scope.form.dataRecruiterToAdd;
     if (toValidate.firstname !== '' && toValidate.lastname !== '' && toValidate.email !== '') {
-      $scope.newRecruiter.recruitersData.push($scope.form.dataRecruiterToAdd);
+      $scope.newRecruiter.participantsData.push($scope.form.dataRecruiterToAdd);
       $scope.resetDataRecruiterToAdd();
     }
   };
 
   $scope.deleteRecruiterData = function(data) {
-    $scope.newRecruiter.recruitersData.splice($scope.newRecruiter.recruitersData.indexOf(data), 1);
+    $scope.newRecruiter.participantsData.splice($scope.newRecruiter.participantsData.indexOf(data), 1);
   };
 
   $scope.resetDataRecruiterToAdd = function() {
