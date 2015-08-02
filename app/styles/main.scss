@@ -217,9 +217,19 @@ footer {
       }
     }
   }
+  .register-title {
+    .customLabel {
+      @extend .label, .label-default;
+      &.blue {
+        background: $customLightBlue;
+      }
+      &.green {
+        background: $valid-color;
+      }
+    }
+  }
   .register-form {
-    @extend .col-md-7;
-
+    @extend .col-md-8, .col-md-offset-2;
     margin-top: 20px;
     .form-block {
       border: 1px solid $customLightBlue;
@@ -295,6 +305,40 @@ footer {
       &:last-child {
         border-bottom: none;
       }
+    }
+  }
+
+  .dropbox {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border: dashed 5px $customLightBlue;
+    min-height: 130px;
+    cursor: pointer;
+    .help {
+      text-align: center;
+      padding-top: 30px;
+      font-size: 20px;
+    }
+  }
+
+  #documentsSent {
+    width: 90%;
+    margin: 20px auto 25px auto;
+    p {
+      font-size: 16px;
+    }
+    ul {
+      list-style-type: none;
+      li {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+    }
+    i {
+      cursor: pointer;
     }
   }
 

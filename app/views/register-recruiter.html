@@ -1,13 +1,17 @@
 <div id="register-recruiter" class="register-page">
 
-    <div class="register-icon">
-        <div class="icon"></div>
-    </div>
-
     <div class="register-form">
 
-        <h2>S'inscrire en tant que recruteur</h2>
-        <p>Vous souhaitez vous inscrire à notre journée de simulation des entretiens et nous vous en remercions. Merci de bien vouloir compléter ce formulaire afin de pouvoir vous enregister.</p>
+        <div class="register-title" style="margin-bottom: 42px;">
+            <h2>S'inscrire en tant que recruteur</h2><br />
+            <p>
+                Vous souhaitez vous inscrire à la journée de Jobs Dating organisée par l'équipe CVS de la FGES et nous vous en remercions.
+                Afin de procéder à votre inscription, <strong>merci de compléter ces quelques champs qui, sauf mention contraire, sont tous obligatoires</strong>.<br />
+            </p>
+            <p>
+                <small>Astuce : dès qu'une étape est validée sa couleur passe du <span class="customLabel blue">BLEUE</span> au <span class="customLabel green">VERT</span> !</small>
+            </p>
+        </div>
 
         <!-- Identifiants -->
         <form name="credentialPartForm" class="form-block" novalidate
@@ -17,12 +21,12 @@
             <div class="row" style="margin-top: 15px;">
                 <div class="form-group col-md-6">
                     <label for="email">Adresse email</label>
-                    <input type="email" class="form-control" id="email" name="email"
+                    <input type="email" class="form-control input-lg" id="email" name="email"
                            ng-model="newRecruiter.user.email" ng-change="checkDuplicateEmail()" ng-model-options="{debounce: 500}" ng-required="true">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="password">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password"
+                    <input type="password" class="form-control input-lg" id="password" name="password"
                            ng-model="newRecruiter.user.password" ng-required="true" ng-minlength="6">
                     <span class="help-block">On demande juste 6 caractères au moins :)</span>
                 </div>
@@ -47,7 +51,7 @@
                 <div class="form-group col-md-6">
                     <label for="company">Société</label>
                     <input type="text" class="form-control" id="company" name="company"
-                           ng-model="newRecruiter.recruiter.company" ng-required="true">
+                           ng-model="newRecruiter.recruiter.company" typeahead="company for company in companies | filter:$viewValue | limitTo:8" ng-required="true">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="phone">Téléphone</label>
@@ -274,8 +278,38 @@
             </div>
         </div>
 
+        <!-- Documents -->
+        <form name="documentsPartForm" class="form-block" novalidate
+              ng-class="{'valid': documentsPartForm.$valid}">
+            <h4>Documents</h4>
+            <p>Afin de correspondre au mieux aux profils des candidats, n'hésitez pas à envoyer des exemples d'annonces ici (formats .doc, .docx et .pdf acceptés).</p>
+            <div class="row">
+                <div ngf-drop ng-model="form.documents" class="dropbox"
+                     ngf-select="true" ngf-multiple="true" ngf-allow-dir="false">
+                    <div class="help">
+                        <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
+                        <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+                    </div>
+                </div>
+                <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+                <div id="documentsSent" ng-if="newRecruiter.recruiter.documents.length">
+                    <p><strong>Document(s) envoyé(s) :</strong></p>
+                    <ul>
+                        <li ng-repeat="document in newRecruiter.recruiter.documents">
+                            {{ document.name }}  - <i class="fa fa-trash-o fa-fw text-danger" title="Supprimer ce document" ng-click="deleteDocument(document)"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
         <p class="register-submit">
-            <button type="button" class="btn btn-lg btn-success" ng-click="register()">Je m'inscris <i class="fa fa-chevron-right fa-fw"></i></button>
+            <button type="button" class="btn btn-lg btn-success" style="transition:all 0.3s linear;"
+                    ng-click="register()" ng-disabled="form.isBeingSubmitted || form.isSubmitted">
+                <span ng-if="!form.isBeingSubmitted && !form.isSubmitted">Je m'inscris <i class="fa fa-chevron-right fa-fw"></i></span>
+                <span ng-if="form.isBeingSubmitted && !form.isSubmitted"><i class="fa fa-cog fa-spin fa-fw"></i></span>
+                <span ng-if="form.isSubmitted"><i class="fa fa-check fa-2x"></i></span>
+            </button>
         </p>
 
     </div>

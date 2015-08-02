@@ -1,11 +1,14 @@
 'use strict';
 
-angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http', 'constants', function($scope, $http, constants) {
+angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http', 'Upload', 'constants', function($scope, $http, Upload, constants) {
+
+  $scope.companies = ['Apple', 'Facebook', 'Google', 'Amazon', 'OVH'];
 
   $scope.newRecruiter = {
     user: {},
     recruiter: {
-      availability: ''
+      availability: '',
+      documents: []
     },
     participantsEmails: [],
     participantsData: []
@@ -14,8 +17,21 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
   $scope.form = {
     others: '',
     emailRecruiterToAdd: '',
-    dataRecruiterToAdd: {}
+    dataRecruiterToAdd: {},
+    documents: false,
+    documentIsBeingSent: false,
+    isBeingSubmitted: false,
+    isSubmitted: false
   };
+
+  $scope.$watch('form.documents', function() {
+    $scope.uploadDocuments($scope.form.documents);
+  });
+
+  $scope.$watch('form.others', function() {
+    $scope.newRecruiter.participantsEmails = [];
+    $scope.newRecruiter.participantsData = [];
+  });
 
   $scope.checkDuplicateEmail = function() {
     console.log('we need to check the email duplicate1');
@@ -66,15 +82,43 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
 
   $scope.resetDataRecruiterToAdd();
 
+  $scope.uploadDocuments = function(files) {
+    /*jshint -W083 */
+    if (files && files.length) {
+      for (var i = 0; i < files.length; i++) {
+        $scope.form.documentIsBeingSent = true;
+        var file = files[i];
+        Upload.upload({
+          url: constants.urlAPI + '/documents',
+          file: file,
+          sendFieldsAs: 'form',
+          skipAuthorization: true
+        }).success(function(document) {
+          $scope.newRecruiter.recruiter.documents.push(document);
+          $scope.form.documentIsBeingSent = false;
+        }).error(function(data, status, headers, config) {
+          console.log('ERROR', data, status, headers, config);
+          $scope.form.documentIsBeingSent = false;
+        });
+      }
+    }
+  };
+
+  $scope.deleteDocument = function(document) {
+    $scope.newRecruiter.recruiter.documents.splice($scope.newRecruiter.recruiter.documents.indexOf(document), 1);
+  };
+
   $scope.register = function() {
-    console.log('we need to register this new recruiter!');
+    $scope.form.isBeingSubmitted = true;
     $http({method: 'POST', url: constants.urlAPI + '/authenticate/register-recruiter',
       skipAuthorization: true,
       data: $scope.newRecruiter
     }).then(function(response) {
       console.log('SUCCESS', response);
+      $scope.form.isSubmitted = true;
     }, function() {
       console.log('ERROR');
+      $scope.form.isSubmitted = false;
     });
   };
 

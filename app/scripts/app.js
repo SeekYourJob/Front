@@ -1,6 +1,6 @@
 'use strict';
 
-var cvsApp = angular.module('cvsApp', ['ui.router', 'angular-jwt']);
+var cvsApp = angular.module('cvsApp', ['ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap']);
 
 cvsApp.constant('constants', {
   urlAPI: 'http://api.cvs.dev'
