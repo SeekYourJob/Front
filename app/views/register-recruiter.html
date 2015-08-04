@@ -6,7 +6,7 @@
             <h2>S'inscrire en tant que recruteur</h2><br />
             <p>
                 Vous souhaitez vous inscrire à la journée de Jobs Dating organisée par l'équipe CVS de la FGES et nous vous en remercions.
-                Afin de procéder à votre inscription, <strong>merci de compléter ces quelques champs qui, sauf mention contraire, sont tous obligatoires</strong>.<br />
+                Afin de procéder à votre inscription, <strong>merci de compléter ces quelques champs qui, sauf mention contraire, sont tous requis</strong>.<br />
             </p>
             <p>
                 <small>Astuce : dès qu'une étape est validée sa couleur passe du <span class="customLabel blue">BLEUE</span> au <span class="customLabel green">VERT</span> !</small>
@@ -15,17 +15,18 @@
 
         <!-- Identifiants -->
         <form name="credentialPartForm" class="form-block" novalidate
-              ng-class="{'valid': credentialPartForm.$valid}">
+              ng-class="{'valid': !form.emailAlreadyExists && credentialPartForm.$valid}">
             <h4>Identifiants</h4>
             <p>Ces identifiants sont importants, ils vous permettront <strong>d'accéder au planning de vos entretiens ainsi qu'aux curriculums des candidats</strong>.</p>
             <div class="row" style="margin-top: 15px;">
-                <div class="form-group col-md-6">
-                    <label for="email">Adresse email</label>
+                <div class="form-group col-md-6" ng-class="{'has-error': form.emailAlreadyExists}">
+                    <label for="email">Adresse email<span class="required">*</span></label>
                     <input type="email" class="form-control input-lg" id="email" name="email"
                            ng-model="newRecruiter.user.email" ng-change="checkDuplicateEmail()" ng-model-options="{debounce: 500}" ng-required="true">
+                    <span class="help-block" ng-if="form.emailAlreadyExists"><strong>Cette adresse email est déjà utilisée !</strong></span>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="password">Mot de passe</label>
+                    <label for="password">Mot de passe<span class="required">*</span></label>
                     <input type="password" class="form-control input-lg" id="password" name="password"
                            ng-model="newRecruiter.user.password" ng-required="true" ng-minlength="6">
                     <span class="help-block">On demande juste 6 caractères au moins :)</span>
@@ -39,22 +40,22 @@
             <h4>Coordonnées</h4>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="firstname">Prénom</label>
+                    <label for="firstname">Prénom<span class="required">*</span></label>
                     <input type="text" class="form-control" id="firstname" name="firstname"
                            ng-model="newRecruiter.user.firstname" ng-required="true">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="lastname">Nom</label>
+                    <label for="lastname">Nom<span class="required">*</span></label>
                     <input type="text" class="form-control" id="lastname" name="lastname"
                            ng-model="newRecruiter.user.lastname" ng-required="true">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="company">Société</label>
+                    <label for="company">Société<span class="required">*</span></label>
                     <input type="text" class="form-control" id="company" name="company"
                            ng-model="newRecruiter.recruiter.company" typeahead="company for company in companies | filter:$viewValue | limitTo:8" ng-required="true">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="phone">Téléphone</label>
+                    <label for="phone">Téléphone<span class="required">*</span></label>
                     <input type="text" class="form-control" id="phone" name="phone"
                            ng-model="newRecruiter.user.phone" ng-required="true" ng-pattern="/^[0-9 ]+$/" ng-minlength="10">
                 </div>
@@ -116,13 +117,9 @@
 
         <!-- Collaborateurs -->
         <div class="form-block"
-                ng-class="{'valid': othersPartForm.$valid
-                    && (form.others === 'none'
-                        || (form.others === 'withEmails' && newRecruiter.participantsEmails.length)
-                        || (form.others === 'withData' && newRecruiter.participantsData.length)
-                    )}">
+                ng-class="{'valid': collaboratorsFormIsValid()}">
             <h4>Collaborateurs</h4>
-            <p><strong>Vous souhaitez venir à plusieurs ? Aucun problème, avec plaisir !</strong> Mais avant toute chose...</p>
+            <p><strong>Vous souhaitez venir à plusieurs ? C'est encore mieux !</strong> Mais avant toute chose...</p>
 
             <form name="othersPartForm" class="row" novalidate>
                 <div class="radio">
@@ -305,11 +302,12 @@
 
         <p class="register-submit">
             <button type="button" class="btn btn-lg btn-success" style="transition:all 0.3s linear;"
-                    ng-click="register()" ng-disabled="form.isBeingSubmitted || form.isSubmitted">
-                <span ng-if="!form.isBeingSubmitted && !form.isSubmitted">Je m'inscris <i class="fa fa-chevron-right fa-fw"></i></span>
+                    ng-click="register()" ng-disabled="!formsAreValid() || form.isBeingSubmitted || form.isSubmitted">
+                <span ng-if="!form.isBeingSubmitted && !form.isSubmitted">Je procède à mon inscription <i class="fa fa-chevron-right fa-fw"></i></span>
                 <span ng-if="form.isBeingSubmitted && !form.isSubmitted"><i class="fa fa-cog fa-spin fa-fw"></i></span>
                 <span ng-if="form.isSubmitted"><i class="fa fa-check fa-2x"></i></span>
             </button>
+            <p class="text-center text-danger" ng-if="!formsAreValid()"><small>Certains champs ne sont pas valides !</small></p>
         </p>
 
     </div>

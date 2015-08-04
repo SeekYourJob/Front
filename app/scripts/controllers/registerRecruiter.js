@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http', 'Upload', 'constants', function($scope, $http, Upload, constants) {
+angular.module('cvsApp').controller('RegisterRecruiterCtrl',
+  ['$scope', '$http', 'Upload', 'AuthService', '$state', 'constants', function($scope, $http, Upload, AuthService, $state, constants) {
 
   $scope.companies = ['Apple', 'Facebook', 'Google', 'Amazon', 'OVH'];
 
@@ -19,6 +20,7 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
     emailRecruiterToAdd: '',
     dataRecruiterToAdd: {},
     documents: false,
+    emailAlreadyExists: false,
     documentIsBeingSent: false,
     isBeingSubmitted: false,
     isSubmitted: false
@@ -40,9 +42,10 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
         email: $scope.newRecruiter.user.email
       }
     }).then(function() {
-      console.log('not exists');
+      $scope.form.emailAlreadyExists = false;
     }, function() {
-      console.log('exists');
+      $scope.form.emailAlreadyExists = true;
+      $scope.credentialPartForm.email.$setValidity("required", false);
     });
   };
 
@@ -113,13 +116,29 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl', ['$scope', '$http',
     $http({method: 'POST', url: constants.urlAPI + '/authenticate/register-recruiter',
       skipAuthorization: true,
       data: $scope.newRecruiter
-    }).then(function(response) {
-      console.log('SUCCESS', response);
+    }).then(function() {
       $scope.form.isSubmitted = true;
+
+      AuthService.login({
+        email: $scope.newRecruiter.user.email,
+        password: $scope.newRecruiter.user.password
+      }).then(function() {
+        $state.go('account');
+      });
     }, function() {
-      console.log('ERROR');
       $scope.form.isSubmitted = false;
     });
+  };
+
+  $scope.collaboratorsFormIsValid = function() {
+    return $scope.othersPartForm.$valid && ($scope.form.others === 'none' || ($scope.form.others === 'withEmails' && $scope.newRecruiter.participantsEmails.length) || ($scope.form.others === 'withData' && $scope.newRecruiter.participantsData.length));
+  };
+
+  $scope.formsAreValid = function() {
+    return ($scope.credentialPartForm.$valid &&
+      $scope.contactInfoPartForm.$valid &&
+      $scope.availabilityPartForm.$valid &&
+      $scope.collaboratorsFormIsValid());
   };
 
 }]);

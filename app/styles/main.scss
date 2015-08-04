@@ -134,7 +134,6 @@ footer {
       }
     }
 
-    border: solid 1px $customDarkBlue;
     padding: 20px;
 
     .icon {
@@ -145,7 +144,8 @@ footer {
 
     &:hover {
       cursor: pointer;
-      border-radius: 4px;
+      border: solid 1px $customDarkBlue;
+      border-radius: 3px;
 
       h2 {
         color: $customLightBlue;
@@ -231,10 +231,17 @@ footer {
   .register-form {
     @extend .col-md-8, .col-md-offset-2;
     margin-top: 20px;
+    .required {
+      color: $brand-danger;
+      font-size: 15px;
+      vertical-align: super;
+      margin-left: 5px;
+    }
     .form-block {
       border: 1px solid $customLightBlue;
       padding-bottom: 5px;
       margin-bottom: 20px;
+      background: white;
       h4 {
         background: $customLightBlue;
         color: white;
