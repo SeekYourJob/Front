@@ -118,7 +118,6 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
       data: $scope.newRecruiter
     }).then(function() {
       $scope.form.isSubmitted = true;
-
       AuthService.login({
         email: $scope.newRecruiter.user.email,
         password: $scope.newRecruiter.user.password
