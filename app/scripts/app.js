@@ -1,6 +1,6 @@
 'use strict';
 
-var cvsApp = angular.module('cvsApp', ['ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap']);
+var cvsApp = angular.module('cvsApp', ['ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage']);
 
 cvsApp.constant('constants', {
   urlAPI: 'http://api.cvs.dev'
@@ -10,47 +10,23 @@ cvsApp.constant('constants', {
 
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
-  jwtInterceptorProvider.tokenGetter = function(jwtHelper, $http, config, $window, constants) {
+  jwtInterceptorProvider.tokenGetter = ['jwtHelper', '$http', 'config', '$window', '$localStorage', 'AuthService',
+    function(jwtHelper, $http, config, $window, $localStorage, AuthService) {
 
-    var token = localStorage.getItem('token');
-
-    // Skip authentication for any requests ending in .html
-    if (config.url.substr(config.url.length - 5) === '.html') {
-      return null;
-    }
-
-    if (token === null) {
-      return;
-    }
-
-    else if (jwtHelper.isTokenExpired(token)) {
-      console.log('TOKEN EXPIRED, REFRESHING...');
-
-      return $http({
-        method: 'POST',
-        url: constants.urlAPI + '/authenticate/refresh',
-        skipAuthorization: true,
-        data: {
-          oldToken: token
+        // Skip authentication for any requests ending in .html
+        if (config.url.substr(config.url.length - 5) === '.html') {
+          console.log('token: html');
+          return null;
         }
-      }).then(function (response) {
-        console.log('TOKEN REFRESHED');
-        localStorage.setItem('token', response.data.token);
-        return response.data.token;
-      }, function () {
-        console.log('TOKEN NOT REFRESHED, RELOADING');
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        $window.location.reload();
-      });
-    }
 
-    else {
-      console.log('TOKEN AVAILABLE, USING');
-      return token;
-    }
+        return AuthService.getToken().then(function(token) {
+          return token;
+        }, function() {
+          return null;
+        });
 
-  };
+    }
+  ];
 
   $httpProvider.interceptors.push('jwtInterceptor');
 });
@@ -58,12 +34,13 @@ cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
 
 
 
-cvsApp.run(['$rootScope', '$state', 'AuthService', function($rootScope, $state) {
+cvsApp.run(['$rootScope', '$state', '$localStorage', function($rootScope, $state, $localStorage) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
-    var user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
+    var user = $localStorage.user;
+
+    if (typeof $localStorage.user !== 'undefined') {
       $rootScope.authenticated = true;
-      $rootScope.user = user;
+      $rootScope.user = $localStorage.user;
 
       if (toState.name === 'login') {
         event.preventDefault();
@@ -73,8 +50,12 @@ cvsApp.run(['$rootScope', '$state', 'AuthService', function($rootScope, $state) 
   });
 
   $rootScope.$on('$stateChangeError', function (_0, _1, _2, _3, _4, error) {
+    console.log(error);
     if (error.notAuthenticated) {
       $state.go('login');
+    }
+    else if (error.accessDenied) {
+      $state.go('home');
     }
   });
 }]);

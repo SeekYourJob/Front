@@ -1,42 +1,113 @@
 'use strict';
 
-angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelper', '$q', '$window', 'constants',
-  function($http, $rootScope, jwtHelper, $q, $window, constants) {
+angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelper', '$q', '$localStorage', 'constants',
+  function($http, $rootScope, jwtHelper, $q, $localStorage, constants) {
 
     var self = this;
 
     self.login = function(credentials) {
-      console.log('AuthService.login');
-
-      return $http({
+      var deferred = $q.defer();
+      $http({
         method: 'POST',
         url: constants.urlAPI + '/authenticate',
         skipAuthorization: true,
         data: credentials
       }).success(function(data) {
-          localStorage.setItem('token', data.token);
+          $localStorage.token = data.token;
           $rootScope.authenticated = true;
-          return self.getUser();
-        }).error(function() {
-          return false;
-        });
+          deferred.resolve(data.token);
+      }).error(function() {
+        deferred.reject('Bad credentials.');
+      });
 
+      return deferred.promise;
     };
 
     self.getUser = function() {
-      return $http.get(constants.urlAPI + '/me').
-        success(function(data) {
-          localStorage.setItem('user', JSON.stringify(data.user));
+      var deferred = $q.defer();
+      $http.get(constants.urlAPI + '/me')
+        .success(function(data) {
+          $localStorage.user = data.user;
           $rootScope.user = data.user;
-          return data.user;
-        }).
-        error(function() {
-          return false;
+          deferred.resolve(data.user);
+        })
+        .error(function() {
+          deferred.reject('Bugous user.');
         });
+
+      return deferred.promise;
+    };
+
+    self.getToken = function() {
+      var deferred = $q.defer();
+
+      if ($localStorage.token === null || typeof $localStorage.token === 'undefined') {
+        deferred.reject('No token');
+      }
+      else if (jwtHelper.isTokenExpired($localStorage.token)) {
+        console.log('token: needs refresh');
+        self.refreshToken().then(function(token) {
+          deferred.resolve(token);
+        }, function() {
+          deferred.reject('Token too old');
+        });
+      }
+      else {
+        console.log('token: from storage');
+        deferred.resolve($localStorage.token);
+      }
+
+      return deferred.promise;
+    };
+
+    self.refreshToken = function() {
+      console.log('TOKEN EXPIRED, REFRESHING...');
+      var deferred = $q.defer();
+      $http({
+        method: 'POST',
+        url: constants.urlAPI + '/authenticate/refresh',
+        skipAuthorization: true,
+        data: {
+          oldToken: $localStorage.token
+        }
+      }).then(function (response) {
+        console.log('TOKEN REFRESHED');
+        $localStorage.token = response.data.token;
+        deferred.resolve(response.data.token);
+      }, function () {
+        console.log('TOKEN NOT REFRESHED');
+        delete $localStorage.token;
+        delete $localStorage.user;
+        deferred.reject('Token couldnt be renewed');
+      });
+
+      return deferred.promise;
     };
 
     self.check = function() {
-      return localStorage.getItem('token');
+      return $localStorage.token;
+    };
+
+    self.checkOrganizer = function() {
+
+      var deferred = $q.defer();
+
+      if (typeof $localStorage.token === 'undefined') {
+        deferred.reject('No token');
+      }
+
+      $http({
+        method: 'GET',
+        url: constants.urlAPI + '/authenticate/check-organizer'
+      }).then(function() {
+        console.log('is organizer');
+        deferred.resolve();
+      }, function() {
+        console.log('is NOT organizer');
+        deferred.reject('User is not an organizer');
+      });
+
+      return deferred.promise;
     };
 
 }]);

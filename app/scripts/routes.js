@@ -9,7 +9,6 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     .state('session', {
       resolve: {
         authentication: ['AuthService', '$q', function (AuthService, $q) {
-          // The authentication fails if no Token exists
           if (!AuthService.check()) {
             return $q.reject({
               notAuthenticated: true
@@ -42,6 +41,22 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/register-candidate',
       controller: 'RegisterCandidateCtrl',
       templateUrl: 'views/register-candidate.html'
+    })
+    .state('admin', {
+      url: '/admin',
+      controller: 'AdminCtrl',
+      templateUrl: 'views/admin.html',
+      resolve: {
+        organizer: ['AuthService', '$q', function (AuthService, $q) {
+          return AuthService.checkOrganizer().then(function() {
+            // User is organizer, nothing to do...
+          }, function() {
+            return $q.reject({
+              accessDenied: true
+            });
+          });
+        }]
+      }
     });
 
 });
