@@ -10,16 +10,14 @@ angular.module('cvsApp').controller('LoginCtrl', ['$rootScope', '$scope', '$stat
 
     $scope.login = function() {
       AuthService.login($scope.credentials).then(
-        function(success) {
-          console.log('SUCCESS !!!', success);
+        function() {
           AuthService.getUser().then(function() {
-            console.log('we got the user, we can go to account!');
             $state.go('account');
           }, function() {
-            console.log('error while getting user...');
+            //TODO Error while getting user on login
           });
         }, function() {
-          console.log('error while authenticating');
+         //TODO Error while login
         }
       );
     };

@@ -36,8 +36,6 @@ cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
 
 cvsApp.run(['$rootScope', '$state', '$localStorage', function($rootScope, $state, $localStorage) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
-    var user = $localStorage.user;
-
     if (typeof $localStorage.user !== 'undefined') {
       $rootScope.authenticated = true;
       $rootScope.user = $localStorage.user;
