@@ -1,21 +1,18 @@
 'use strict';
 
-var cvsApp = angular.module('cvsApp', ['ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage']);
+var cvsApp = angular.module('cvsApp',
+  ['ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular']
+);
 
 cvsApp.constant('constants', {
   urlAPI: 'http://api.cvs.dev'
 });
 
-
-
-
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = ['jwtHelper', '$http', 'config', '$window', '$localStorage', 'AuthService',
     function(jwtHelper, $http, config, $window, $localStorage, AuthService) {
-
         // Skip authentication for any requests ending in .html
         if (config.url.substr(config.url.length - 5) === '.html') {
-          console.log('token: html');
           return null;
         }
 
@@ -24,11 +21,16 @@ cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
         }, function() {
           return null;
         });
-
     }
   ];
-
   $httpProvider.interceptors.push('jwtInterceptor');
+});
+
+cvsApp.config(function(RestangularProvider, constants) {
+  RestangularProvider.setBaseUrl(constants.urlAPI);
+  RestangularProvider.setRestangularFields({
+    id: "ido"
+  });
 });
 
 

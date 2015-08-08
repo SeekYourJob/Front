@@ -5,13 +5,6 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
   $locationProvider.html5Mode(false);
   $urlRouterProvider.otherwise('/');
 
-  var getAdminTemplate = function(htmlTemplate) {
-    return {
-      'admin-menu': {templateUrl: 'views/admin/admin-menu.html'},
-      'admin-content': {templateUrl: 'views/admin/' + htmlTemplate}
-    };
-  };
-
   $stateProvider
     .state('session', {
       resolve: {
@@ -52,7 +45,8 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       abstract: true,
       url: '/admin',
       views: {
-        '@': {templateUrl: 'views/admin/admin.html'}
+        '@': {templateUrl: 'views/admin/admin.html'},
+        'admin-menu@admin': {templateUrl: 'views/admin/admin-menu.html'}
       },
       resolve: {
         organizer: ['AuthService', '$q', function (AuthService, $q) {
@@ -68,15 +62,15 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('admin.home', {
       url: '/',
-      views: getAdminTemplate('home.html')
-    })
-    .state('admin.users', {
-      url: '/users',
-      views: getAdminTemplate('users.html')
+      views: {'admin-content@admin': {templateUrl: 'views/admin/home.html'}}
     })
     .state('admin.companies', {
       url: '/companies',
-      views: getAdminTemplate('companies.html')
+      views: {'admin-content@admin': {templateUrl: 'views/admin/companies.html', controller: 'CompaniesCtrl'}}
+    })
+    .state('admin.companies.details', {
+      url: '/{id:int}',
+      views: {'admin-content@admin': {templateUrl: 'views/admin/companies-details.html', controller: 'CompaniesDetailsCtrl'}}
     })
 
   ;

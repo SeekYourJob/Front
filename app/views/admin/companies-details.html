@@ -1,0 +1,36 @@
+<h2>{{ company.name }}</h2>
+
+<div class="row">
+
+    <div class="col-md-5">
+        <h3>Modifier</h3>
+        <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" class="form-control" id="name"
+                   ng-model="company.name" ng-model-options="{debounce: 420}">
+        </div>
+        <button type="button" class="btn btn-success" ng-click="update()">Modifier</button>
+    </div>
+
+    <div class="col-md-7">
+        <h3>Recruteurs</h3>
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Identité</th>
+                <th>Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="recruiter in recruiters">
+                <td><a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{ recruiter.user.firstname }} {{ recruiter.user.lastname }}</a></td>
+                <td>
+                    <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-primary': recruiter.parking_option}">PARKING</span>
+                    <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-primary': recruiter.lunch_option}">REPAS</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

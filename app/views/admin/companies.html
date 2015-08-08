@@ -1,1 +1,23 @@
-this is the companies page!
+<h2>Entreprises</h2>
+
+
+
+<div class="row"
+     st-table="companiesDisplayedCollection" st-safe-src="companiesCollection">
+
+    <div class="searchBox">
+        <input class="form-control" type="search" placeholder="Rechercher..." st-search>
+    </div>
+
+    <div class="col-md-10 col-md-offset-1">
+        <table class="table table-striped">
+            <tbody>
+            <tr ng-repeat="company in companiesDisplayedCollection">
+                <td><a ui-sref="admin.companies.details({id: company.ido})">{{company.name}}</a></td>
+                <td>{{ company.recruitersCount }} recruteur(s)</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
