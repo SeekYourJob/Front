@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cvsApp').controller('RegisterRecruiterCtrl',
-  ['$scope', '$http', 'Upload', 'AuthService', '$state', 'constants', function($scope, $http, Upload, AuthService, $state, constants) {
+  ['$scope', '$http', 'Upload', 'AuthService', '$state', 'ENV', function($scope, $http, Upload, AuthService, $state, ENV) {
 
   $scope.companies = ['Apple', 'Facebook', 'Google', 'Amazon', 'OVH'];
 
@@ -37,7 +37,7 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
 
   $scope.checkDuplicateEmail = function() {
     console.log('we need to check the email duplicate1');
-    $http({method: 'GET', url: constants.urlAPI + '/authenticate/check-email', skipAuthorization: true,
+    $http({method: 'GET', url: ENV.apiEndpoint + '/authenticate/check-email', skipAuthorization: true,
       params: {
         email: $scope.newRecruiter.user.email
       }
@@ -92,7 +92,7 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
         $scope.form.documentIsBeingSent = true;
         var file = files[i];
         Upload.upload({
-          url: constants.urlAPI + '/documents',
+          url: ENV.apiEndpoint + '/documents',
           file: file,
           sendFieldsAs: 'form',
           skipAuthorization: true
@@ -113,7 +113,7 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
 
   $scope.register = function() {
     $scope.form.isBeingSubmitted = true;
-    $http({method: 'POST', url: constants.urlAPI + '/authenticate/register-recruiter',
+    $http({method: 'POST', url: ENV.apiEndpoint + '/authenticate/register-recruiter',
       skipAuthorization: true,
       data: $scope.newRecruiter
     }).then(function() {

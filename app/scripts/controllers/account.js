@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('cvsApp').controller('AccountCtrl', ['$scope', '$http', 'constants', function($scope, $http, constants) {
+angular.module('cvsApp').controller('AccountCtrl', ['$scope', '$http', 'ENV', function($scope, $http, ENV) {
 
   $scope.me = {};
 
-  $http.get(constants.urlAPI + '/me')
+  $http.get(ENV.apiEndpoint + '/me')
     .success(function(response) {
       $scope.me = response.user;
     })

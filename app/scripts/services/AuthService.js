@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelper', '$q', '$localStorage', 'constants',
-  function($http, $rootScope, jwtHelper, $q, $localStorage, constants) {
+angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelper', '$q', '$localStorage', 'ENV',
+  function($http, $rootScope, jwtHelper, $q, $localStorage, ENV) {
 
     var self = this;
 
@@ -9,7 +9,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
       var deferred = $q.defer();
       $http({
         method: 'POST',
-        url: constants.urlAPI + '/authenticate',
+        url: ENV.apiEndpoint + '/authenticate',
         skipAuthorization: true,
         data: credentials
       }).success(function(data) {
@@ -25,7 +25,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
 
     self.getUser = function() {
       var deferred = $q.defer();
-      $http.get(constants.urlAPI + '/me')
+      $http.get(ENV.apiEndpoint + '/me')
         .success(function(data) {
           $localStorage.user = data.user;
           $rootScope.user = data.user;
@@ -65,7 +65,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
       var deferred = $q.defer();
       $http({
         method: 'POST',
-        url: constants.urlAPI + '/authenticate/refresh',
+        url: ENV.apiEndpoint + '/authenticate/refresh',
         skipAuthorization: true,
         data: {
           oldToken: $localStorage.token
@@ -98,7 +98,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
 
       $http({
         method: 'GET',
-        url: constants.urlAPI + '/authenticate/check-organizer'
+        url: ENV.apiEndpoint + '/authenticate/check-organizer'
       }).then(function() {
         console.log('is organizer');
         deferred.resolve();

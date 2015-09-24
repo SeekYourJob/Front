@@ -1,12 +1,8 @@
 'use strict';
 
 var cvsApp = angular.module('cvsApp',
-  ['ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular']
+  ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular']
 );
-
-cvsApp.constant('constants', {
-  urlAPI: 'http://api.cvs.dev'
-});
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = ['jwtHelper', '$http', 'config', '$window', '$localStorage', 'AuthService',
@@ -26,8 +22,8 @@ cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
   $httpProvider.interceptors.push('jwtInterceptor');
 });
 
-cvsApp.config(function(RestangularProvider, constants) {
-  RestangularProvider.setBaseUrl(constants.urlAPI);
+cvsApp.config(function(RestangularProvider, ENV) {
+  RestangularProvider.setBaseUrl(ENV.apiEndpoint);
   RestangularProvider.setRestangularFields({
     id: "ido"
   });
