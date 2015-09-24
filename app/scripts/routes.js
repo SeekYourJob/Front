@@ -2,7 +2,7 @@
 
 angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-  $locationProvider.html5Mode(false);
+  $locationProvider.html5Mode(true);
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
@@ -71,6 +71,14 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     .state('admin.companies.details', {
       url: '/{id:int}',
       views: {'admin-content@admin': {templateUrl: 'views/admin/companies-details.html', controller: 'CompaniesDetailsCtrl'}}
+    })
+    .state('admin.recruiters', {
+      url: '/recruiters',
+      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters.html', controller: 'RecruitersCtrl'}}
+    })
+    .state('admin.recruiters.details', {
+      url: '/{id:int}',
+      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'RecruitersDetailsCtrl'}}
     })
 
   ;

@@ -25,8 +25,8 @@
             <tr ng-repeat="recruiter in recruiters">
                 <td><a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{ recruiter.user.firstname }} {{ recruiter.user.lastname }}</a></td>
                 <td>
-                    <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-primary': recruiter.parking_option}">PARKING</span>
-                    <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-primary': recruiter.lunch_option}">REPAS</span>
+                    <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-success': recruiter.parking_option}">PARKING</span>
+                    <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-success': recruiter.lunch_option}">REPAS</span>
                 </td>
             </tr>
             </tbody>
