@@ -36,7 +36,6 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
   });
 
   $scope.checkDuplicateEmail = function() {
-    console.log('we need to check the email duplicate1');
     $http({method: 'GET', url: ENV.apiEndpoint + '/authenticate/check-email', skipAuthorization: true,
       params: {
         email: $scope.newRecruiter.user.email
@@ -122,7 +121,11 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
         email: $scope.newRecruiter.user.email,
         password: $scope.newRecruiter.user.password
       }).then(function() {
-        $state.go('account');
+        AuthService.getUser().then(function() {
+          $state.go('account');
+        }, function() {
+          //TODO Error while getting user on login
+        });
       });
     }, function() {
       $scope.form.isSubmitted = false;
