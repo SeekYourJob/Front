@@ -23,6 +23,25 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
       return deferred.promise;
     };
 
+    self.logout = function() {
+      var deferred = $q.defer();
+
+      $http({
+        method: 'GET',
+        url: ENV.apiEndpoint + '/logout'
+      }).success(function() {
+        delete $localStorage.token;
+        delete $localStorage.user;
+        delete $rootScope.user;
+        $rootScope.authenticated = false;
+        deferred.resolve();
+      }).error(function() {
+        deferred.reject('Error while logging out');
+      });
+
+      return deferred.promise;
+    };
+
     self.getUser = function() {
       var deferred = $q.defer();
       $http.get(ENV.apiEndpoint + '/me')

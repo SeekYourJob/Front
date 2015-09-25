@@ -26,6 +26,10 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       controller: 'LoginCtrl',
       templateUrl: 'views/login.html'
     })
+    .state('logout', {
+      url: '/logout',
+      controller: 'LogoutCtrl'
+    })
     .state('account', {
       parent: 'session',
       url: '/account',
