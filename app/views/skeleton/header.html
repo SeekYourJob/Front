@@ -15,7 +15,7 @@
                     <li ng-if="authenticated"><a ui-sref="account">Connecté(e) en tant que {{ user.firstname }} {{ user.lastname }}</a></li>
                     <li ng-if="authenticated"><a ui-sref="logout">Se déconnecter</a></li>
                 </ul>
-                <button ng-if="user.organizer" type="button" class="btn btn-primary navbar-btn navbar-right" ui-sref="admin.home">Administration</button>
+                <button ng-if="user.organizer === true" type="button" class="btn btn-primary navbar-btn navbar-right" ui-sref="admin.home">Administration</button>
             </div>
         </div>
     </div>
