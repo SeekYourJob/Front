@@ -11,7 +11,6 @@
     "ng-file-upload": "~6.0.2",
     "ngstorage": "~0.3.7",
     "angular-smart-table": "~2.1.2",
-    "components-font-awesome": "~4.4.0",
     "restangular": "~1.5.1"
   },
   "devDependencies": {
