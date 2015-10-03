@@ -1,1 +1,23 @@
 <h2>Administration</h2>
+
+<div class="admin-display-interviews" ng-repeat="company in interviewsByCompanies">
+    <h3><a ui-sref="admin.companies.details({id: company.company.ido})">{{ company.company.name }}</a></h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="recruiter-name"></th>
+                    <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="recruiter in company.recruiters">
+                    <td><a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname }} {{ recruiter.lastname }}</a></td>
+                    <td ng-repeat="interview in recruiter.interviews" class="interview-status-{{interview.status}}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
