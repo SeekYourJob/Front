@@ -33,25 +33,27 @@ angular.module('cvsApp').controller('RecruitersDetailsCtrl', ['$scope', '$state'
     };
 
     $scope.freeInterview = function(interview) {
-      console.log('FREE interview', interview);
-
-      // GET /accounts/123/messages
-      Restangular.one("interviews", interview.ido).customPOST(undefined, 'free');
-
-      refreshInterviews();
+      Restangular.one("interviews", interview.ido).customPOST(undefined, 'free')
+        .then(function() {
+          refreshInterviews();
+        });
     };
 
     $scope.deleteInterview = function(interview) {
-      Restangular.one('interviews', interview.ido).remove();
-      refreshInterviews();
+      Restangular.one('interviews', interview.ido).remove().then(function() {
+        refreshInterviews();
+      });
     };
 
     $scope.createInterview = function(interview) {
-      Restangular.all('interviews').customPOST({slot: interview.slot.ido, recruiter: $scope.recruiter.ido});
-      refreshInterviews();
+      Restangular.all('interviews').customPOST({slot: interview.slot.ido, recruiter: $scope.recruiter.ido})
+        .then(function() {
+          refreshInterviews();
+        });
     };
 
     $scope.bookInterview = function(interview) {
+      console.log(interview);
       //TODO
     };
 
