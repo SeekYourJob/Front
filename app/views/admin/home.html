@@ -14,10 +14,22 @@
                 <tbody>
                 <tr ng-repeat="recruiter in company.recruiters">
                     <td><a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname }} {{ recruiter.lastname }}</a></td>
-                    <td ng-repeat="interview in recruiter.interviews" class="interview-status-{{interview.status}}"></td>
+                    <td ng-repeat="interview in recruiter.interviews" class="interview interview-status-{{interview.status}}">
+                        <span ng-if="interview.status === 'taken'"
+                              ng-mouseenter="setSelectedInterview(interview)"
+                              popover-template="popover.templateUrl" popover-title="Interview" popover-trigger="mouseenter">
+                            <i class="fa fa-check-circle"></i>
+                        </span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="popover.html">
+    <p>
+        <strong>{{ selectedInterview.candidate.firstname }} {{ selectedInterview.candidate.lastname }}</strong> ({{ selectedInterview.candidate.grade }})
+    </p>
+</script>

@@ -9,8 +9,14 @@
         <input class="form-control" type="search" placeholder="Rechercher..." st-search>
     </div>
 
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-12">
         <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th></th>
+            </tr>
+            </thead>
             <tbody>
             <tr ng-repeat="company in companiesDisplayedCollection">
                 <td><a ui-sref="admin.companies.details({id: company.ido})">{{company.name}}</a></td>

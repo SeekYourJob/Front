@@ -64,15 +64,15 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
         deferred.reject('No token');
       }
       else if (jwtHelper.isTokenExpired($localStorage.token)) {
-        console.log('token: needs refresh');
+        console.log('[TOKEN] : Refresh needed');
         self.refreshToken().then(function(token) {
           deferred.resolve(token);
         }, function() {
-          deferred.reject('Token too old');
+          deferred.reject('[TOKEN] : Too old');
         });
       }
       else {
-        console.log('token: from storage');
+        console.log('[TOKEN] : Fetched from Storage');
         deferred.resolve($localStorage.token);
       }
 
@@ -119,10 +119,10 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
         method: 'GET',
         url: ENV.apiEndpoint + '/authenticate/check-organizer'
       }).then(function() {
-        console.log('is organizer');
+        console.log('[ACCESS] : Organizer');
         deferred.resolve();
       }, function() {
-        console.log('is NOT organizer');
+        console.log('[ACCESS] : User');
         deferred.reject('User is not an organizer');
       });
 

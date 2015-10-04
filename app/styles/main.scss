@@ -10,7 +10,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 // Fonts
 @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
-@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic);
 
 html {
   position: relative;
@@ -41,6 +41,10 @@ p {
   font-weight: 300;
 }
 
+strong {
+  font-weight: 600;
+}
+
 label {
   font-weight: 600;
   font-size: 15px;
@@ -55,10 +59,10 @@ label {
 }
 .navbar-brand {
   font-size: 24px !important;
-  font-weight: 700;
+  font-weight: 500;
   @media (max-width: $screen-xs-max) {
     font-size: 19px !important;
-    font-weight: 600;
+    font-weight: 400;
   }
 }
 
@@ -365,7 +369,7 @@ footer {
 }
 
 .searchBox {
-  @extend .col-md-6, .col-md-offset-3;
+  @extend .col-md-12;
   margin-bottom: 26px;
 }
 
@@ -396,7 +400,7 @@ footer {
   }
 }
 
-.panel-body .lead {
+.panel-body .lead, .panel-body p:last-child {
   margin: 0;
 }
 
@@ -407,6 +411,14 @@ footer {
   }
   .panel-body {
     padding-top: 4px;
+  }
+  .popover {
+    h3 {
+      margin: 0 !important;
+    }
+    p {
+      margin-bottom: 0;
+    }
   }
   table {
     margin-bottom: 0;
@@ -420,15 +432,40 @@ footer {
     }
 
     tr > td {
+      &.interview {
+        text-align: center;
+      }
       &.interview-status-free {
-        background: #9CCC65;
+        background: $interview-free;
       }
       &.interview-status-unavailable {
-        background: #E0E0E0;
+        background: $interview-unavailable;
       }
       &.interview-status-taken {
-        background: #4CAF50;
+        background: $interview-taken;
+
+        i {
+          color: white;
+        }
       }
+    }
+  }
+}
+
+#admin-display-interviews-for-recruiter {
+  tr {
+    td {
+      vertical-align: middle;
+    }
+    &.interview-status-free {
+      background: $interview-free;
+    }
+    &.interview-status-unavailable {
+      background: $interview-unavailable;
+    }
+    &.interview-status-taken {
+      background: $interview-taken;
+      color: white;
     }
   }
 }

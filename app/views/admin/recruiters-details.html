@@ -1,105 +1,122 @@
 <h2><strong>{{ recruiter.user.firstname }} {{ recruiter.user.lastname }}</strong></h2>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p class="lead">Entreprise :<br><strong>{{ recruiter.company.name }}</strong>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p class="lead">Téléphone :<br><strong>{{ recruiter.user.phone }}</strong>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p class="lead">Entretiens :<br>
-                    <strong>42</strong>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p class="lead">Options :
-                    <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-success': recruiter.parking_option}">PARKING</span>&nbsp;
-                    <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-success': recruiter.lunch_option}">REPAS</span>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p class="lead">Notifications :
-                    <span class="label" ng-class="{'label-default': !recruiter.user.email_notifications, 'label-success': recruiter.user.email_notifications}">EMAIL</span>&nbsp;
-                    <span class="label" ng-class="{'label-default': !recruiter.user.sms_notifications, 'label-success': recruiter.user.sms_notifications}">SMS</span>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr>
-
 <div class="row" style="margin-top: 42px;">
-
     <div class="col-md-8">
         <h3>Entretiens</h3>
+        <table id="admin-display-interviews-for-recruiter" class="table">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Créneau</th>
+                    <th>Candidat</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="interview in recruiterInterviews.interviews" class="interview interview-status-{{interview.status}}">
+                    <td>
+                        {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
+                    </td>
+                    <td>
+                        <span ng-if="interview.status === 'taken'">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} ({{ interview.candidate.grade }})</span>
+                        <button type="button" class="btn btn-sm btn-success" ng-if="interview.status === 'free'" ng-click="bookInterview(interview)"><i class="fa fa-sign-in fa-fw"></i> Inscrire un étudiant</button>
+                    </td>
+                    <td class="actions">
+                        <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'taken'" ng-click="freeInterview(interview)"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>
+                        <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'free'" ng-click="deleteInterview(interview)"><i class="fa fa-times fa-fw"></i> Marquer comme indisponible</button>
+                        <button type="button" class="btn btn-sm btn-success" ng-if="interview.status === 'unavailable'" ng-click="createInterview(interview)"><i class="fa fa-check-square-o fa-fw"></i> Marquer comme disponible</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="col-md-4">
-        <h3>Modifier</h3>
+        <h3>Informations</h3>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="firstname">Prénom</label>
-                    <input type="text" class="form-control" id="firstname"
-                           ng-model="recruiter.user.firstname" ng-model-options="{debounce: 550}">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>
+                            Entreprise : <strong>{{ recruiter.company.name }}</strong><br>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="lastname">Nom</label>
-                    <input type="text" class="form-control" id="lastname"
-                           ng-model="recruiter.user.lastname" ng-model-options="{debounce: 550}">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>Téléphone : <strong>{{ recruiter.user.phone_formatted }}</strong>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="company">Entreprise</label>
-                    <select id="company" class="form-control"
-                            ng-model="recruiter.company" ng-options="company.name for company in companies track by company.ido">
-                    </select>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>Entretiens : <strong>42</strong></p>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="email">Adresse email</label>
-                    <input type="text" class="form-control" id="email"
-                           ng-model="recruiter.user.email" ng-model-options="{debounce: 550}">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>Options :
+                            <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-success': recruiter.parking_option}">PARKING</span>&nbsp;
+                            <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-success': recruiter.lunch_option}">REPAS</span>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <p class="text-center" style="margin-top: 21px;">
-                <button type="button" class="btn btn-success" ng-click="updateRecruiter()">Enregistrer</button>
-            </p>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>Notifications :
+                            <span class="label" ng-class="{'label-default': !recruiter.user.email_notifications, 'label-success': recruiter.user.email_notifications}">EMAIL</span>&nbsp;
+                            <span class="label" ng-class="{'label-default': !recruiter.user.sms_notifications, 'label-success': recruiter.user.sms_notifications}">SMS</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 
-<pre>
-
-    {{ recruiter | json }}
-
-</pre>
+<div class="row">
+    <h3>Modifier</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="firstname">Prénom</label>
+                <input type="text" class="form-control" id="firstname"
+                       ng-model="recruiter.user.firstname" ng-model-options="{debounce: 550}">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="lastname">Nom</label>
+                <input type="text" class="form-control" id="lastname"
+                       ng-model="recruiter.user.lastname" ng-model-options="{debounce: 550}">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="company">Entreprise</label>
+                <select id="company" class="form-control"
+                        ng-model="recruiter.company" ng-options="company.name for company in companies track by company.ido">
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="email">Adresse email</label>
+                <input type="text" class="form-control" id="email"
+                       ng-model="recruiter.user.email" ng-model-options="{debounce: 550}">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <p class="text-center" style="margin-top: 21px;">
+            <button type="button" class="btn btn-success" ng-click="updateRecruiter()">Enregistrer</button>
+        </p>
+    </div>
+</div>

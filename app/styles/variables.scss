@@ -15,7 +15,7 @@ $customLightBlue: #2197bd;
 
 $body-bg: #f8f8f8;
 
-$font-family-sans-serif: 'Titillium Web', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 
 $navbar-height: 62px;
 $navbar-default-bg: $customGrey;
@@ -40,3 +40,7 @@ $btn-success-border:  darken($brand-success, 1%);
 $btn-info-border: darken($brand-info, 1%);
 $btn-warning-border: darken($brand-warning, 1%);
 $btn-danger-border: darken($brand-danger, 1%);
+
+$interview-free: #9CCC65;
+$interview-taken: #4CAF50;
+$interview-unavailable: #F8F8F8;

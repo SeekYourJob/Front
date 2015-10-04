@@ -5,19 +5,21 @@ angular.module('cvsApp').controller('AdminCtrl', ['$scope', 'Restangular',
 
     $scope.slots = false;
     $scope.interviewsByCompanies = false;
+    $scope.selectedInterview = false;
+
+    $scope.popover = {templateUrl: 'popover.html'};
 
     Restangular.all('interviews/slots').getList().then(function(slots) {
       $scope.slots = slots.plain();
 
       Restangular.all('interviews').getList().then(function(interviewsByCompanies) {
         $scope.interviewsByCompanies = interviewsByCompanies.plain();
-
-        console.log($scope.slots);
-        console.log($scope.interviewsByCompanies);
       });
     });
 
-
+    $scope.setSelectedInterview = function(interview) {
+      $scope.selectedInterview = interview;
+    };
 
   }
 ]);
