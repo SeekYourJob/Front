@@ -32,6 +32,7 @@
 
     <div class="col-md-4">
         <h3>Informations</h3>
+        <hr>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -81,36 +82,86 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 42px;">
     <h3>Modifier</h3>
+    <hr>
     <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="firstname">Prénom</label>
-                <input type="text" class="form-control" id="firstname"
-                       ng-model="recruiter.user.firstname" ng-model-options="{debounce: 550}">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="firstname">Prénom</label>
+                        <input type="text" class="form-control" id="firstname"
+                               ng-model="recruiter.user.firstname" ng-model-options="{debounce: 550}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lastname">Nom</label>
+                        <input type="text" class="form-control" id="lastname"
+                               ng-model="recruiter.user.lastname" ng-model-options="{debounce: 550}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="company">Entreprise</label>
+                        <select id="company" class="form-control"
+                                ng-model="recruiter.company" ng-options="company.name for company in companies track by company.ido">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="email">Adresse email</label>
+                        <input type="text" class="form-control" id="email"
+                               ng-model="recruiter.user.email" ng-model-options="{debounce: 550}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="email">Téléphone</label>
+                        <input type="text" class="form-control" id="email"
+                               ng-model="recruiter.user.phone" ng-model-options="{debounce: 550}">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="lastname">Nom</label>
-                <input type="text" class="form-control" id="lastname"
-                       ng-model="recruiter.user.lastname" ng-model-options="{debounce: 550}">
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="company">Entreprise</label>
-                <select id="company" class="form-control"
-                        ng-model="recruiter.company" ng-options="company.name for company in companies track by company.ido">
-                </select>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="email">Adresse email</label>
-                <input type="text" class="form-control" id="email"
-                       ng-model="recruiter.user.email" ng-model-options="{debounce: 550}">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="firstname">Options</label>
+                        <div class="checkbox">
+                            <label for="checkbox-parking">
+                                <input type="checkbox" name="checkboxes" id="checkbox-parking"
+                                       ng-model="recruiter.parking_option" ng-true-value="1" ng-false-value="0"> Parking
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label for="checkbox-lunch">
+                                <input type="checkbox" name="checkboxes" id="checkbox-lunch"
+                                        ng-model="recruiter.lunch_option" ng-true-value="1" ng-false-value="0"> Repas
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="firstname">Notifications</label>
+                        <div class="checkbox">
+                            <label for="checkbox-email">
+                                <input type="checkbox" name="checkboxes" id="checkbox-email"
+                                       ng-model="recruiter.user.email_notifications" ng-true-value="1" ng-false-value="0"> Email
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label for="checkbox-sms">
+                                <input type="checkbox" name="checkboxes" id="checkbox-sms"
+                                       ng-model="recruiter.user.sms_notifications" ng-true-value="1" ng-false-value="0"> SMS
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
