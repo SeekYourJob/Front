@@ -57,7 +57,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'beta',
-            apiEndpoint: 'http://api.beta.jobforum.fges.info'
+            apiEndpoint: 'http://beta.jobforum.fges.info/api'
           }
         }
       },
