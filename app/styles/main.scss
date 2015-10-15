@@ -456,12 +456,16 @@ footer {
   tr {
     td {
       vertical-align: middle;
+
+      p {
+        margin-bottom: 0;
+      }
     }
     &.interview-status-free {
       background: $interview-free;
     }
     &.interview-status-unavailable {
-      background: #ff7164;
+      background: #ededed;
     }
     &.interview-status-taken {
       background: $interview-taken;
