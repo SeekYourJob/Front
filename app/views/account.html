@@ -1,7 +1,9 @@
-<p>This is the account.html page!</p>
+<div ng-if="user.profile === 'CVS\\Candidate'"
+     ng-include src="'views/accountCandidate.html'"
+     ng-controller="AccountCandidateCtrl">
+</div>
 
-<pre>
-
-    {{ me | json }}
-
-</pre>
+<div ng-if="user.profile === 'CVS\\Recruiter'"
+     ng-include src="'views/accountRecruiter.html'"
+     ng-controller="AccountRecruiterCtrl">
+</div>

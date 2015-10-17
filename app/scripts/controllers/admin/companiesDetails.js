@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cvsApp').controller('CompaniesDetailsCtrl', ['$scope', '$state', 'Restangular',
+angular.module('cvsApp').controller('AdminCompaniesDetailsCtrl', ['$scope', '$state', 'Restangular',
   function($scope, $state, Restangular) {
 
     $scope.$watch('company.name', function(oldValue, newValue) {
