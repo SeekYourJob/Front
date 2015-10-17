@@ -2,6 +2,6 @@
 
  angular.module('config', [])
 
-.constant('ENV', {name:'development',apiEndpoint:'http://api.cvs.local'})
+.constant('ENV', {name:'development',apiEndpoint:'http://api.cvs.dev'})
 
 ;

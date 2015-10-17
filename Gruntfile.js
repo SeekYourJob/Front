@@ -17,7 +17,8 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
-    ngconstant: 'grunt-ng-constant'
+    ngconstant: 'grunt-ng-constant',
+    karma: 'grunt-karma'
   });
   
   // Configurable paths for the application
@@ -46,7 +47,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
-            apiEndpoint: 'http://api.cvs.local'
+            apiEndpoint: 'http://api.cvs.dev'
           }
         }
       },
@@ -114,7 +115,7 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        hostname: 'cvs.local',
+        hostname: 'cvs.dev',
         livereload: 35729
       },
       livereload: {

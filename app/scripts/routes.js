@@ -84,6 +84,14 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/{id:int}',
       views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'RecruitersDetailsCtrl'}}
     })
+    .state('admin.messaging', {
+      url: '/messaging',
+      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging.html', controller: 'MessagingCtrl'}}
+    })
+    .state('admin.messaging.newEmail', {
+      url: '/new-email',
+      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-newEmail.html', controller: 'MessagingNewEmailCtrl'}}
+    })
 
   ;
 

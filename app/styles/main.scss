@@ -473,3 +473,21 @@ footer {
     }
   }
 }
+
+#messagingHome {
+  h3 {
+    margin-bottom: 0;
+    &+hr {
+      margin-top: 10px;
+    }
+  }
+  #sendingButtons {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 70px;
+
+    .btn:first-of-type {
+      margin-right: 42px;
+    }
+  }
+}
