@@ -32,8 +32,18 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('account', {
       parent: 'session',
-      url: '/account',
-      views: {'@': {controller: 'AccountCtrl', templateUrl: 'views/account.html'}}
+      url: '/my-account',
+      resolve: {
+        user: ['AuthService', function(AuthService) {
+          return AuthService.getUser();
+        }]
+      },
+      views: {'@': {
+        templateUrl: 'views/account.html',
+        controller: ['$scope', 'user', function($scope, user) {
+          $scope.user = user;
+        }]
+      }}
     })
     .state('registerRecruiter', {
       url: '/register-recruiter',
@@ -70,19 +80,19 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('admin.companies', {
       url: '/companies',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/companies.html', controller: 'CompaniesCtrl'}}
+      views: {'admin-content@admin': {templateUrl: 'views/admin/companies.html', controller: 'AdminCompaniesCtrl'}}
     })
     .state('admin.companies.details', {
       url: '/{id:int}',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/companies-details.html', controller: 'CompaniesDetailsCtrl'}}
+      views: {'admin-content@admin': {templateUrl: 'views/admin/companies-details.html', controller: 'AdminCompaniesDetailsCtrl'}}
     })
     .state('admin.recruiters', {
       url: '/recruiters',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters.html', controller: 'RecruitersCtrl'}}
+      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters.html', controller: 'AdminRecruitersCtrl'}}
     })
     .state('admin.recruiters.details', {
       url: '/{id:int}',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'RecruitersDetailsCtrl'}}
+      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'AdminRecruitersDetailsCtrl'}}
     })
 
   ;

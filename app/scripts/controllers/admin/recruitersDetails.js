@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cvsApp').controller('RecruitersDetailsCtrl', ['$scope', '$state', 'Restangular',
+angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$state', 'Restangular',
   function($scope, $state, Restangular) {
 
     $scope.recruiter = {};

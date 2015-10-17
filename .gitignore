@@ -5,3 +5,4 @@ app/.htaccess
 /.sass-cache
 /bower_components
 /.idea
+.DS_Store
