@@ -36,6 +36,8 @@ module.exports = function(config) {
       'bower_components/restangular/dist/restangular.js',
       'bower_components/ui-select/dist/select.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
+      'bower_components/sweetalert/dist/sweetalert.min.js',
+      'bower_components/ngSweetAlert/SweetAlert.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
