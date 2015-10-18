@@ -1,1 +1,76 @@
-<h2>Envoyer un nouvel email</h2>
+<h2><a ui-sref="admin.messaging">Messagerie</a> - Envoyer un email</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Type d'envoi</label>
+        <div class="col-sm-10">
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="sendingType" value="toUsers"> Envoyer à un (ou des) utilisateur(s) particulier(s)
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="sendingType" value="toGroups"> Envoyer à un (ou des) groupe(s)
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="form-group" ng-if="sendingType === 'toUsers'">
+        <label class="col-sm-2 control-label">Destinataires(s)</label>
+        <div class="col-sm-8">
+            <ui-select multiple ng-model="selected.users">
+                <ui-select-match placeholder="Choisir le(s) utilisateur(s)...">{{ $item.identity }} &lt;{{ $item.email }}&gt;</ui-select-match>
+                <ui-select-choices repeat="user.user_ido as user in users | filter: $select.search">
+                    <div ng-bind-html="user.identity | highlight: $select.search"></div>
+                    <small>
+                        {{ user.profile }}
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="form-group" ng-if="sendingType === 'toGroups'">
+        <label class="col-sm-2 control-label">Destinataires(s)</label>
+        <div class="col-sm-8">
+            <ui-select multiple ng-model="selected.groups">
+                <ui-select-match placeholder="Choisir le(s) groupe(s)...">{{ $item.name }}</ui-select-match>
+                <ui-select-choices repeat="group.users as group in groups | filter: $select.search">
+                    <div ng-bind-html="group.name | highlight: $select.search"></div>
+                    <small>
+                        {{ group.users.length }} personne(s)
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Objet</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control"
+                   ng-model="message.object">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Message</label>
+        <div class="col-sm-8">
+            <textarea class="form-control" style="height: 210px;"
+                      ng-model="message.content" ></textarea>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button class="btn btn-success" ng-click="sendEmail();">Envoyer</button>
+        </div>
+    </div>
+</div>
+
+<pre>
+    {{ selected | json }}
+</pre>

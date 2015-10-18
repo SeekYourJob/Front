@@ -2,14 +2,10 @@
 
 <div id="messagingHome" class="row">
 
-    <div class="col-md-12">
-        <p id="sendingButtons">
-            <a ui-sref="admin.messaging.newEmail" class="btn btn-lg btn-success">Envoyer un email</a>
-            <a ui-sref="admin.messaging.newSMS" class="btn btn-lg btn-success">Envoyer un SMS</a>
-        </p>
-    </div>
-
     <div class="col-md-6">
+        <p class="sendingButtonWrapper">
+            <a ui-sref="admin.messaging.newEmail" class="btn btn-lg btn-success"><i class="fa fa-envelope-o fa-fw"></i> Envoyer un email</a>
+        </p>
         <h3>Derniers emails envoyés</h3>
         <hr>
         <p class="lead">
@@ -18,6 +14,9 @@
     </div>
 
     <div class="col-md-6">
+        <p class="sendingButtonWrapper">
+            <a ui-sref="admin.messaging.newSMS" class="btn btn-lg btn-success"><i class="fa fa-mobile fa-fw"></i> Envoyer un SMS</a>
+        </p>
         <h3>Derniers SMS envoyés</h3>
         <hr>
         <p class="lead">

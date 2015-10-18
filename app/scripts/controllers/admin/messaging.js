@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cvsApp').controller('MessagingCtrl',
+angular.module('cvsApp').controller('AdminMessagingCtrl',
   ['$scope',
     function($scope) {
 

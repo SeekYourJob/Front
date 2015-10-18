@@ -20,6 +20,10 @@ html {
 body {
   padding: 0;
   margin-bottom: 300px;
+
+  @media (min-width: $screen-md-max) {
+    min-height: 640px;
+  }
 }
 
 h1 {
@@ -374,10 +378,15 @@ footer {
 }
 
 #admin-menu {
-  @extend .col-md-2;
-  
+  @extend .col-md-12;
+
+  ul {
+    @extend .nav, .nav-pills, .nav-justified;
+  }
+
   @media (min-width: $screen-md-min) {
-    margin-top: 64px;
+    margin-top: 10px;
+    margin-bottom: 21px;
   }
 
   @media print {
@@ -386,12 +395,12 @@ footer {
 }
 
 #admin-content {
-  @extend .col-md-10;
+  @extend .col-md-12;
 
   h2 {
     margin-top: 8px;
     margin-bottom: 25px;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     border-bottom: 1px solid #DCDCDC;
   }
   h3 {
@@ -481,13 +490,9 @@ footer {
       margin-top: 10px;
     }
   }
-  #sendingButtons {
+  .sendingButtonWrapper {
     text-align: center;
     margin-top: 40px;
     margin-bottom: 70px;
-
-    .btn:first-of-type {
-      margin-right: 42px;
-    }
   }
 }

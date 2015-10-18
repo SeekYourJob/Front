@@ -96,11 +96,11 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('admin.messaging', {
       url: '/messaging',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging.html', controller: 'MessagingCtrl'}}
+      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging.html', controller: 'AdminMessagingCtrl'}}
     })
     .state('admin.messaging.newEmail', {
       url: '/new-email',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-newEmail.html', controller: 'MessagingNewEmailCtrl'}}
+      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-newEmail.html', controller: 'AdminMessagingNewEmailCtrl'}}
     })
 
   ;

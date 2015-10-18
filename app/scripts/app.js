@@ -1,7 +1,7 @@
 'use strict';
 
 var cvsApp = angular.module('cvsApp',
-  ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular']
+  ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular', 'ngSanitize', 'ui.select']
 );
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
@@ -29,6 +29,9 @@ cvsApp.config(function(RestangularProvider, ENV) {
   });
 });
 
+cvsApp.config(function(uiSelectConfig) {
+  uiSelectConfig.theme = 'bootstrap';
+});
 
 
 
