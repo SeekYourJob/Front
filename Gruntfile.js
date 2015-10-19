@@ -47,8 +47,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
-            //apiEndpoint: 'http://api.cvs.dev'
-            apiEndpoint: 'http://api.cvs.local'
+            apiEndpoint: 'http://api.cvs.dev'
+            //apiEndpoint: 'http://api.cvs.local'
           }
         }
       },
@@ -116,8 +116,8 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        //hostname: 'cvs.dev',
-        hostname: 'cvs.local',
+        hostname: 'cvs.dev',
+        //hostname: 'cvs.local',
         livereload: 35729
       },
       livereload: {

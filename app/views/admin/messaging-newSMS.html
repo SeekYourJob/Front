@@ -1,4 +1,4 @@
-<h2><a ui-sref="admin.messaging">Messagerie</a> - Envoyer un email</h2>
+<h2><a ui-sref="admin.messaging">Messagerie</a> - Envoyer un SMS</h2>
 
 <div class="form-horizontal">
     <div class="form-group">
@@ -25,7 +25,7 @@
         <label class="col-sm-3 control-label">Destinataires(s)</label>
         <div class="col-sm-7">
             <ui-select multiple ng-model="selected.users">
-                <ui-select-match placeholder="Choisir le(s) utilisateur(s)...">{{ $item.identity }} ({{ $item.email }})</ui-select-match>
+                <ui-select-match placeholder="Choisir le(s) utilisateur(s)...">{{ $item.identity }} ({{ $item.phone_formatted }})</ui-select-match>
                 <ui-select-choices repeat="user.user_ido as user in users | filter: $select.search">
                     <div ng-bind-html="user.identity | highlight: $select.search"></div>
                     <small>
@@ -50,23 +50,12 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label">Objet</label>
-        <div class="col-sm-7">
-            <input type="text" class="form-control"
-                   ng-model="message.object" ng-required="true">
-        </div>
-    </div>
-    <div class="form-group">
         <label class="col-sm-3 control-label">Message</label>
         <div class="col-sm-7">
-            <p style="margin-top: 6px; margin-bottom: 20px;">Bonjour,</p>
             <textarea class="form-control" style="height: 210px;"
-                      ng-model="message.content" ng-required="true">
+                      ng-model="message" ng-required="true">
             </textarea><br>
-            <p>
-                Bien cordialement,<br>
-                L'équipe SeekYourJob de la FGES.
-            </p>
+            <p>– SeekYourJob</p>
         </div>
     </div>
 
@@ -75,7 +64,7 @@
     <div class="form-group">
         <div class="col-sm-16 col-sm-offset-3">
             <button class="btn btn-lg btn-success"
-                    ng-click="sendEmail();" ng-disabled="!canBeSent()">
+                    ng-click="sendSMS();" ng-disabled="!canBeSent()">
                 <i class="fa fa-paper-plane-o fa-fw"></i>&nbsp; Envoyer
             </button>
         </div>
