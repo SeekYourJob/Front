@@ -6,6 +6,7 @@ angular.module('cvsApp').controller('AdminMessagingNewSMSCtrl',
 
       $scope.users = [];
       $scope.groups = [];
+      $scope.remainingSMSCredits = {};
 
       function initForm() {
         $scope.sendingType = 'toUsers';
@@ -14,7 +15,6 @@ angular.module('cvsApp').controller('AdminMessagingNewSMSCtrl',
           groups: []
         };
         $scope.message = '';
-        $scope.remainingSMSCredits = {};
       }
       initForm();
 
@@ -44,10 +44,12 @@ angular.module('cvsApp').controller('AdminMessagingNewSMSCtrl',
         $scope.groups = usersGroups.plain();
       });
 
+      // Getting remaining SMS credits
       Restangular.one('messaging/remaining-sms-credits').get().then(function(remainingSMSCredits) {
         $scope.remainingSMSCredits = remainingSMSCredits.plain();
       });
 
+      // Determines if Text Message can be sent
       $scope.canBeSent = function() {
         return $scope.message !== '' &&
           ( $scope.selected.users.length || $scope.selected.groups.length );
