@@ -493,6 +493,12 @@ footer {
   tr > td {
     vertical-align: middle;
     height: 36px;
+    p {
+      margin-bottom: 0;
+    }
+    &.interview {
+      text-align: center;
+    }
 
     &.interview-status-free {
       background: $interview-free;
@@ -502,6 +508,9 @@ footer {
     }
     &.interview-status-taken {
       background: $interview-taken;
+    }
+    
+    i {
       color: white;
     }
 
