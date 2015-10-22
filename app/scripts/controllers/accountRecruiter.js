@@ -6,6 +6,11 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
 
       $scope.user = $scope.$parent.user;
 
+      $scope.setSelectedAccountInterview = function(interview) {
+        $scope.selectedAccountInterview = interview;
+      };
+
     }
+
   ]
 );

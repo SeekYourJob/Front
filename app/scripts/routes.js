@@ -35,7 +35,7 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/my-account',
       resolve: {
         user: ['AuthService', function(AuthService) {
-          return AuthService.getUser();
+          return AuthService.getUser(true);
         }]
       },
       views: {'@': {

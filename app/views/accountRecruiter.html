@@ -1,5 +1,40 @@
 <h2>Recruiter Account</h2>
 
+<div id="account-display-interviews">
+    <h3>Mon planning</h3>
+    <hr/>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th ng-repeat="interwiew in user.recruiter.interviews">{{interwiew.slot.begins_at}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td ng-repeat="interview in user.recruiter.interviews"
+                        class="interview interview-status-{{interview.status}}">
+                  <span ng-if="interview.status === 'taken'"
+                        ng-mouseenter="setSelectedAccountInterview(interview)"
+                        popover-template="popover.templateUrl" popover-title="Interview" popover-trigger="mouseenter">
+                            <i class="fa fa-check-circle"></i>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <pre>
    {{ user | json }}
 </pre>
+
+<script type="text/ng-template" id="popover.html">
+    <p>
+        <strong>{{ selectedAccountInterview.candidate.firstname }} {{ selectedAccountInterview.candidate.lastname }}</strong> ({{
+        selectedAccountInterview.candidate.grade }})
+    </p>
+</script>

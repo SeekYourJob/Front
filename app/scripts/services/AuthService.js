@@ -42,9 +42,13 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
       return deferred.promise;
     };
 
-    self.getUser = function() {
+    self.getUser = function($showDetails) {
+      var url = ENV.apiEndpoint + '/me/';
+      if ($showDetails == true) {
+        url += '?showDetails=true'
+      }
       var deferred = $q.defer();
-      $http.get(ENV.apiEndpoint + '/me')
+      $http.get(url)
         .success(function(data) {
           $localStorage.user = data.user;
           $rootScope.user = data.user;
