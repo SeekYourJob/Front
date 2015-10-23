@@ -6,5 +6,4 @@ app/.htaccess
 /bower_components
 /.idea
 .DS_Store
-Gruntfile.js
 app/scripts/config.js
