@@ -1,7 +1,7 @@
 'use strict';
 
 var cvsApp = angular.module('cvsApp',
-  ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular', 'ngSanitize', 'ui.select', 'oitozero.ngSweetAlert']
+  ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular', 'ngSanitize', 'ui.select', 'oitozero.ngSweetAlert', 'pusher-angular']
 );
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
@@ -57,4 +57,6 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', function($rootScope, $state
       $state.go('home');
     }
   });
+
+  window.client = new Pusher('9b5860d837aa56e753e6');
 }]);

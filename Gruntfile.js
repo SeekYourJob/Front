@@ -27,8 +27,12 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  // For env variables
+  var env = grunt.file.readJSON('env.json');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
+    env: env,
 
     // Project settings
     yeoman: appConfig,
@@ -37,7 +41,7 @@ module.exports = function (grunt) {
       options: {
         space: '  ',
         wrap: '"use strict";\n\n {%= __ngModule %}',
-        name: 'config',
+        name: 'config'
       },
       // Environment targets
       development: {
@@ -47,8 +51,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
-            apiEndpoint: 'http://api.cvs.dev'
-            //apiEndpoint: 'http://api.cvs.local'
+            apiEndpoint: env.constants.dev.apiEndpoint
           }
         }
       },
@@ -116,8 +119,7 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        hostname: 'cvs.dev',
-        //hostname: 'cvs.local',
+        hostname: env.constants.dev.hostname,
         livereload: 35729
       },
       livereload: {

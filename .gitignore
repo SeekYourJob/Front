@@ -6,3 +6,4 @@ app/.htaccess
 /bower_components
 /.idea
 .DS_Store
+env.json
