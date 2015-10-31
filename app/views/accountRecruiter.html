@@ -28,6 +28,23 @@
     </div>
 </div>
 
+<h2>Mes Documents:</h2>
+<!-- Documents -->
+<form name="documentsPartForm" class="form-block" novalidate>
+    <h4>Documents</h4>
+    <p>Afin de correspondre au mieux aux profils des candidats, n'hésitez pas à envoyer des exemples d'annonces ici (formats .doc, .docx et .pdf acceptés).</p>
+    <div class="row">
+        <div ngf-drop ng-model="form.documents" class="dropbox"
+             ngf-select="true" ngf-multiple="true" ngf-allow-dir="false">
+            <div class="help">
+                <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
+                <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+            </div>
+        </div>
+        <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+    </div>
+</form>
+
 <pre>
    {{ user | json }}
 </pre>

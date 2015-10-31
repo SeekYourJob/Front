@@ -301,6 +301,22 @@ footer {
   }
 }
 
+.dropbox {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: dashed 5px $customLightBlue;
+  min-height: 130px;
+  cursor: pointer;
+  .help {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 20px;
+  }
+}
+
 #register-recruiter {
   @extend .row;
 
@@ -334,22 +350,6 @@ footer {
       &:last-child {
         border-bottom: none;
       }
-    }
-  }
-
-  .dropbox {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    border: dashed 5px $customLightBlue;
-    min-height: 130px;
-    cursor: pointer;
-    .help {
-      text-align: center;
-      padding-top: 30px;
-      font-size: 20px;
     }
   }
 
