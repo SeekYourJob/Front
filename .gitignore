@@ -7,3 +7,4 @@ app/.htaccess
 /.idea
 .DS_Store
 env.json
+app/scripts/config.js

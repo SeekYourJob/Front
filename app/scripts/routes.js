@@ -83,7 +83,7 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       views: {'admin-content@admin': {templateUrl: 'views/admin/companies.html', controller: 'AdminCompaniesCtrl'}}
     })
     .state('admin.companies.details', {
-      url: '/{id:int}',
+      url: '/{id}',
       views: {'admin-content@admin': {templateUrl: 'views/admin/companies-details.html', controller: 'AdminCompaniesDetailsCtrl'}}
     })
     .state('admin.recruiters', {
@@ -91,7 +91,7 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters.html', controller: 'AdminRecruitersCtrl'}}
     })
     .state('admin.recruiters.details', {
-      url: '/{id:int}',
+      url: '/{id}',
       views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'AdminRecruitersDetailsCtrl'}}
     })
     .state('admin.messaging', {
