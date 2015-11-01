@@ -34,11 +34,12 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
             var file = files[i];
             Upload.upload({
               url: ENV.apiEndpoint + '/documents',
-              data:{file: file,
-                  'user': $scope.user.ido},
+              file: file,
+              data:{
+                'user':$scope.user.ido},
               sendFieldsAs: 'form',
               skipAuthorization: true
-            }).success(function(document) {
+            }).success(function() {
               $scope.form.documentIsBeingSent = false;
             }).error(function(data, status, headers, config) {
               console.log('ERROR', data, status, headers, config);

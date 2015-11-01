@@ -28,20 +28,43 @@
     </div>
 </div>
 
-<h2>Mes Documents:</h2>
+<h3>Mes Documents:</h3>
+<hr/>
 <!-- Documents -->
 <form name="documentsPartForm" class="form-block" novalidate>
-    <h4>Documents</h4>
-    <p>Afin de correspondre au mieux aux profils des candidats, n'hésitez pas à envoyer des exemples d'annonces ici (formats .doc, .docx et .pdf acceptés).</p>
+    <p>Afin de correspondre au mieux aux profils des candidats, n'hÃ©sitez pas Ã  envoyer des exemples d'annonces ici (formats .doc, .docx et .pdf acceptÃ©s).</p>
     <div class="row">
+        <div class="col-md-6">
         <div ngf-drop ng-model="form.documents" class="dropbox"
              ngf-select="true" ngf-multiple="true" ngf-allow-dir="false">
             <div class="help">
-                <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
+                <span ng-if="!form.documentIsBeingSent">Glissez-dÃ©posez vos documents ou<br> cliquez ici pour les sÃ©lectionner.</span>
                 <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
             </div>
         </div>
-        <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+        <div ngf-no-file-drop>Cette fonctionnalitÃ© n'est pas disponible sur votre navigateur</div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Documents</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>fichier.pdf</td>
+                        <td class="pull-right">
+                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span> Telecharger</button>
+                            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </form>
 

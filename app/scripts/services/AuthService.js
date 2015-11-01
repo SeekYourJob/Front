@@ -44,8 +44,8 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
 
     self.getUser = function($showDetails) {
       var url = ENV.apiEndpoint + '/me/';
-      if ($showDetails == true) {
-        url += '?showDetails=true'
+      if ($showDetails === true) {
+        url += '?showDetails=true';
       }
       var deferred = $q.defer();
       $http.get(url)
