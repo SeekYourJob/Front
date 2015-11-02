@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 angular.module('cvsApp').controller('AccountCandidateCtrl',
@@ -18,4 +19,4 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
 
     }
   ]
-);
+);*/

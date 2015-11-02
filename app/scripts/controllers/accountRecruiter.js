@@ -1,21 +1,17 @@
 'use strict';
 
 angular.module('cvsApp').controller('AccountRecruiterCtrl',
-  ['$scope','Upload','ENV',
-    function($scope,Upload,ENV) {
+  ['$scope','Upload','ENV','Restangular',
+    function($scope,Upload,ENV, Restangular) {
 
       $scope.user = $scope.$parent.user;
       $scope.accountPopover = {templateUrl: 'popover.html'};
 
+      $scope.documents = [];
+
       $scope.form = {
-        others: '',
-        emailRecruiterToAdd: '',
-        dataRecruiterToAdd: {},
         documents: false,
-        emailAlreadyExists: false,
-        documentIsBeingSent: false,
-        isBeingSubmitted: false,
-        isSubmitted: false
+        documentIsBeingSent: false
       };
 
       $scope.setSelectedAccountInterview = function(interview) {
@@ -39,7 +35,11 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
                 'user':$scope.user.ido},
               sendFieldsAs: 'form',
               skipAuthorization: true
-            }).success(function() {
+            }).success(function(document) {
+              console.log(document);
+              $scope.documents.push(document);
+
+              console.log($scope.documents);
               $scope.form.documentIsBeingSent = false;
             }).error(function(data, status, headers, config) {
               console.log('ERROR', data, status, headers, config);
@@ -47,6 +47,17 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
             });
           }
         }
+      };
+
+      // Documents
+      Restangular.one('documents/user',$scope.user.ido).get().then(function(documents) {
+        $scope.documents = documents.plain();
+      });
+
+      $scope.deleteDocument = function(document) {
+        Restangular.one("documents", document.ido).remove().then(function() {
+          $scope.documents.splice($scope.documents.indexOf(document), 1);
+          });
       };
 
     }

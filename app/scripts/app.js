@@ -58,5 +58,5 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', function($rootScope, $state
     }
   });
 
-  window.client = new Pusher('9b5860d837aa56e753e6');
+ // window.client = new Pusher('9b5860d837aa56e753e6');
 }]);

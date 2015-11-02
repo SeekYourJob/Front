@@ -54,11 +54,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>fichier.pdf</td>
+                    <tr ng-repeat="document in documents">
+                        <td>{{ document.name | limitTo: 30 }}{{document.name.length > 30 ? '...' : ''}} </td>
                         <td class="pull-right">
                             <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span> Telecharger</button>
-                            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                            <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
                         </td>
                     </tr>
                     </tbody>
