@@ -40,6 +40,9 @@ module.exports = function(config) {
       'bower_components/ngSweetAlert/SweetAlert.js',
       'bower_components/pusher-angular/lib/pusher-angular.js',
       'bower_components/pusher/dist/pusher.js',
+      'bower_components/blob-polyfill/Blob.js',
+      'bower_components/file-saver.js/FileSaver.js',
+      'bower_components/angular-file-saver/dist/angular-file-saver.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cvsApp').controller('AccountRecruiterCtrl',
-  ['$scope','Upload','ENV','Restangular',
-    function($scope,Upload,ENV, Restangular) {
+  ['$scope','$http','Upload','ENV','Restangular','$localStorage',
+    function($scope,$http,Upload,ENV, Restangular,$localStorage) {
 
       $scope.user = $scope.$parent.user;
       $scope.accountPopover = {templateUrl: 'popover.html'};
@@ -36,10 +36,7 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
               sendFieldsAs: 'form',
               skipAuthorization: true
             }).success(function(document) {
-              console.log(document);
               $scope.documents.push(document);
-
-              console.log($scope.documents);
               $scope.form.documentIsBeingSent = false;
             }).error(function(data, status, headers, config) {
               console.log('ERROR', data, status, headers, config);
@@ -58,6 +55,13 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
         Restangular.one("documents", document.ido).remove().then(function() {
           $scope.documents.splice($scope.documents.indexOf(document), 1);
           });
+      };
+
+      $scope.downloadDocument = function(document) {
+/*        Restangular.one("documents", document.ido).get().then(function(data) {
+          var blob = new Blob([ data ], { type : document.header });
+        });*/
+        window.open(ENV.apiEndpoint+'/documents/'+document.ido+'?token='+$localStorage.token);
       };
 
     }
