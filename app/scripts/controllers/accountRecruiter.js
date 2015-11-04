@@ -58,9 +58,6 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
       };
 
       $scope.downloadDocument = function(document) {
-/*        Restangular.one("documents", document.ido).get().then(function(data) {
-          var blob = new Blob([ data ], { type : document.header });
-        });*/
         window.open(ENV.apiEndpoint+'/documents/'+document.ido+'?token='+$localStorage.token);
       };
 
