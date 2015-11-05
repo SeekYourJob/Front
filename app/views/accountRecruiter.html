@@ -28,6 +28,46 @@
     </div>
 </div>
 
+<h3>Mes Documents:</h3>
+<hr/>
+<!-- Documents -->
+<form name="documentsPartForm" class="form-block" novalidate>
+    <p>Afin de correspondre au mieux aux profils des candidats, n'hésitez pas à envoyer des exemples d'annonces ici (formats .doc, .docx et .pdf acceptés).</p>
+    <div class="row">
+        <div class="col-md-6">
+        <div ngf-drop ng-model="form.documents" class="dropbox"
+             ngf-select="true" ngf-multiple="true" ngf-allow-dir="false">
+            <div class="help">
+                <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
+                <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+            </div>
+        </div>
+        <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Documents</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="document in documents">
+                        <td>{{ document.name | limitTo: 30 }}{{document.name.length > 30 ? '...' : ''}} </td>
+                        <td class="pull-right">
+                            <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><span class="glyphicon glyphicon-edit"></span> Telecharger</button>
+                            <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
 <pre>
    {{ user | json }}
 </pre>
