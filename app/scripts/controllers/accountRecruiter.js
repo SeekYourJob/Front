@@ -54,11 +54,13 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
       $scope.deleteDocument = function(document) {
         Restangular.one("documents", document.ido).remove().then(function() {
           $scope.documents.splice($scope.documents.indexOf(document), 1);
-          });
+        });
       };
 
       $scope.downloadDocument = function(document) {
-        window.open(ENV.apiEndpoint+'/documents/'+document.ido+'?token='+$localStorage.token);
+        Restangular.one("documents/request-token", document.ido).get().then(function(download) {
+          window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+        });
       };
 
     }
