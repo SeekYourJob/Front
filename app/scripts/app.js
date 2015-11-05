@@ -49,7 +49,6 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', function($rootScope, $state
   });
 
   $rootScope.$on('$stateChangeError', function (_0, _1, _2, _3, _4, error) {
-    console.log(error);
     if (error.notAuthenticated) {
       $state.go('login');
     }
@@ -58,5 +57,6 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', function($rootScope, $state
     }
   });
 
- // window.client = new Pusher('9b5860d837aa56e753e6');
+  //window.client = new Pusher('9b5860d837aa56e753e6');
+
 }]);

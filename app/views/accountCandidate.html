@@ -1,5 +1,62 @@
-<h2>Candidate Account</h2>
+<h2 class="text-center">
+    <img src="http://placehold.it/84x84" class="img-circle"> &nbsp;Compte de {{ user.firstname }} {{ user.lastname }}
+</h2>
 
-<pre>
-   {{ user | json }}
-</pre>
+<div id="candidateInterviews">
+
+    <div class="col-md-8">
+
+        <h3>Planifier mes entretiens</h3><hr>
+
+        <div class="row">
+            <div class="company" ng-repeat="company in companies">
+                <div class="panel panel-default">
+                    <div ng-click="company.show = !company.show"
+                         class="panel-heading"
+                    >
+                        <h3 class="panel-title pull-left">{{ company.company.name }}</h3>
+                <span class="pull-right">
+                    <span class="label" ng-class="{'label-success': company.summary.remaining_percentage > 50, 'label-warning': company.summary.remaining_percentage > 0 && company.summary.remaining_percentage <= 50, 'label-danger': company.summary.remaining_percentage == 0}">
+                        DISPONIBILITÉ
+                    </span>
+                </span>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div ng-show="company.show"
+                         class="panel-body"
+                    >
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td ng-repeat="interview in company.interviews"
+                                    ng-click="actOnInterview(company, interview)"
+                                    ng-class="{
+                            available: interview.free_slots > 0 && !interview.already_registered && !interview.interview,
+                            unavailable: interview.free_slots == 0,
+                            takenByMe: interview.interview,
+                            alreadyRegistered: interview.already_registered,
+                            waiting: interview.isWaiting}"
+                                >
+                                    <span ng-if="interview.already_registered">{{ interview.already_registered }}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <h3>Mes informations</h3><hr>
+    </div>
+
+
+</div>
+

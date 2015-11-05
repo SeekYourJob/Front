@@ -530,3 +530,116 @@ footer {
     margin-bottom: 70px;
   }
 }
+
+#candidateInterviews {
+  @extend .row;
+
+  .company {
+    @extend .col-md-12;
+    margin-bottom: 6px;
+
+    .panel {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .panel-heading {
+      cursor: pointer;
+
+      .panel-title {
+        font-size: 18px;
+      }
+
+      .pull-right {
+        margin-top: -3px;
+      }
+    }
+
+    .panel-body {
+      padding: 0;
+
+      table {
+        margin-bottom: 0;
+
+        tbody > tr > td {
+          width: 12.5%;
+          height: 50px;
+          font-family: FontAwesome;
+          font-size: 22px;
+          text-align: center;
+          vertical-align: middle;
+
+
+          &.available {
+            background: #A5D6A7;
+
+            &:hover {
+              cursor: pointer;
+
+              &:before {
+                content: "\f00c";
+                color: #43A047;
+              }
+            }
+          }
+
+          &.unavailable {
+            background: #FFAB91;
+          }
+
+          &.alreadyRegistered {
+            background: repeating-linear-gradient(
+              155deg,
+              #f8f8f8,
+              #f8f8f8 10px,
+              #e2e2e2 10px,
+              #e2e2e2 20px
+            );
+            font-size: 9px;
+          }
+
+          &.takenByMe {
+            background: #00BCD4;
+
+            &:hover {
+              cursor: pointer;
+
+              &:before {
+                content: "\f00d";
+                color: #B2EBF2;
+              }
+            }
+          }
+
+          &.waiting {
+            background: #EEEEEE !important;
+
+            &:hover {
+              content: "\f017";
+              cursor: default !important;
+              color: black !important;
+
+              &:before {
+                content: "\f017";
+                cursor: default !important;
+                color: black !important;
+              }
+            }
+
+            &:before {
+              content: "\f017";
+              cursor: default !important;
+              color: black !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+}
