@@ -11,6 +11,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       $scope.slots = [];
       $scope.companies = [];
       $scope.isWaiting = false;
+      $scope.displayCompanies = [];
       $scope.pusherChannelMembers = pusherChannel.members;
 
       function getInterviews() {
