@@ -1,5 +1,5 @@
 <h2 class="text-center">
-    <img src="http://placehold.it/84x84" class="img-circle"> &nbsp;Compte de {{ user.firstname }} {{ user.lastname }}
+    <img src="https://www.gravatar.com/avatar/{{ user.email_md5 }}.jpg?s=168&d=mm" class="img-circle" width="84px" height="84px"> &nbsp;Compte de {{ user.firstname }} {{ user.lastname }}
 </h2>
 
 <div id="candidateInterviews">
@@ -7,6 +7,18 @@
     <div class="col-md-8">
 
         <h3>Planifier mes entretiens</h3><hr>
+
+        <div class="showAllCompaniesWrapper">
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-8">
+                    <div class="checkbox">
+                        <label for="showAllCompanies">
+                            <input type="checkbox" id="showAllCompanies" ng-model="showAllCompanies"> Déplier toutes les entreprises
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="company" ng-repeat="company in companies">
@@ -22,7 +34,7 @@
                 </span>
                         <div class="clearfix"></div>
                     </div>
-                    <div ng-show="company.show"
+                    <div ng-show="company.show || showAllCompanies"
                          class="panel-body"
                     >
                         <table class="table">

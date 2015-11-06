@@ -534,6 +534,19 @@ footer {
 #candidateInterviews {
   @extend .row;
 
+  .showAllCompaniesWrapper {
+    @extend .row, .form-horizontal;
+
+    margin-bottom: 4px;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   .company {
     @extend .col-md-12;
     margin-bottom: 6px;
@@ -549,13 +562,16 @@ footer {
 
     .panel-heading {
       cursor: pointer;
+      padding-top: 15px;
+      padding-bottom: 15px;
 
       .panel-title {
-        font-size: 18px;
+        font-size: 21px;
       }
 
       .pull-right {
         margin-top: -3px;
+        font-size: 17px;
       }
     }
 
@@ -599,7 +615,7 @@ footer {
               #e2e2e2 10px,
               #e2e2e2 20px
             );
-            font-size: 9px;
+            font-size: 10px;
           }
 
           &.takenByMe {
@@ -640,6 +656,4 @@ footer {
       }
     }
   }
-
-
 }
