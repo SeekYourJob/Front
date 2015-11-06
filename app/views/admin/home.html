@@ -1,31 +1,42 @@
-<h2>Administration</h2>
-
-<div class="admin-display-interviews" ng-repeat="company in interviewsByCompanies">
-    <h3><a ui-sref="admin.companies.details({id: company.company.ido})">{{ company.company.name }}</a></h3>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class="recruiter-name"></th>
-                    <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="recruiter in company.recruiters">
-                    <td><a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname }} {{ recruiter.lastname }}</a></td>
-                    <td ng-repeat="interview in recruiter.interviews" class="interview interview-status-{{interview.status}}">
-                        <span ng-if="interview.status === 'taken'"
-                              ng-mouseenter="setSelectedInterview(interview)"
-                              popover-template="popover.templateUrl" popover-title="Interview" popover-trigger="mouseenter">
-                            <i class="fa fa-check-circle"></i>
-                        </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-3 pull-right text-right">
+            <div class="checkbox">
+                <label for="hideCompanyNames">
+                    <input type="checkbox" name="hideCompanyNames" id="hideCompanyNames" ng-model="hideCompanyNames" checked="checked">
+                    Cacher les entreprises
+                </label>
+            </div>
         </div>
     </div>
+</div>
+
+
+<div class="admin-display-interviews">
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
+        </tr>
+        </thead>
+        <tbody ng-repeat-start="company in interviewsByCompanies">
+        <tr ng-show="!hideCompanyNames">
+            <th colspan="{{ 1 + slots.length}}" class="company-name">{{ company.company.name }}</th>
+        </tr>
+        <tr ng-repeat="recruiter in company.recruiters">
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname }} {{ recruiter.lastname }}</a></td>
+            <td ng-repeat="interview in recruiter.interviews" class="interview interview-status-{{interview.status}}">
+                <span ng-if="interview.status === 'taken'"
+                      ng-mouseenter="setSelectedInterview(interview)"
+                      popover-template="popover.templateUrl" popover-title="Interview" popover-trigger="mouseenter">
+                    <i class="fa fa-check-circle"></i>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot ng-repeat-end></tfoot>
+    </table>
 </div>
 
 <script type="text/ng-template" id="popover.html">

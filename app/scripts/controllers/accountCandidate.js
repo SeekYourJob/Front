@@ -1,18 +1,25 @@
 'use strict';
 
 angular.module('cvsApp').controller('AccountCandidateCtrl',
-  ['$scope', 'Restangular',
-    function($scope, Restangular) {
+  ['$scope', 'Restangular', '$pusher', '$rootScope',
+    function($scope, Restangular, $pusher, $rootScope) {
+
+      var pusher = $pusher($rootScope.pusherClient);
+      var pusherChannel = pusher.subscribe('presence-interviews');
 
       $scope.user = $scope.$parent.user;
       $scope.slots = [];
       $scope.companies = [];
       $scope.isWaiting = false;
+      $scope.pusherChannelMembers = pusherChannel.members;
 
-      Restangular.one("candidates/" + $scope.user.ido + "/interviews").get().then(function(response) {
-        $scope.slots = response.slots;
-        $scope.companies = response.companies;
-      });
+      function getInterviews() {
+        Restangular.one("interviews/candidate/" + $scope.user.ido).get().then(function(response) {
+          $scope.slots = response.slots;
+          $scope.companies = response.companies;
+        });
+      }
+      getInterviews();
 
       $scope.actOnInterview = function(company, interview) {
         if ($scope.isWaiting) {
@@ -34,24 +41,33 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
           company_ido: company.company.ido,
           slot_id: interview.slot_id
         }).then(function(response) {
-          console.log(response);
-          console.log(company);
           $scope.isWaiting = false;
-          interview.isWaiting = false;
+          getInterviews();
+        }, function(err) {
+          $scope.isWaiting = false;
+          getInterviews();
         });
       };
 
       $scope.cancelInterview = function(interview) {
         console.log(interview);
+        $scope.isWaiting = true;
+        interview.isWaiting = true;
+
+        Restangular.one("interviews/" + interview.interview + "/free").customPOST({}).then(function(response) {
+          $scope.isWaiting = false;
+          getInterviews();
+        }, function(err) {
+          $scope.isWaiting = false;
+          getInterviews();
+        });
       };
 
-      //var pusher = $pusher(client);
-      //var my_channel = pusher.subscribe('test-channel');
-      //my_channel.bind('updated',
-      //  function(data) {
-      //    console.log('updated', data);
-      //  }
-      //);
+      pusherChannel.bind('interviews-updated',
+        function(data) {
+          getInterviews();
+        }
+      );
 
     }
   ]

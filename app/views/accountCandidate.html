@@ -1,12 +1,13 @@
 <h2 class="text-center">
-    <img src="https://www.gravatar.com/avatar/{{ user.email_md5 }}.jpg?s=168&d=mm" class="img-circle" width="84px" height="84px"> &nbsp;Compte de {{ user.firstname }} {{ user.lastname }}
+    <img src="https://www.gravatar.com/avatar/{{ user.email_md5 }}.jpg?s=168&d=mm" class="img-circle" width="84px" height="84px"> &nbsp;&nbsp;Compte de {{ user.firstname }} {{ user.lastname }}
 </h2>
 
 <div id="candidateInterviews">
 
     <div class="col-md-8">
-
         <h3>Planifier mes entretiens</h3><hr>
+
+        {{ pusherChannelMembers.count }}
 
         <div class="showAllCompaniesWrapper">
             <div class="form-group">
@@ -34,9 +35,7 @@
                 </span>
                         <div class="clearfix"></div>
                     </div>
-                    <div ng-show="company.show || showAllCompanies"
-                         class="panel-body"
-                    >
+                    <div class="panel-body">
                         <table class="table">
                             <thead>
                             <tr>

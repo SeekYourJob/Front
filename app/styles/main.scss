@@ -415,27 +415,14 @@ footer {
 }
 
 .admin-display-interviews {
-  h3 {
-    margin-bottom: 12px !important;
-    margin-left: 16px !important;
-  }
-  .panel-body {
-    padding-top: 4px;
-  }
-  .popover {
-    h3 {
-      margin: 0 !important;
-    }
-    p {
-      margin-bottom: 0;
-    }
-  }
   table {
     margin-bottom: 0;
 
     tr > th {
       border-bottom: 0;
-
+      &.company-name {
+        background: #EAEAEA;
+      }
       &.recruiter-name {
         width: 20%;
       }
