@@ -38,9 +38,11 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
         $scope.isWaiting = true;
         interview.isWaiting = true;
 
+        console.log(interview);
+
         Restangular.one("interviews/register").customPOST({
           company_ido: company.company.ido,
-          slot_id: interview.slot_id
+          slot_ido: interview.slot_ido
         }).then(function() {
           $scope.isWaiting = false;
           getInterviews();

@@ -1,61 +1,94 @@
 'use strict';
 
-angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$state', 'Restangular',
-  function($scope, $state, Restangular) {
+angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$state', 'Restangular', '$modal', function($scope, $state, Restangular, $modal) {
 
-    $scope.recruiter = {};
-    $scope.companies = [];
-    $scope.recruiterInterviews = {};
+  var selectStudentForInterviewModal = false;
 
-    function refreshInterviews() {
-      Restangular.one('interviews/recruiter', $scope.recruiter.ido).get().then(function(recruiterInterviews) {
-        $scope.recruiterInterviews = recruiterInterviews.plain();
-      });
-      console.log('Interviews refreshed');
-    }
+  $scope.recruiter = {};
+  $scope.companies = [];
+  $scope.recruiterInterviews = {};
 
-    // Recruiter details
-    Restangular.one("recruiters", $state.params.id).get().then(function(recruiter) {
-      $scope.recruiter = recruiter;
+  $scope.slots = [];
+  $scope.selected = {};
+  $scope.availableCandidates = [];
 
-      // Interviews
-      refreshInterviews();
+  function refreshInterviews() {
+    Restangular.one('interviews/recruiter', $scope.recruiter.ido).get().then(function(recruiterInterviews) {
+      $scope.recruiterInterviews = recruiterInterviews.plain();
     });
+  }
 
-    // Companies
-    Restangular.all('companies').getList().then(function(companies) {
-      $scope.companies = companies;
-    });
+  // Recruiter details
+  Restangular.one("recruiters", $state.params.id).get().then(function(recruiter) {
+    $scope.recruiter = recruiter;
 
-    // Saving updated recruiter
-    $scope.updateRecruiter = function() {
-      $scope.recruiter.put();
-    };
+    // Interviews
+    refreshInterviews();
+  });
 
-    $scope.freeInterview = function(interview) {
-      Restangular.one("interviews", interview.ido).customPOST(undefined, 'free')
-        .then(function() {
-          refreshInterviews();
-        });
-    };
+  // Companies
+  Restangular.all('companies').getList().then(function(companies) {
+    $scope.companies = companies;
+  });
 
-    $scope.deleteInterview = function(interview) {
-      Restangular.one('interviews', interview.ido).remove().then(function() {
+  // Saving updated recruiter
+  $scope.updateRecruiter = function() {
+    $scope.recruiter.put();
+  };
+
+  // Cancel interview
+  $scope.freeInterview = function(interview) {
+    Restangular.one("interviews", interview.ido).customPOST(undefined, 'free')
+      .then(function() {
         refreshInterviews();
       });
-    };
+  };
 
-    $scope.createInterview = function(interview) {
-      Restangular.all('interviews').customPOST({slot: interview.slot.ido, recruiter: $scope.recruiter.ido})
-        .then(function() {
-          refreshInterviews();
+  // Remove interview availability
+  $scope.deleteInterview = function(interview) {
+    Restangular.one('interviews', interview.ido).remove().then(function() {
+      refreshInterviews();
+    });
+  };
+
+  // Create interview availability
+  $scope.createInterview = function(interview) {
+    Restangular.all('interviews').customPOST({slot: interview.slot.ido, recruiter: $scope.recruiter.ido})
+      .then(function() {
+        refreshInterviews();
+      });
+  };
+
+  // Book interview
+  $scope.bookInterview = function(interview) {
+    $scope.selected.slot = interview.slot;
+
+    Restangular.one('interviews/candidates-available-for-slot', interview.slot.ido).get()
+      .then(function(availableCandidates) {
+        console.log(availableCandidates.plain());
+        $scope.availableCandidates = availableCandidates.plain().candidates;
+        $scope.slots = availableCandidates.plain().slots;
+
+        selectStudentForInterviewModal = $modal.open({
+          animation: true,
+          templateUrl: 'selectStudentForInterviewModal.html',
+          scope: $scope
         });
-    };
+      });
+  };
 
-    $scope.bookInterview = function(interview) {
-      console.log(interview);
-      //TODO
-    };
+  $scope.doBookInterview = function() {
+    Restangular.one("interviews/register").customPOST({
+      slot_ido: $scope.selected.slot.ido,
+      company_ido: $scope.recruiter.company.ido,
+      recruiter_ido: $scope.recruiter.ido,
+      candidate_ido: $scope.selected.availableCandidate.ido
+    }).then(function(response) {
+      refreshInterviews();
+      selectStudentForInterviewModal.close();
+    }, function(err) {
+      alert(err); //TODO
+    });
+  };
 
-  }
-]);
+}]);

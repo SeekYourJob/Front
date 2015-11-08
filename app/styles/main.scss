@@ -644,3 +644,26 @@ footer {
     }
   }
 }
+
+#selectStudentForInterviewModal {
+
+
+  table {
+    margin-top: 21px;
+  }
+  table > tbody > tr > td {
+    font-size: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 12.5%;
+
+    &.selectedSlot {
+      background: #A5D6A7;
+    }
+
+    .free {
+      font-style: italic;
+      font-weight: bold;
+    }
+  }
+}

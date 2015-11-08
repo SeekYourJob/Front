@@ -1,74 +1,77 @@
 <h2><strong>{{ recruiter.user.firstname }} {{ recruiter.user.lastname }}</strong></h2>
 
 <div class="row">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p>
-                    Entreprise :<br><strong>{{ recruiter.company.name }}</strong>
-                </p>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="admin-display-interviews-for-recruiter" class="table">
+                    <thead>
+                    <tr>
+                        <th style="width: 20%;">Créneau</th>
+                        <th style="width: 50%;">Candidat</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="interview in recruiterInterviews.interviews" class="interview interview-status-{{interview.status}}">
+                        <td>
+                            {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
+                        </td>
+                        <td>
+                            <span ng-if="interview.status === 'taken'">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} – {{ interview.candidate.grade }}</span>
+                            <p ng-if="interview.status === 'free'" class="text-center"><button type="button" class="btn btn-sm btn-primary" ng-click="bookInterview(interview)"><i class="fa fa-sign-in fa-fw"></i> Inscrire un étudiant</button></p>
+                        </td>
+                        <td class="actions">
+                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'taken'" ng-click="freeInterview(interview)"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>
+                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'free'" ng-click="deleteInterview(interview)"><i class="fa fa-times fa-fw"></i> Marquer comme indisponible</button>
+                            <button type="button" class="btn btn-sm btn-success" ng-if="interview.status === 'unavailable'" ng-click="createInterview(interview)"><i class="fa fa-check-square-o fa-fw"></i> Marquer comme disponible</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p>
-                    Téléphone :<br>
-                    <strong>{{ recruiter.user.phone_formatted }}</strong>
-                </p>
+        <div class="row"  style="margin-top: 35px;">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>
+                            Entreprise :<br><strong>{{ recruiter.company.name }}</strong>
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <p>
-                    Options :
-                    <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-success': recruiter.parking_option}">PARKING</span>&nbsp;
-                    <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-success': recruiter.lunch_option}">REPAS</span><br>
-                    Notifications :
-                    <span class="label" ng-class="{'label-default': !recruiter.user.email_notifications, 'label-success': recruiter.user.email_notifications}">EMAIL</span>&nbsp;
-                    <span class="label" ng-class="{'label-default': !recruiter.user.sms_notifications, 'label-success': recruiter.user.sms_notifications}">SMS</span>
-                </p>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>
+                            Téléphone :<br>
+                            <strong>{{ recruiter.user.phone_formatted }}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>
+                            Options :
+                            <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-success': recruiter.parking_option}">PARKING</span>&nbsp;
+                            <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-success': recruiter.lunch_option}">REPAS</span><br><br>
+                            Notifications :
+                            <span class="label" ng-class="{'label-default': !recruiter.user.email_notifications, 'label-success': recruiter.user.email_notifications}">EMAIL</span>&nbsp;
+                            <span class="label" ng-class="{'label-default': !recruiter.user.sms_notifications, 'label-success': recruiter.user.sms_notifications}">SMS</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row" style="margin-top: 5px;">
-    <div class="col-md-12">
-        <h3>Entretiens</h3>
-        <hr>
-        <table id="admin-display-interviews-for-recruiter" class="table">
-            <thead>
-                <tr>
-                    <th style="width: 20%;">Créneau</th>
-                    <th style="width: 50%;">Candidat</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="interview in recruiterInterviews.interviews" class="interview interview-status-{{interview.status}}">
-                    <td>
-                        {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
-                    </td>
-                    <td>
-                        <span ng-if="interview.status === 'taken'">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} ({{ interview.candidate.grade }})</span>
-                        <p ng-if="interview.status === 'free'"><button type="button" class="btn btn-sm btn-primary" ng-click="bookInterview(interview)"><i class="fa fa-sign-in fa-fw"></i> Inscrire un étudiant</button></p>
-                    </td>
-                    <td class="actions">
-                        <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'taken'" ng-click="freeInterview(interview)"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>
-                        <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'free'" ng-click="deleteInterview(interview)"><i class="fa fa-times fa-fw"></i> Marquer comme indisponible</button>
-                        <button type="button" class="btn btn-sm btn-success" ng-if="interview.status === 'unavailable'" ng-click="createInterview(interview)"><i class="fa fa-check-square-o fa-fw"></i> Marquer comme disponible</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="row" style="margin-top: 42px;">
+<div class="row hidden-print" style="margin-top: 42px;">
     <div class="col-md-12">
         <h3>Modifier</h3>
         <hr>
@@ -138,13 +141,13 @@
                             <div class="checkbox">
                                 <label for="checkbox-email">
                                     <input type="checkbox" name="checkboxes" id="checkbox-email"
-                                           ng-model="recruiter.user.email_notifications" ng-true-value="1" ng-false-value="0"> Email
+                                           ng-model="recruiter.user.email_notifications" ng-true-value="true" ng-false-value="false"> Email
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label for="checkbox-sms">
                                     <input type="checkbox" name="checkboxes" id="checkbox-sms"
-                                           ng-model="recruiter.user.sms_notifications" ng-true-value="1" ng-false-value="0"> SMS
+                                           ng-model="recruiter.user.sms_notifications" ng-true-value="true" ng-false-value="false"> SMS
                                 </label>
                             </div>
                         </div>
@@ -159,3 +162,58 @@
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="selectStudentForInterviewModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Inscrire un étudiant à un entretien...</h3>
+    </div>
+    <div id="selectStudentForInterviewModal" class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-3 control-label">Recruteur</label>
+                <div class="col-md-7">
+                    <p class="form-control-static">{{ recruiter.user.firstname }} {{ recruiter.user.lastname }} ({{ recruiter.company.name }})</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Horaire</label>
+                <div class="col-md-7">
+                    <p class="form-control-static">de {{ selected.slot.begins_at }} à {{ selected.slot.ends_at }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Étudiant</label>
+                <div class="col-md-7">
+                    <ui-select ng-model="selected.availableCandidate">
+                        <ui-select-match placeholder="Choisir un étudiant...">{{ $select.selected.user.firstname }} {{ $select.selected.user.lastname }} - {{ $select.selected.grade }}</ui-select-match>
+                        <ui-select-choices repeat="candidate in availableCandidates| filter: $select.search">
+                            <div ng-bind-html="candidate.user.firstname + ' ' + candidate.user.lastname | highlight: $select.search"></div>
+                            <small>
+                                {{ candidate.grade }} - {{ candidate.interviews.length }} entretien(s)
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+
+        <table class="table" ng-if="selected.availableCandidate">
+            <thead>
+                <tr>
+                    <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td ng-repeat="slot in slots" ng-class="{selectedSlot: selected.slot.ido == slot.ido}">
+                        {{ selected.availableCandidate.registered_slots_obfuscated[slot.ido] }}
+                        <span ng-if="!selected.availableCandidate.registered_slots_obfuscated[slot.ido]" class="free">Libre</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="button" ng-disabled="!selected.availableCandidate" ng-click="doBookInterview()">Inscrire {{ selected.availableCandidate.user.firstname }}</button>
+    </div>
+</script>
