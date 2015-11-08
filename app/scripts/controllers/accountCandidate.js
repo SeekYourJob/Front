@@ -41,10 +41,10 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
         Restangular.one("interviews/register").customPOST({
           company_ido: company.company.ido,
           slot_id: interview.slot_id
-        }).then(function(response) {
+        }).then(function() {
           $scope.isWaiting = false;
           getInterviews();
-        }, function(err) {
+        }, function() {
           $scope.isWaiting = false;
           getInterviews();
         });
@@ -55,17 +55,18 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
         $scope.isWaiting = true;
         interview.isWaiting = true;
 
-        Restangular.one("interviews/" + interview.interview + "/free").customPOST({}).then(function(response) {
+        Restangular.one("interviews/" + interview.interview + "/free").customPOST({})
+          .then(function() {
           $scope.isWaiting = false;
           getInterviews();
-        }, function(err) {
+        }, function() {
           $scope.isWaiting = false;
           getInterviews();
         });
       };
 
       pusherChannel.bind('interviews-updated',
-        function(data) {
+        function() {
           getInterviews();
         }
       );

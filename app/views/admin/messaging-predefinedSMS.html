@@ -1,0 +1,20 @@
+<h2><a ui-sref="admin.messaging">Messagerie</a> - SMS prédéfinis</h2>
+
+<div class="col-md-8 col-md-offset-2">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="width: 75%;">Intitulé</th>
+            <th style="width: 25%;"></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="predefinedSMS in predefinedSMSs">
+                <td style="vertical-align: middle;">{{ predefinedSMS.title }}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" ng-click="sendPredefinedSMS(predefinedSMS.key)">Envoyer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
