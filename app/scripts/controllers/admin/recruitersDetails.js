@@ -65,7 +65,6 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
 
     Restangular.one('interviews/candidates-available-for-slot', interview.slot.ido).get()
       .then(function(availableCandidates) {
-        console.log(availableCandidates.plain());
         $scope.availableCandidates = availableCandidates.plain().candidates;
         $scope.slots = availableCandidates.plain().slots;
 
@@ -88,6 +87,7 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
       selectStudentForInterviewModal.close();
     }, function(err) {
       alert(err); //TODO
+      console.log(err);
     });
   };
 
