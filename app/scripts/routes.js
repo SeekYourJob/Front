@@ -102,6 +102,10 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/new-email',
       views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-newEmail.html', controller: 'AdminMessagingNewEmailCtrl'}}
     })
+    .state('admin.messaging.predefinedEmail', {
+      url: '/predefined-emails',
+      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-predefinedEmail.html', controller: 'AdminMessagingPredefinedEmailCtrl'}}
+    })
     .state('admin.messaging.newSMS', {
       url: '/new-sms',
       views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-newSMS.html', controller: 'AdminMessagingNewSMSCtrl'}}
