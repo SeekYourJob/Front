@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cvsApp').controller('AccountRecruiterCtrl',
-  ['$scope','$http','Upload','ENV','Restangular','$localStorage',
-    function($scope,$http,Upload,ENV, Restangular,$localStorage) {
+  ['$scope','Upload','ENV','Restangular',
+    function($scope,Upload,ENV, Restangular) {
 
       $scope.user = $scope.$parent.user;
       $scope.accountPopover = {templateUrl: 'popover.html'};
