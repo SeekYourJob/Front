@@ -71,12 +71,12 @@
     </div>
 </div>
 
-<div class="row hidden-print" style="margin-top: 42px;">
-    <div class="col-md-12">
+<div class="row" style="margin-top: 42px;">
+    <div class="col-md-6">
         <h3>Modifier</h3>
         <hr>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -116,9 +116,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-12" style="margin-top: 15px;">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="firstname">Options</label>
                             <div class="checkbox">
@@ -135,19 +135,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="firstname">Notifications</label>
                             <div class="checkbox">
                                 <label for="checkbox-email">
                                     <input type="checkbox" name="checkboxes" id="checkbox-email"
-                                           ng-model="recruiter.user.email_notifications" ng-true-value="true" ng-false-value="false"> Email
+                                           ng-model="recruiter.user.email_notifications" ng-true-value="1" ng-false-value="0"> Email
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label for="checkbox-sms">
                                     <input type="checkbox" name="checkboxes" id="checkbox-sms"
-                                           ng-model="recruiter.user.sms_notifications" ng-true-value="true" ng-false-value="false"> SMS
+                                           ng-model="recruiter.user.sms_notifications" ng-true-value="1" ng-false-value="0"> SMS
                                 </label>
                             </div>
                         </div>
@@ -161,6 +161,40 @@
             </p>
         </div>
     </div>
+    <div class="col-md-6">
+        <h3>Documents</h3>
+        <hr/>
+        <form name="documentsPartForm" class="form-block" novalidate>
+            <div class="panel panel-default" ng-show="documents.length">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Documents</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="document in documents">
+                        <td>{{ document.name | limitTo: 30 }}{{document.name.length > 30 ? '...' : ''}} </td>
+                        <td class="pull-right">
+                            <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><span class="glyphicon glyphicon-edit"></span> Telecharger</button>
+                            <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ngf-drop ng-model="form.documents" class="dropbox"
+                 ngf-select="true" ngf-multiple="true" ngf-allow-dir="false">
+                <div class="help">
+                    <span ng-if="!form.documentIsBeingSent">Glissez-déposez les documents ou<br> cliquez ici pour les sélectionner.</span>
+                    <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+                </div>
+            </div>
+            <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+        </form>
+    </div>
+
 </div>
 
 <script type="text/ng-template" id="selectStudentForInterviewModal.html">
