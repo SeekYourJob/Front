@@ -55,17 +55,6 @@ module.exports = function (grunt) {
           }
         }
       },
-      beta: {
-        options: {
-          dest: '<%= yeoman.dist %>/scripts/config.js'
-        },
-        constants: {
-          ENV: {
-            name: 'beta',
-            apiEndpoint: 'https://beta.jobforum.myfges.fr/api'
-          }
-        }
-      },
       production: {
         options: {
           dest: '<%= yeoman.dist %>/scripts/config.js'
@@ -73,7 +62,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            apiEndpoint: 'https://jobforum.myfges.fr/api'
+            apiEndpoint: env.constants.production.apiEndpoint
           }
         }
       }
@@ -527,7 +516,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'ngconstant:beta',
+    'ngconstant:production',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
