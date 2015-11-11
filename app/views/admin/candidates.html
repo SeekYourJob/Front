@@ -1,0 +1,26 @@
+<h2>Candidats</h2>
+
+<div class="row"
+     st-table="candidatesDisplayedCollection" st-safe-src="candidatesCollection">
+
+    <div class="searchBox">
+        <input class="form-control" type="search" placeholder="Rechercher..." st-search>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 30%">Identité</th>
+                <th style="width: 20%">Promotion</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="candidate in candidatesDisplayedCollection">
+                <td><a>{{candidate.user.firstname}} {{ candidate.user.lastname }}</a></td>
+                <td>{{candidate.grade}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

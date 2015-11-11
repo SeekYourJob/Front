@@ -100,6 +100,10 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/recruiters',
       views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters.html', controller: 'AdminRecruitersCtrl'}}
     })
+    .state('admin.candidates', {
+        url: '/candidates',
+        views: {'admin-content@admin': {templateUrl: 'views/admin/candidates.html', controller: 'AdminCandidatesCtrl'}}
+    })
     .state('admin.recruiters.details', {
       url: '/{id}',
       views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'AdminRecruitersDetailsCtrl'}}
