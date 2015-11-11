@@ -8,16 +8,18 @@ angular.module('cvsApp').controller('LoginCtrl', ['$rootScope', '$scope', '$stat
       password: ''
     };
 
+    $scope.badCredentials = false;
+
     $scope.login = function() {
       AuthService.login($scope.credentials).then(
         function() {
           AuthService.getUser().then(function() {
             $state.go('account');
           }, function() {
-            //TODO Error while getting user on login
+            $state.go('logout');
           });
         }, function() {
-         //TODO Error while login
+          $scope.badCredentials = true;
         }
       );
     };
