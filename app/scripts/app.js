@@ -35,7 +35,7 @@ cvsApp.config(function(uiSelectConfig) {
 
 
 
-cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', function($rootScope, $state, $localStorage, ENV) {
+cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function($rootScope, $state, $localStorage, ENV, $window) {
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     if (typeof $localStorage.user !== 'undefined') {
       $rootScope.authenticated = true;
@@ -65,6 +65,10 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', function($rootScope,
     else if (error.accessDenied) {
       $state.go('home');
     }
+  });
+
+  $rootScope.$on('$stateChangeSuccess', function() {
+    $window.scrollTo(0, 0);
   });
 
 }]);
