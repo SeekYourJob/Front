@@ -8,14 +8,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" ui-sref="home">Job Forum de la FGES</a>
+                <a class="navbar-brand" ui-sref="app.home">Job Forum de la FGES</a>
             </div>
             <div class="collapse navbar-collapse" id="js-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="authenticated"><a ui-sref="account">Connecté(e) en tant que {{ user.firstname }} {{ user.lastname }}</a></li>
-                    <li ng-if="authenticated"><a ui-sref="logout">Se déconnecter</a></li>
+                    <li ng-if="authenticated"><a ui-sref="app.account">Connecté(e) en tant que {{ user.firstname }} {{ user.lastname }}</a></li>
+                    <li ng-if="authenticated"><a ui-sref="app.logout">Se déconnecter</a></li>
                 </ul>
-                <button ng-if="user.organizer === true" type="button" class="btn btn-primary navbar-btn navbar-right" ui-sref="admin.home">Administration</button>
+                <button ng-if="user.organizer === true" type="button" class="btn btn-primary navbar-btn navbar-right" ui-sref="app.admin.home">Administration</button>
             </div>
         </div>
     </div>

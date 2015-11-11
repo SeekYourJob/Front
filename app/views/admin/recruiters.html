@@ -20,8 +20,8 @@
             </thead>
             <tbody>
             <tr ng-repeat="recruiter in recruitersDisplayedCollection">
-                <td><a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{recruiter.user.firstname}} {{ recruiter.user.lastname }}</a></td>
-                <td><a ui-sref="admin.companies.details({id: recruiter.company.ido})">{{recruiter.company.name}}</a></td>
+                <td><a ui-sref="app.admin.recruiters.details({id: recruiter.ido})">{{recruiter.user.firstname}} {{ recruiter.user.lastname }}</a></td>
+                <td><a ui-sref="app.admin.companies.details({id: recruiter.company.ido})">{{recruiter.company.name}}</a></td>
                 <td>
                     <span ng-if="recruiter.availability === 'ALL'"><span class="label label-success">MATIN</span> &nbsp; <span class="label label-success">APRES-MIDI</span></span>
                     <span ng-if="recruiter.availability === 'AM'"><span class="label label-success">MATIN</span> &nbsp; <span class="label label-default">APRES-MIDI</span></span>

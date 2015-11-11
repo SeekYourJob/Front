@@ -5,7 +5,7 @@ angular.module('cvsApp').controller('LogoutCtrl', ['$rootScope', '$scope', '$sta
 
     AuthService.logout().then(function() {
       console.log('has been logged out!');
-      $state.go('home');
+      $state.go('app.home');
     });
 
   }]);

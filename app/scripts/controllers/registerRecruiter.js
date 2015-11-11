@@ -127,7 +127,7 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
             password: $scope.newRecruiter.user.password
           }).then(function() {
             AuthService.getUser().then(function() {
-              $state.go('account');
+              $state.go('app.account');
             }, function() {
               //TODO Error while getting user on login
             });
