@@ -227,6 +227,23 @@ footer {
   }
 }
 
+#reset-password-box {
+  @extend .row;
+
+  h2 {
+    text-align: center;
+    margin: 42px 0 42px 0;
+  }
+
+  #reset-password-form {
+    @extend .col-md-4, .col-md-offset-4;
+
+    button {
+      margin-top: 25px;
+    }
+  }
+}
+
 .register-page {
   .register-icon {
     @extend .col-md-3, .col-md-offset-1;

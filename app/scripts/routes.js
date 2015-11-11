@@ -26,6 +26,16 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       controller: 'LoginCtrl',
       templateUrl: 'views/login.html'
     })
+    .state('resetPassword', {
+      url: '/reset-password',
+      controller: 'LoginCtrl',
+      templateUrl: 'views/reset-password.html'
+    })
+    .state('doResetPassword', {
+      url: '/do-reset-password?token',
+      controller: 'LoginCtrl',
+      templateUrl: 'views/do-reset-password.html'
+    })
     .state('logout', {
       url: '/logout',
       controller: 'LogoutCtrl'
