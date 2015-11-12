@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cvsApp').controller('RegisterRecruiterCtrl',
-  ['$scope', '$http', 'Upload', 'AuthService', '$state', 'ENV',
-    function($scope, $http, Upload, AuthService, $state, ENV) {
+  ['$scope', '$http', 'Upload', 'AuthService', '$state', 'ENV', 'UploadService',
+    function($scope, $http, Upload, AuthService, $state, ENV, UploadService) {
 
       $scope.companies = ['Apple', 'Facebook', 'Google', 'Amazon', 'OVH'];
 
@@ -90,25 +90,9 @@ angular.module('cvsApp').controller('RegisterRecruiterCtrl',
       $scope.resetDataRecruiterToAdd();
 
       $scope.uploadDocuments = function(files) {
-        /*jshint -W083 */
-        if (files && files.length) {
-          for (var i = 0; i < files.length; i++) {
-            $scope.form.documentIsBeingSent = true;
-            var file = files[i];
-            Upload.upload({
-              url: ENV.apiEndpoint + '/documents',
-              file: file,
-              sendFieldsAs: 'form',
-              skipAuthorization: true
-            }).success(function(document) {
-              $scope.newRecruiter.recruiter.documents.push(document);
-              $scope.form.documentIsBeingSent = false;
-            }).error(function(data, status, headers, config) {
-              console.log('ERROR', data, status, headers, config);
-              $scope.form.documentIsBeingSent = false;
-            });
-          }
-        }
+        $scope.form.documentIsBeingSent = true;
+        UploadService.upload(null,files,$scope.newRecruiter.recruiter.documents);
+        $scope.form.documentIsBeingSent = false;
       };
 
       $scope.deleteDocument = function(document) {

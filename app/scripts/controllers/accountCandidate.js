@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('cvsApp').controller('AccountCandidateCtrl',
-  ['$scope', 'Restangular', '$pusher', '$rootScope',
-    function($scope, Restangular, $pusher, $rootScope) {
+  ['$scope', 'Restangular', '$pusher', '$rootScope','UploadService','ENV',
+    function($scope, Restangular, $pusher, $rootScope, UploadService, ENV) {
 
       var pusher = $pusher($rootScope.pusherClient);
       var pusherChannel = pusher.subscribe('presence-interviews');
@@ -13,6 +13,13 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       $scope.isWaiting = false;
       $scope.displayCompanies = [];
       $scope.pusherChannelMembers = pusherChannel.members;
+
+      $scope.documents = [];
+
+      $scope.form = {
+        documents: false,
+        documentIsBeingSent: false
+      };
 
       function getInterviews() {
         Restangular.one("interviews/candidate/" + $scope.user.ido).get().then(function(response) {
@@ -72,6 +79,35 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
           getInterviews();
         }
       );
+
+      // Documents
+
+      $scope.$watch('form.documents', function() {
+        console.log('upload documents triggered');
+        $scope.uploadDocuments($scope.form.documents);
+      });
+
+      $scope.uploadDocuments = function(files) {
+        $scope.form.documentIsBeingSent = true;
+        UploadService.upload($scope.user,files,$scope.documents);
+        $scope.form.documentIsBeingSent = false;
+      };
+
+      Restangular.one('documents/user',$scope.user.ido).get().then(function(documents) {
+        $scope.documents = documents.plain();
+      });
+
+      $scope.deleteDocument = function(document) {
+        Restangular.one("documents", document.ido).remove().then(function() {
+          $scope.documents.splice($scope.documents.indexOf(document), 1);
+        });
+      };
+
+      $scope.downloadDocument = function(document) {
+        Restangular.one("documents/request-token", document.ido).get().then(function(download) {
+          window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+        });
+      };
 
     }
   ]
