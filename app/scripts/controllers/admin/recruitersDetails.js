@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$state', 'Restangular','Upload','ENV', '$modal',
-  function($scope, $state, Restangular, Upload, ENV, $modal) {
+angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$state', 'Restangular','Upload','ENV', '$modal', 'UploadService',
+  function($scope, $state, Restangular, Upload, ENV, $modal, UploadService) {
 
     var selectStudentForInterviewModal = false;
 
@@ -116,30 +116,9 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
     });
 
     $scope.uploadDocuments = function(files) {
-      /*      $scope.form.documentIsBeingSent = true;
-       console.log($scope.user);
-       //DocumentService.uploadDocuments();
-       $scope.form.documentIsBeingSent = false;*/
-      if (files && files.length) {
-        for (var i = 0; i < files.length; i++) {
-          $scope.form.documentIsBeingSent = true;
-          var file = files[i];
-          Upload.upload({
-            url: ENV.apiEndpoint + '/documents',
-            file: file,
-            data:{
-              'user':$scope.user.ido},
-            sendFieldsAs: 'form',
-            skipAuthorization: true
-          }).success(function(document) {
-            $scope.documents.push(document);
-            $scope.form.documentIsBeingSent = false;
-          }).error(function(data, status, headers, config) {
-            console.log('ERROR', data, status, headers, config);
-            $scope.form.documentIsBeingSent = false;
-          });
-        }
-      }
+      $scope.form.documentIsBeingSent = true;
+      UploadService.upload($scope.user,files,$scope.documents);
+      $scope.form.documentIsBeingSent = false;
     };
 
     $scope.deleteDocument = function(document) {
