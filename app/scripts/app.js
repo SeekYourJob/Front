@@ -43,7 +43,7 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function(
 
       if (toState.name === 'login') {
         event.preventDefault();
-        $state.go('account');
+        $state.go('app.account');
       }
     }
 
@@ -60,10 +60,10 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function(
 
   $rootScope.$on('$stateChangeError', function (_0, _1, _2, _3, _4, error) {
     if (error.notAuthenticated) {
-      $state.go('login');
+      $state.go('app.login');
     }
     else if (error.accessDenied) {
-      $state.go('home');
+      $state.go('app.home');
     }
   });
 

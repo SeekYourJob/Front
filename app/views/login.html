@@ -14,7 +14,7 @@
                 <input type="password" class="form-control" id="password" ng-model="credentials.password">
             </div>
 
-            <p><a ui-sref="resetPassword"><small>Mot de passe oublié ?</small></a></p>
+            <p><a ui-sref="app.resetPassword"><small>Mot de passe oublié ?</small></a></p>
 
             <button type="submit" class="btn btn-primary btn-lg" ng-click="login()">Se connecter</button>
             <p class="text-danger pull-right" style="margin-top: 40px;" ng-if="badCredentials"><strong>Identifiants non reconnus.</strong></p>

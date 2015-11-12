@@ -3,10 +3,25 @@
 angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
   $locationProvider.html5Mode(false);
+
+  $urlRouterProvider.when('','/');
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    .state('session', {
+
+    .state('app', {
+      url: '',
+      views: {
+        'header': {
+          templateUrl: 'views/skeleton/header.html'
+        },
+        'footer': {
+          templateUrl: 'views/skeleton/footer.html'
+        }
+      }
+    })
+
+    .state('app.session', {
       resolve: {
         authentication: ['AuthService', '$q', function (AuthService, $q) {
           if (!AuthService.check()) {
@@ -17,60 +32,64 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
         }]
       }
     })
-    .state('home', {
+
+    .state('app.home', {
       url: '/',
-      templateUrl: 'views/home.html'
+      views: {'content@': {templateUrl: 'views/home.html'}}
     })
-    .state('login', {
+    .state('app.login', {
       url: '/login',
-      controller: 'LoginCtrl',
-      templateUrl: 'views/login.html'
+      views: {'content@': {templateUrl: 'views/login.html', controller: 'LoginCtrl'}}
     })
-    .state('resetPassword', {
+    .state('app.resetPassword', {
       url: '/reset-password',
-      controller: 'LoginCtrl',
-      templateUrl: 'views/reset-password.html'
+      views: {'content@': {templateUrl: 'views/reset-password.html', controller: 'LoginCtrl'}}
     })
-    .state('doResetPassword', {
+    .state('app.doResetPassword', {
       url: '/do-reset-password?token',
-      controller: 'LoginCtrl',
-      templateUrl: 'views/do-reset-password.html'
+      views: {'content@': {templateUrl: 'views/do-reset-password.html', controller: 'LoginCtrl'}}
     })
-    .state('logout', {
+    .state('app.logout', {
       url: '/logout',
       controller: 'LogoutCtrl'
     })
-    .state('account', {
-      parent: 'session',
+
+    .state('app.registerRecruiter', {
+      url: '/register-recruiter',
+      views: {'content@': {templateUrl: 'views/register-recruiter.html', controller: 'RegisterRecruiterCtrl'}}
+    })
+    .state('app.registerCandidate', {
+      url: '/register-candidate',
+      views: {'content@': {templateUrl: 'views/register-candidate.html', controller: 'RegisterCandidateCtrl'}}
+    })
+
+    .state('app.account', {
+      parent: 'app.session',
       url: '/my-account',
       resolve: {
         user: ['AuthService', function(AuthService) {
           return AuthService.getUser(true);
         }]
       },
-      views: {'@': {
-        templateUrl: 'views/account.html',
-        controller: ['$scope', 'user', function($scope, user) {
-          $scope.user = user;
-        }]
-      }}
+      views: {
+        'content@': {
+          templateUrl: 'views/account.html',
+          controller: ['$scope', 'user', function($scope, user) {
+            $scope.user = user;
+          }]
+        }
+      }
     })
-    .state('registerRecruiter', {
-      url: '/register-recruiter',
-      controller: 'RegisterRecruiterCtrl',
-      templateUrl: 'views/register-recruiter.html'
-    })
-    .state('registerCandidate', {
-      url: '/register-candidate',
-      controller: 'RegisterCandidateCtrl',
-      templateUrl: 'views/register-candidate.html'
-    })
-    .state('admin', {
+
+
+
+    .state('app.admin', {
       abstract: true,
+      parent: 'app.session',
       url: '/admin',
       views: {
-        '@': {templateUrl: 'views/admin/admin.html'},
-        'admin-menu@admin': {templateUrl: 'views/admin/admin-menu.html'}
+        'content@': {templateUrl: 'views/admin/admin.html'},
+        'admin-menu@app.admin': {templateUrl: 'views/admin/admin-menu.html'}
       },
       resolve: {
         organizer: ['AuthService', '$q', function (AuthService, $q) {
@@ -84,49 +103,54 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
         }]
       }
     })
-    .state('admin.home', {
+
+    .state('app.admin.home', {
       url: '/',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/home.html', controller: 'AdminCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/home.html', controller: 'AdminCtrl'}}
     })
-    .state('admin.companies', {
+
+    .state('app.admin.live', {
+      url: '/live',
+      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminCtrl'}}
+    })
+
+    .state('app.admin.companies', {
       url: '/companies',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/companies.html', controller: 'AdminCompaniesCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/companies.html', controller: 'AdminCompaniesCtrl'}}
     })
-    .state('admin.companies.details', {
+    .state('app.admin.companies.details', {
       url: '/{id}',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/companies-details.html', controller: 'AdminCompaniesDetailsCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/companies-details.html', controller: 'AdminCompaniesDetailsCtrl'}}
     })
-    .state('admin.recruiters', {
+
+    .state('app.admin.recruiters', {
       url: '/recruiters',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters.html', controller: 'AdminRecruitersCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/recruiters.html', controller: 'AdminRecruitersCtrl'}}
     })
-    .state('admin.candidates', {
-        url: '/candidates',
-        views: {'admin-content@admin': {templateUrl: 'views/admin/candidates.html', controller: 'AdminCandidatesCtrl'}}
-    })
-    .state('admin.recruiters.details', {
+    .state('app.admin.recruiters.details', {
       url: '/{id}',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'AdminRecruitersDetailsCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'AdminRecruitersDetailsCtrl'}}
     })
-    .state('admin.messaging', {
+
+    .state('app.admin.messaging', {
       url: '/messaging',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging.html', controller: 'AdminMessagingCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging.html', controller: 'AdminMessagingCtrl'}}
     })
-    .state('admin.messaging.newEmail', {
+    .state('app.admin.messaging.newEmail', {
       url: '/new-email',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-newEmail.html', controller: 'AdminMessagingNewEmailCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging-newEmail.html', controller: 'AdminMessagingNewEmailCtrl'}}
     })
-    .state('admin.messaging.predefinedEmail', {
+    .state('app.admin.messaging.predefinedEmail', {
       url: '/predefined-emails',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-predefinedEmail.html', controller: 'AdminMessagingPredefinedEmailCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging-predefinedEmail.html', controller: 'AdminMessagingPredefinedEmailCtrl'}}
     })
-    .state('admin.messaging.newSMS', {
+    .state('app.admin.messaging.newSMS', {
       url: '/new-sms',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-newSMS.html', controller: 'AdminMessagingNewSMSCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging-newSMS.html', controller: 'AdminMessagingNewSMSCtrl'}}
     })
-    .state('admin.messaging.predefinedSMS', {
+    .state('app.admin.messaging.predefinedSMS', {
       url: '/predefined-sms',
-      views: {'admin-content@admin': {templateUrl: 'views/admin/messaging-predefinedSMS.html', controller: 'AdminMessagingPredefinedSMSCtrl'}}
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging-predefinedSMS.html', controller: 'AdminMessagingPredefinedSMSCtrl'}}
     })
 
   ;

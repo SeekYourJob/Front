@@ -25,7 +25,7 @@
             <th colspan="{{ 1 + slots.length}}" class="company-name">{{ company.company.name }}</th>
         </tr>
         <tr ng-repeat="recruiter in company.recruiters">
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a ui-sref="admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname }} {{ recruiter.lastname }}</a></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a ui-sref="app.admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname }} {{ recruiter.lastname }}</a></td>
             <td ng-repeat="interview in recruiter.interviews" class="interview interview-status-{{interview.status}}">
                 <span ng-if="interview.status === 'taken'"
                       ng-mouseenter="setSelectedInterview(interview)"

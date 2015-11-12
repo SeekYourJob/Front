@@ -17,13 +17,11 @@
   </head>
   <body ng-app="cvsApp">
 
-    <ng-include src="'views/skeleton/header.html'"></ng-include>
-
-    <div class="container">
-        <div ui-view></div>
+    <div id="cvsApp" ui-view>
+        <div ui-view="header"></div>
+        <div class="container" ui-view="content"></div>
+        <div ui-view="footer"></div>
     </div>
-
-    <ng-include src="'views/skeleton/footer.html'"></ng-include>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->

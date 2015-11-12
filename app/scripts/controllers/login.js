@@ -18,9 +18,9 @@ angular.module('cvsApp').controller('LoginCtrl', ['$rootScope', '$scope', '$stat
     AuthService.login($scope.credentials).then(
       function() {
         AuthService.getUser().then(function() {
-          $state.go('account');
+          $state.go('app.account');
         }, function() {
-          $state.go('logout');
+          $state.go('app.logout');
         });
       }, function() {
         $scope.badCredentials = true;
@@ -41,7 +41,7 @@ angular.module('cvsApp').controller('LoginCtrl', ['$rootScope', '$scope', '$stat
       SweetAlert.swal({html: true, closeOnConfirm: true, closeOnCancel: true, title: "Mot de passe modifié", text: "Vous pouvez désormais vous connecter.", type: "success", timer: 2000}, function() {
         /* jshint strict: false, -W117 */
         swal.close();
-        $state.go('login');
+        $state.go('app.login');
       });
     }, function() {
       SweetAlert.swal({html: true, title:"Échec", text: "Nous n'avons pas réussi à modifier votre mot de passe.<br>Merci de vérifier votre saisie.", type: "error"});
