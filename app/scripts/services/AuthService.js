@@ -24,7 +24,6 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
 
   self.logout = function() {
     var deferred = $q.defer();
-
     $http({
       method: 'GET',
       url: ENV.apiEndpoint + '/logout'

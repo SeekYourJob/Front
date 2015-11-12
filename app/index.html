@@ -43,6 +43,22 @@
     <script src="bower_components/ngSweetAlert/SweetAlert.js"></script>
     <script src="bower_components/pusher-angular/lib/pusher-angular.js"></script>
     <script src="bower_components/pusher/dist/pusher.js"></script>
+    <script src="bower_components/waypoints/lib/noframework.waypoints.min.js"></script>
+    <script src="bower_components/SHA-1/sha1.js"></script>
+    <script src="bower_components/angulartics/src/angulartics.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-clicky.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-cnzz.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-ga-cordova.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-gtm.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-piwik.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-scroll.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-splunk.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-woopra.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-marketo.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-intercom.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-inspectlet.js"></script>
+    <script src="bower_components/angulartics/src/angulartics-newrelic-insights.js"></script>
+    <script src="bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="scripts/config.js"></script>
@@ -51,7 +67,6 @@
     <script src="scripts/routes.js"></script>
     <script src="scripts/services/AuthService.js"></script>
     <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/controllers/logout.js"></script>
     <script src="scripts/controllers/accountCandidate.js"></script>
     <script src="scripts/controllers/accountRecruiter.js"></script>
     <script src="scripts/controllers/registerRecruiter.js"></script>
@@ -68,5 +83,13 @@
     <script src="scripts/controllers/admin/messagingNewSMS.js"></script>
     <script src="scripts/controllers/admin/messagingPredefinedSMS.js"></script>
     <!-- endbuild -->
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-41931299-11', 'auto');
+    </script>
 </body>
 </html>

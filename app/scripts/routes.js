@@ -51,7 +51,17 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('app.logout', {
       url: '/logout',
-      controller: 'LogoutCtrl'
+      parent: 'app.session',
+      views: {
+        'content@': {
+          template: '',
+          controller: ['$state', 'AuthService', function($state, AuthService) {
+            AuthService.logout().then(function() {
+              $state.go('app.home');
+            });
+          }]
+        }
+      }
     })
 
     .state('app.registerRecruiter', {

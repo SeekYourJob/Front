@@ -41,7 +41,7 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function(
       $rootScope.authenticated = true;
       $rootScope.user = $localStorage.user;
 
-      if (toState.name === 'login') {
+      if (toState.name === 'app.login') {
         event.preventDefault();
         $state.go('app.account');
       }
