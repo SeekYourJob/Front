@@ -1,0 +1,25 @@
+<h2>Documents à valider</h2>
+<div class="row" st-table="documentsCollection">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 30%">Utilisateur</th>
+                <th style="width: 20%">Document</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="document in documentsCollection">
+                <td><a>{{document.user.firstname}} {{ document.user.lastname }}</a></td>
+                <td>{{document.name}}</td>
+                <td class="text-right">
+                    <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><i class="fa fa-download fa-fw"></i> Télecharger</button>
+                    <button type="button" class="btn btn-primary" ng-click="acceptDocument(document)"><i class="fa fa-check"></i> Valider</button>
+                    <button type="button" class="btn btn-danger" ng-click="refuseDocument(document)"><i class="fa fa-times"></i> Refuser</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
