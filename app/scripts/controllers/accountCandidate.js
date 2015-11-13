@@ -14,6 +14,8 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       $scope.displayCompanies = [];
       $scope.pusherChannelMembers = pusherChannel.members;
 
+      console.log($scope.user);
+
       $scope.documents = [];
 
       $scope.form = {

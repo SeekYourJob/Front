@@ -20,10 +20,8 @@ angular.module('cvsApp').service('UploadService', ['$http', '$q', 'ENV', 'Upload
         }
         /*jshint -W083 */
         if (files && files.length) {
-            console.log('entering loop');
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
-                console.log('looping');
                 Upload.upload({
                     url: ENV.apiEndpoint + '/documents',
                     file: file,

@@ -4,7 +4,7 @@
 
 <div id="candidateInterviews">
 
-    <div class="col-md-8">
+    <div class="col-md-7">
         <h3>Planifier mes entretiens</h3><hr>
 
 
@@ -75,49 +75,48 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <h3>Mes informations</h3><hr>
-        <h2>Mon CV :</h2>
-        <hr/>
+        <h4>Mon CV :</h4>
         <!-- Documents -->
         <form name="documentsPartForm" class="form-block" novalidate>
-            <p>Il vous est vivement conseillé d'uploader un CV sur la plateforme, celui-ci sera envoyé aux recruteurs avant le Job Forum</p>
+            <p>Un CV valide est nécessaire pour s'inscrire à des entretiens.</p>
             <div class="row">
-                <div ngf-drop ng-model="form.documents" class="dropbox"
-                     ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ng-show="!documents.length">
-                    <div class="help">
-                        <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou<br> cliquez ici pour le sélectionner.</span>
-                        <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+                <div class="col-md-12">
+                    <div ngf-drop ng-model="form.documents" class="dropbox"
+                         ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ng-show="!documents.length">
+                        <div class="help">
+                            <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou<br> cliquez ici pour le sélectionner.</span>
+                            <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+                        </div>
+                    </div>
+                    <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+                    <div class="panel panel-default" ng-show="documents.length">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Mon CV</th>
+                                <th>Etat</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="document in documents">
+                                <td style="vertical-align: middle;">{{ document.name | limitTo: 20 }}{{document.name.length > 20 ? '...' : ''}} </td>
+                                <td style="vertical-align: middle;" ng-switch="document.status">
+                                    <span ng-switch-when="ACCEPTED" class="label label-default">Accepté</span>
+                                    <span ng-switch-when="PENDING" class="label label-warning">En attente</span>
+                                    <span ng-switch-when="REJECTED" class="label label-alert">Refusé</span>
+                                </td>
+                                <td style="vertical-align: middle;" class="text-right">
+                                    <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><i class="fa fa-download fa-fw"></i></button>
+                                    <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><i class="fa fa-trash-o"></i></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
-
-                <div class="panel panel-default" ng-show="documents.length">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>Mon CV</th>
-                            <th>Etat</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="document in documents">
-                            <td>{{ document.name | limitTo: 20 }}{{document.name.length > 20 ? '...' : ''}} </td>
-                            <td ng-switch="document.status">
-                                <span ng-switch-when="ACCEPTED" class="label label-default">Accepté</span>
-                                <span ng-switch-when="PENDING" class="label label-warning">En attente</span>
-                                <span ng-switch-when="REJECTED" class="label label-alert">Refusé</span>
-                            </td>
-                            <td class="pull-right">
-                                <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><span class="glyphicon glyphicon-edit"></span> Telecharger</button>
-                                <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
         </form>
     </div>
