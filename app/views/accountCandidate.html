@@ -4,7 +4,7 @@
 
 <div id="candidateInterviews">
 
-    <div class="col-md-6">
+    <div class="col-md-8">
         <h3>Planifier mes entretiens</h3><hr>
 
 
@@ -35,8 +35,9 @@
             <div class="company" ng-repeat="company in companies">
                 <div class="panel panel-default">
                     <div ng-click="displayCompanies[$index] = !displayCompanies[$index]"
+                         analytics-on="click" analytics-event="Toggled" analytics-category="Interviews" analytics-label="{{ company.company.name }}"
                          class="panel-heading"
-                            >
+                    >
                         <h3 class="panel-title pull-left">{{ company.company.name }}</h3>
                 <span class="pull-right">
                     <span class="label" ng-class="{'label-success': company.summary.remaining_percentage > 50, 'label-warning': company.summary.remaining_percentage > 0 && company.summary.remaining_percentage <= 50, 'label-danger': company.summary.remaining_percentage == 0}">
@@ -57,12 +58,12 @@
                                 <td ng-repeat="interview in company.interviews"
                                     ng-click="actOnInterview(company, interview)"
                                     ng-class="{
-                            available: interview.free_slots > 0 && !interview.already_registered && !interview.interview,
-                            unavailable: interview.free_slots == 0,
-                            takenByMe: interview.interview,
-                            alreadyRegistered: interview.already_registered,
-                            waiting: interview.isWaiting}"
-                                        >
+                                        available: interview.free_slots > 0 && !interview.already_registered && !interview.interview,
+                                        unavailable: interview.free_slots == 0,
+                                        takenByMe: interview.interview,
+                                        alreadyRegistered: interview.already_registered,
+                                        waiting: interview.isWaiting}"
+                                >
                                     <span ng-if="interview.already_registered">{{ interview.already_registered }}</span>
                                 </td>
                             </tr>
