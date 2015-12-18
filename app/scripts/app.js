@@ -36,6 +36,16 @@ cvsApp.config(function(uiSelectConfig) {
 
 
 cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function($rootScope, $state, $localStorage, ENV, $window) {
+
+  /* jshint strict: false, -W117 */
+  $rootScope.pusherClient = new Pusher('9b5860d837aa56e753e6', {
+    authEndpoint: ENV.apiEndpoint + "/authenticate/pusher-token",
+    disableStats: true,
+    auth: {
+      headers: {Authorization: "Bearer " + $localStorage.token}
+    }
+  });
+
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     if (typeof $localStorage.user !== 'undefined') {
       $rootScope.authenticated = true;
@@ -46,23 +56,12 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function(
         $state.go('app.account');
       }
     }
-
-    /* jshint strict: false, -W117 */
-    //$rootScope.pusherClient = new Pusher('9b5860d837aa56e753e6', {
-    //  authEndpoint: ENV.apiEndpoint + "/authenticate/pusher-token",
-    //  encrypted: true,
-    //  disableStats: true,
-    //  auth: {
-    //    headers: {Authorization: "Bearer " + $localStorage.token}
-    //  }
-    //});
   });
 
   $rootScope.$on('$stateChangeError', function (_0, _1, _2, _3, _4, error) {
     if (error.notAuthenticated) {
       $state.go('app.login');
-    }
-    else if (error.accessDenied) {
+    } else if (error.accessDenied) {
       $state.go('app.home');
     }
   });

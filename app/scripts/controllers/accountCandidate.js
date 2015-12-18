@@ -14,8 +14,6 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       $scope.displayCompanies = [];
       $scope.pusherChannelMembers = pusherChannel.members;
 
-      console.log($scope.user);
-
       $scope.documents = [];
 
       $scope.form = {
@@ -80,9 +78,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       );
 
       // Documents
-
       $scope.$watch('form.documents', function() {
-        console.log('upload documents triggered');
         $scope.uploadDocuments($scope.form.documents);
       });
 
