@@ -48,14 +48,14 @@ cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function(
     }
 
     /* jshint strict: false, -W117 */
-    $rootScope.pusherClient = new Pusher('9b5860d837aa56e753e6', {
-      authEndpoint: ENV.apiEndpoint + "/authenticate/pusher-token",
-      encrypted: true,
-      disableStats: true,
-      auth: {
-        headers: {Authorization: "Bearer " + $localStorage.token}
-      }
-    });
+    //$rootScope.pusherClient = new Pusher('9b5860d837aa56e753e6', {
+    //  authEndpoint: ENV.apiEndpoint + "/authenticate/pusher-token",
+    //  encrypted: true,
+    //  disableStats: true,
+    //  auth: {
+    //    headers: {Authorization: "Bearer " + $localStorage.token}
+    //  }
+    //});
   });
 
   $rootScope.$on('$stateChangeError', function (_0, _1, _2, _3, _4, error) {
