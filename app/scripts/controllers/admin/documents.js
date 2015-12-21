@@ -14,15 +14,15 @@ angular.module('cvsApp').controller('AdminDocumentsCtrl', ['$scope', 'Restangula
         });
 
         $scope.refuseDocument = function(document) {
-           // Restangular.one("documents", document.ido).remove().then(function() {
+            Restangular.one('documents/'+document.ido+'/refuse').post().then(function() {
                 $scope.documentsCollection.splice($scope.documentsCollection.indexOf(document), 1);
-           // });
+            });
         };
 
         $scope.acceptDocument = function(document) {
-            // Restangular.one("documents", document.ido).remove().then(function() {
+            Restangular.one('documents/'+document.ido+'/accept').post().then(function() {
                 $scope.documentsCollection.splice($scope.documentsCollection.indexOf(document), 1);
-            // });
+            });
         };
 
         $scope.downloadDocument = function(document) {
