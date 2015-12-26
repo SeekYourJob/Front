@@ -146,7 +146,10 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/candidates',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/candidates.html', controller: 'AdminCandidatesCtrl'}}
     })
-
+    .state('app.admin.candidates.details', {
+      url: '/{id}',
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/candidates-details.html', controller: 'AdminCandidatesDetailsCtrl'}}
+    })
     .state('app.admin.messaging', {
       url: '/messaging',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging.html', controller: 'AdminMessagingCtrl'}}
@@ -167,6 +170,7 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/predefined-sms',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging-predefinedSMS.html', controller: 'AdminMessagingPredefinedSMSCtrl'}}
     })
+
 
   ;
 

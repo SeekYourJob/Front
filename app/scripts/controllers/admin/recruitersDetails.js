@@ -35,7 +35,7 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
       Restangular.one('documents/user',$scope.user.ido).get().then(function(documents) {
         $scope.documents = documents.plain();
       });
-    };
+    }
 
     // Recruiter details
     Restangular.one("recruiters", $state.params.id).get().then(function(recruiter) {

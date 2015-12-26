@@ -1,0 +1,44 @@
+<h2><strong>{{ user.firstname }} {{ user.lastname }}</strong></h2>
+
+<div class="row" style="margin-top: 42px;">
+    <div class="col-md-6">
+        <h3>Documents</h3>
+        <hr/>
+        <form name="documentsPartForm" class="form-block" novalidate>
+            <div class="panel panel-default" ng-show="documents.length">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Documents</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="document in documents">
+                        <td>{{ document.name | limitTo: 30 }}{{document.name.length > 30 ? '...' : ''}} </td>
+                        <td style="vertical-align: middle;" ng-switch="document.status">
+                            <span ng-switch-when="ACCEPTED" class="label label-default">Accepté</span>
+                            <span ng-switch-when="PENDING" class="label label-warning">En attente</span>
+                            <span ng-switch-when="REJECTED" class="label label-alert">Refusé</span>
+                        </td>
+                        <td class="pull-right">
+                            <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><span class="glyphicon glyphicon-edit"></span> Telecharger</button>
+                            <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ngf-drop ng-model="form.documents" class="dropbox"
+                 ngf-select="true" ngf-multiple="true" ngf-allow-dir="false" ng-show="!documents.length">
+                <div class="help">
+                    <span ng-if="!form.documentIsBeingSent">Glissez-déposez les documents ou<br> cliquez ici pour les sélectionner.</span>
+                    <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+                </div>
+            </div>
+            <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+        </form>
+    </div>
+
+</div>
