@@ -1,5 +1,37 @@
 <h2><strong>{{ user.firstname }} {{ user.lastname }}</strong></h2>
 
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="admin-display-interviews-for-recruiter" class="table">
+                    <thead>
+                    <tr>
+                        <th style="width: 20%;">Créneau</th>
+                        <th style="width: 50%;">Recruteur</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="interview in candidateInterviews.interviews" class="interview interview-status-{{interview.status}}">
+                        <td>
+                            {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
+                        </td>
+                        <td>
+                            <span ng-if="interview.status === 'taken'">{{ interview.recruiter.lastname }} - {{ interview.recruiter.company.name}} </span>
+                            <p ng-if="interview.status === 'free'" class="text-center"></p>
+                        </td>
+                        <td class="actions">
+                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'taken'" ng-click="freeInterview(interview)"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row" style="margin-top: 42px;">
     <div class="col-md-6">
         <h3>Documents</h3>

@@ -9,6 +9,7 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
         $scope.candidate = {};
         $scope.user = {};
         $scope.documents = [];
+        $scope.candidateInterviews = {};
 
         $scope.form = {
             documents: false,
@@ -22,12 +23,23 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
             });
         }
 
+        function refreshInterviews() {
+            Restangular.one('interviews/candidate', $scope.candidate.ido).get().then(function(candidateInterviews) {
+                $scope.candidateInterviews = candidateInterviews.plain();
+            });
+            console.log($scope.user.ido);
+
+            console.log('Interviews refreshed');
+        }
+
         // Candidate details
         Restangular.one("candidates", $state.params.id).get().then(function(candidate) {
             $scope.candidate = candidate;
             $scope.user = candidate.user;
             // Documents
             getDocuments();
+            // Interviews
+            refreshInterviews();
         });
 
         $scope.$watch('form.documents', function() {
@@ -50,6 +62,14 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
             Restangular.one("documents/request-token", document.ido).get().then(function(download) {
                 window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
             });
+        };
+
+        // Cancel interview
+        $scope.freeInterview = function(interview) {
+            Restangular.one("interviews", interview.ido).customPOST(undefined, 'free')
+                .then(function() {
+                    refreshInterviews();
+                });
         };
 
     }]);
