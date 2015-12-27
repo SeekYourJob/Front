@@ -30,7 +30,6 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
             getDocuments();
         });
 
-
         $scope.$watch('form.documents', function() {
             $scope.uploadDocuments($scope.form.documents);
         });

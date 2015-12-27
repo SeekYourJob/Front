@@ -31,7 +31,7 @@
                 </table>
             </div>
             <div ngf-drop ng-model="form.documents" class="dropbox"
-                 ngf-select="true" ngf-multiple="true" ngf-allow-dir="false" ng-show="!documents.length">
+                 ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ng-show="!documents.length">
                 <div class="help">
                     <span ng-if="!form.documentIsBeingSent">Glissez-déposez les documents ou<br> cliquez ici pour les sélectionner.</span>
                     <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
