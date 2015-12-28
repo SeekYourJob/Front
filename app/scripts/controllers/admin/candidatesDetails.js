@@ -9,7 +9,7 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
         $scope.candidate = {};
         $scope.user = {};
         $scope.documents = [];
-        $scope.candidateInterviews = {};
+        $scope.candidateSlots = {};
 
         $scope.form = {
             documents: false,
@@ -24,8 +24,8 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
         }
 
         function refreshInterviews() {
-            Restangular.one('interviews/candidate', $scope.candidate.ido).get().then(function(candidateInterviews) {
-                $scope.candidateInterviews = candidateInterviews.plain();
+            Restangular.one('interviews/candidate', $scope.candidate.ido).get().then(function(candidateSlots) {
+                $scope.candidateSlots = candidateSlots.plain();
             });
             console.log($scope.user.ido);
 
@@ -70,6 +70,10 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
                 .then(function() {
                     refreshInterviews();
                 });
+        };
+
+        $scope.formatDate = function(date){
+            return new Date(date);
         };
 
     }]);

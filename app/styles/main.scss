@@ -466,7 +466,7 @@ footer {
   }
 }
 
-#admin-display-interviews-for-recruiter {
+#admin-display-interviews {
   tr {
     td {
       vertical-align: middle;
@@ -484,6 +484,9 @@ footer {
     &.interview-status-taken {
       background: $interview-taken;
       color: white;
+      a {
+        color: white;
+      }
     }
   }
 }

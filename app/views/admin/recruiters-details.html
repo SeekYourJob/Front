@@ -4,7 +4,7 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-12">
-                <table id="admin-display-interviews-for-recruiter" class="table">
+                <table id="admin-display-interviews" class="table">
                     <thead>
                     <tr>
                         <th style="width: 20%;">Créneau</th>
@@ -18,7 +18,9 @@
                             {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
                         </td>
                         <td>
-                            <span ng-if="interview.status === 'taken'">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} – {{ interview.candidate.grade }}</span>
+                            <span ng-if="interview.status === 'taken'">
+                                <a ui-sref="app.admin.candidates.details({id: interview.candidate.ido})">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} – {{ interview.candidate.grade }}
+                            </span>
                             <p ng-if="interview.status === 'free'" class="text-center"><button type="button" class="btn btn-sm btn-primary" ng-click="bookInterview(interview)"><i class="fa fa-sign-in fa-fw"></i> Inscrire un étudiant</button></p>
                         </td>
                         <td class="actions">
