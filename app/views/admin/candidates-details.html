@@ -9,7 +9,8 @@
                     <thead>
                     <tr>
                         <th style="width: 20%;">Créneau</th>
-                        <th style="width: 50%;">Recruteur</th>
+                        <th style="width: 40%;">Recruteur</th>
+                        <th style="width: 20%;">Compagnie</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -20,10 +21,13 @@
                         </td>
                         <td>
                             <span ng-if="slot.interviews.length > 0">
-                                <a ui-sref="app.admin.recruiters.details({id: slot.interviews[0].recruiter.ido})">{{ slot.interviews[0].recruiter.user.firstname }} {{  slot.interviews[0].recruiter.user.lastname }}</a> -
-                                <a ui-sref="app.admin.companies.details({id: slot.interviews[0].recruiter.company.ido})">{{slot.interviews[0].recruiter.company.name}}</a>
+                                <a ui-sref="app.admin.recruiters.details({id: slot.interviews[0].recruiter.ido})">{{ slot.interviews[0].recruiter.user.firstname }} {{  slot.interviews[0].recruiter.user.lastname }}</a>
+
                             </span>
                             <p ng-if="interview.status === 'free'" class="text-center"></p>
+                        </td>
+                        <td>
+                            <a ui-sref="app.admin.companies.details({id: slot.interviews[0].recruiter.company.ido})">{{slot.interviews[0].recruiter.company.name}}</a>
                         </td>
                         <td class="actions">
                             <button type="button" class="btn btn-sm btn-danger" ng-if="slot.interviews.length > 0 " ng-click="freeInterview(slot.interviews[0])"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>

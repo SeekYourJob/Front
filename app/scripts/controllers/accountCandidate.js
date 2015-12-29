@@ -24,7 +24,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       };
 
       function getInterviews() {
-        Restangular.one("interviews/candidate/" + $scope.user.ido).get().then(function(response) {
+        Restangular.one("interviews/candidate-by-company/" + $scope.user.ido).get().then(function(response) {
           $scope.slots = response.slots;
           $scope.companies = response.companies;
         });

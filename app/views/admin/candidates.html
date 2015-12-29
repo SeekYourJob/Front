@@ -16,7 +16,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="candidate in candidatesDisplayedCollection">
+            <tr ng-repeat="candidate in candidatesDisplayedCollection | orderBy:'user.lastname'">
                 <td><a ui-sref="app.admin.candidates.details({id: candidate.ido})">{{candidate.user.firstname}} {{ candidate.user.lastname }}</a></td>
                 <td>{{candidate.grade}}</td>
             </tr>
