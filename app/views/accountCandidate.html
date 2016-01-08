@@ -32,7 +32,7 @@
 
         <div class="row">
             <div class="company" ng-repeat="company in companies">
-                <div class="panel panel-default">
+                <div class="panel {{ company.hasInterviewWithCandidate ? 'panel-success' : 'panel-default' }}">
                     <div ng-click="displayCompanies[$index] = !displayCompanies[$index]"
                          analytics-on="click" analytics-event="Toggled" analytics-category="Interviews" analytics-label="{{ company.company.name }}"
                          class="panel-heading"
@@ -67,6 +67,14 @@
                                 </td>
                             </tr>
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="{{ slots.length }}">
+                                    <small>
+                                        <span ng-repeat="(jobType, activated) in company.company.job_types"><i class="fa fa-fw {{ activated ? 'fa-check' : 'fa-times' }}"></i> {{ jobType }} &nbsp;&nbsp;&nbsp;</span>
+                                    </small></td>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

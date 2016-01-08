@@ -599,6 +599,10 @@ footer {
       table {
         margin-bottom: 0;
 
+        thead > tr > th {
+          text-align: center;
+        }
+
         tbody > tr > td {
           width: 12.5%;
           height: 50px;
