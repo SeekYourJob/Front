@@ -4,8 +4,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
   ['$scope', 'Restangular', '$pusher', '$rootScope','UploadService','ENV',
     function($scope, Restangular, $pusher, $rootScope, UploadService, ENV) {
 
-      var pusher = $pusher($rootScope.pusherClient);
-      var pusherChannel = pusher.subscribe('presence-interviews');
+      var pusherChannel = $rootScope.pusherClient.subscribe('presence-interviews');
 
       $scope.user = $scope.$parent.user;
       $scope.slots = [];
@@ -22,7 +21,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       };
 
       function getInterviews() {
-        Restangular.one("interviews/candidate/" + $scope.user.ido).get().then(function(response) {
+        Restangular.one("interviews/candidate/" + $scope.user.profile_ido).get().then(function(response) {
           $scope.slots = response.slots;
           $scope.companies = response.companies;
         });

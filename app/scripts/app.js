@@ -33,16 +33,17 @@ cvsApp.config(function(uiSelectConfig) {
 
 
 
-cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', function($rootScope, $state, $localStorage, ENV, $window) {
+cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', '$pusher', function($rootScope, $state, $localStorage, ENV, $window, $pusher) {
 
   /* jshint strict: false, -W117 */
-  $rootScope.pusherClient = new Pusher('9b5860d837aa56e753e6', {
+  $rootScope.pusher = new Pusher('9b5860d837aa56e753e6', {
     authEndpoint: ENV.apiEndpoint + "/authenticate/pusher-token",
     disableStats: true,
     auth: {
       headers: {Authorization: "Bearer " + $localStorage.token}
     }
   });
+  $rootScope.pusherClient = $pusher($rootScope.pusher);
 
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     if (typeof $localStorage.user !== 'undefined') {
