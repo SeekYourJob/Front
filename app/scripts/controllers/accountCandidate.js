@@ -14,6 +14,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       $scope.isWaiting = false;
       $scope.displayCompanies = [];
       $scope.pusherChannelMembers = pusherChannel.members;
+      $scope.summary = {};
       $scope.offersModalComponents = {};
 
       $scope.documents = [];
@@ -23,11 +24,19 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
         documentIsBeingSent: false
       };
 
+      function getCandidateSummary() {
+        Restangular.one("candidates/" + $scope.user.profile_ido + "/summary").get().then(function(response) {
+          $scope.summary = response.plain();
+        });
+      }
+
       function getInterviews() {
         Restangular.one("interviews/candidate/" + $scope.user.profile_ido).get().then(function(response) {
           $scope.slots = response.slots;
           $scope.companies = response.companies;
         });
+
+        getCandidateSummary()
       }
       getInterviews();
 
