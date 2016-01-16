@@ -70,7 +70,7 @@
                                 </td>
                                 <td colspan="{{ slots.length / 2 }}" class="text-right">
                                     <small>
-                                        <a href="#">Télécharger le(s) offre(s) proposée(s) par {{ company.company.name }}</a>
+                                        <a href="javascript:void(0);" ng-click="showOffersForCompany(company.company);">Télécharger le(s) offre(s) proposée(s) par {{ company.company.name }}</a>
                                     </small>
                                 </td>
                             </tr>
@@ -130,7 +130,28 @@
             </div>
         </form>
     </div>
-
-
 </div>
 
+<script type="text/ng-template" id="showCompanysOffers.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Offres de {{ offersModalComponents.company.name }}</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 70%;">Intitulé</th>
+                <th style="width: 30%;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="offer in offersModalComponents.offers">
+                <td style="vertical-align: middle;">{{ offer.name }} <em>({{ offer.size_readable }})</em></td>
+                <td  style="vertical-align: middle; text-align: right;">
+                    <button class="btn btn-primary" ng-click="downloadDocument(offer);"><i class="fa fa-download fa-fw"></i> Télécharger</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
