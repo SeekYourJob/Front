@@ -20,14 +20,10 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
       documentIsBeingSent: false
     };
 
-
     function refreshInterviews() {
       Restangular.one('interviews/recruiter', $scope.recruiter.ido).get().then(function(recruiterInterviews) {
         $scope.recruiterInterviews = recruiterInterviews.plain();
       });
-      console.log($scope.user.ido);
-
-      console.log('Interviews refreshed');
     }
 
     // Documents
@@ -35,7 +31,7 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
       Restangular.one('documents/user',$scope.user.ido).get().then(function(documents) {
         $scope.documents = documents.plain();
       });
-    };
+    }
 
     // Recruiter details
     Restangular.one("recruiters", $state.params.id).get().then(function(recruiter) {
@@ -83,7 +79,8 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
   $scope.bookInterview = function(interview) {
     $scope.selected.slot = interview.slot;
 
-    Restangular.one('interviews/candidates-available-for-slot', interview.slot.ido).get()
+    Restangular.one('interviews/candidates-available-for-slot-and-company')
+      .get({idoSlot: interview.slot.ido, idoCompany: $scope.recruiter.company.ido})
       .then(function(availableCandidates) {
         $scope.availableCandidates = availableCandidates.plain().candidates;
         $scope.slots = availableCandidates.plain().slots;
