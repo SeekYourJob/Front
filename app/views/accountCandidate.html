@@ -5,8 +5,11 @@
 <div id="candidateInterviews">
 
     <div class="col-md-8 col-md-offset-2" style="margin-top: 21px; margin-bottom: 42px;" ng-if="user.candidate.canRegisterToInterviews">
-        <h3><i class="fa fa-calendar-check-o fa-fw"></i> Mes entretiens ({{ summary.count }})</h3><hr>
-        <table id="summaryCandidate" class="table">
+        <h3><i class="fa fa-calendar-check-o fa-fw"></i> Mes entretiens</h3><hr>
+        <p class="lead text-center" ng-if="!summary.count">
+            Aucun entretien de prévu
+        </p>
+        <table id="summaryCandidate" class="table" ng-if="summary.count">
             <thead>
             <tr>
                 <th style="width: {{ (1 / summary.summary.length) * 100 }}%;" ng-repeat="sum in summary.summary">{{ sum.slot.begins_at_formatted }}</th>
