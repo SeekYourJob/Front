@@ -168,6 +168,11 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging-predefinedSMS.html', controller: 'AdminMessagingPredefinedSMSCtrl'}}
     })
 
+    .state('app.admin.interviews', {
+      url: '/interviews',
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/interviews.html', controller: 'AdminInterviewsCtrl'}}
+    })
+
   ;
 
 });

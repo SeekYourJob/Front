@@ -1,37 +1,6 @@
 <h2><strong>{{ recruiter.user.firstname }} {{ recruiter.user.lastname }}</strong></h2>
 
 <div class="row">
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-12">
-                <table id="admin-display-interviews-for-recruiter" class="table">
-                    <thead>
-                    <tr>
-                        <th style="width: 20%;">Créneau</th>
-                        <th style="width: 50%;">Candidat</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="interview in recruiterInterviews.interviews" class="interview interview-status-{{interview.status}}">
-                        <td>
-                            {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
-                        </td>
-                        <td>
-                            <span ng-if="interview.status === 'taken'">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} – {{ interview.candidate.grade }}</span>
-                            <p ng-if="interview.status === 'free'" class="text-center"><button type="button" class="btn btn-sm btn-primary" ng-click="bookInterview(interview)"><i class="fa fa-sign-in fa-fw"></i> Inscrire un étudiant</button></p>
-                        </td>
-                        <td class="actions">
-                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'taken'" ng-click="freeInterview(interview)"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>
-                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'free'" ng-click="deleteInterview(interview)"><i class="fa fa-times fa-fw"></i> Marquer comme indisponible</button>
-                            <button type="button" class="btn btn-sm btn-success" ng-if="interview.status === 'unavailable'" ng-click="createInterview(interview)"><i class="fa fa-check-square-o fa-fw"></i> Marquer comme disponible</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
     <div class="col-md-4">
         <div class="row"  style="margin-top: 35px;">
             <div class="col-md-12">
@@ -69,6 +38,61 @@
             </div>
         </div>
     </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="admin-display-interviews-for-recruiter" class="table">
+                    <thead>
+                    <tr>
+                        <th style="width: 20%;">Créneau</th>
+                        <th style="width: 15%;">Zone</th>
+                        <th style="width: 40%;">Candidat</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="interview in recruiterInterviews.interviews" class="interview interview-status-{{interview.status}}">
+                        <td>
+                            {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
+                        </td>
+                        <td>
+                            <select class="form-control"
+                                    ng-options="location.name for location in locations track by location.ido"
+                                    ng-model="interview.location"
+                                    ng-change="updateLocationForInterview(interview, '{{ interview }}')">
+                                <option value="">Aucune</option>
+                            </select>
+                        </td>
+                        <td>
+                            <span ng-if="interview.status === 'taken'">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} – {{ interview.candidate.grade }}</span>
+                            <p ng-if="interview.status === 'free'" class="text-center"><button type="button" class="btn btn-sm btn-primary" ng-click="bookInterview(interview)"><i class="fa fa-sign-in fa-fw"></i> Inscrire un étudiant</button></p>
+                        </td>
+                        <td class="actions">
+                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'taken'" ng-click="freeInterview(interview)"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>
+                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'free'" ng-click="deleteInterview(interview)"><i class="fa fa-times fa-fw"></i> Marquer comme indisponible</button>
+                            <button type="button" class="btn btn-sm btn-success" ng-if="interview.status === 'unavailable'" ng-click="createInterview(interview)"><i class="fa fa-check-square-o fa-fw"></i> Marquer comme disponible</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <select class="form-control"
+                                    ng-options="location.name for location in locations track by location.ido"
+                                    ng-model="newLocationForAllInterviews"
+                                    ng-change="updateLocationForAllInterviews()">
+                                <option value="">Aucune</option>
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row" style="margin-top: 42px;">
@@ -102,15 +126,15 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="email">Adresse email</label>
-                            <input type="text" class="form-control" id="email"
+                            <label>Adresse email</label>
+                            <input type="text" class="form-control"
                                    ng-model="recruiter.user.email" ng-model-options="{debounce: 550}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="email">Téléphone</label>
-                            <input type="text" class="form-control" id="email"
+                            <label>Téléphone</label>
+                            <input type="text" class="form-control"
                                    ng-model="recruiter.user.phone" ng-model-options="{debounce: 550}">
                         </div>
                     </div>
