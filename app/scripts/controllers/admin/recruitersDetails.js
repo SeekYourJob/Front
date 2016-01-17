@@ -124,10 +124,11 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
     Restangular.one("locations/update-interview/" + interview.ido).customPUT({
       idoLocation: (interview.location) ? interview.location.ido : 'NONE'
     }).then(function(response) {
-      // Nothing to do here...
+      refreshInterviews();
     }, function(err) {
       alert('Cet emplacement est déjà occupé !');
       interview.location = previousInterview.location;
+      refreshInterviews();
     });
   };
 
@@ -135,9 +136,10 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
     Restangular.one("locations/update-recruiter/" + $scope.recruiter.ido).customPUT({
       idoLocation: ($scope.newLocationForAllInterviews) ? $scope.newLocationForAllInterviews.ido : 'NONE'
     }).then(function(response) {
-      console.log('ok', response);
+      refreshInterviews();
     }, function(err) {
-      console.log('ko', err);
+      alert('Certains emplacements sont déjà attribués !');
+      refreshInterviews();
     });
   };
 
