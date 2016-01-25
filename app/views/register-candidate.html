@@ -6,10 +6,10 @@
             <h2>S'inscrire en tant que candidat</h2><br />
             <p>
 
-                Afin de procéder à votre inscription, <strong>merci de compléter tous les champs</strong>.<br />
+                Afin de procÃ©der Ã  votre inscription, <strong>merci de complÃ©ter tous les champs</strong>.<br />
             </p>
             <p>
-                <small>Astuce : dès qu'une étape est validée sa couleur passe du <span class="customLabel blue">BLEUE</span> au <span class="customLabel green">VERT</span> !</small>
+                <small>Astuce : dÃ¨s qu'une Ã©tape est validÃ©e sa couleur passe du <span class="customLabel blue">BLEUE</span> au <span class="customLabel green">VERT</span> !</small>
             </p>
         </div>
 
@@ -17,30 +17,30 @@
         <form name="credentialPartForm" class="form-block" novalidate
               ng-class="{'valid': !form.emailAlreadyExists && credentialPartForm.$valid}">
             <h4>Identifiants</h4>
-            <p>Ces identifiants sont importants, ils vous permettront <strong>d'accéder à la platefome, et de visualiser les différentes offres proposées par les entreprises présentes le jour J.</strong>.</p>
+            <p>Ces identifiants sont importants, ils vous permettront <strong>d'accÃ©der Ã  la platefome, et de visualiser les diffÃ©rentes offres proposÃ©es par les entreprises prÃ©sentes le jour J.</strong>.</p>
             <div class="row" style="margin-top: 15px;">
                 <div class="form-group col-md-6" ng-class="{'has-error': form.emailAlreadyExists}">
                     <label for="email">Adresse email<span class="required">*</span></label>
                     <input type="email" class="form-control input-lg" id="email" name="email"
                            ng-model="newCandidate.user.email" ng-change="checkDuplicateEmail()" ng-model-options="{debounce: 500}" ng-required="true">
-                    <span class="help-block" ng-if="form.emailAlreadyExists"><strong>Cette adresse email est déjà utilisée !</strong></span>
+                    <span class="help-block" ng-if="form.emailAlreadyExists"><strong>Cette adresse email est dÃ©jÃ  utilisÃ©e !</strong></span>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="password">Mot de passe<span class="required">*</span></label>
                     <input type="password" class="form-control input-lg" id="password" name="password"
                            ng-model="newRecruiter.user.password" ng-required="true" ng-minlength="6">
-                    <span class="help-block">On demande juste 6 caractères au moins :)</span>
+                    <span class="help-block">On demande juste 6 caractÃ¨res au moins :)</span>
                 </div>
             </div>
         </form>
 
-        <!-- Coordonnées -->
+        <!-- CoordonnÃ©es -->
         <form name="contactInfoPartForm" class="form-block" novalidate
               ng-class="{'valid': contactInfoPartForm.$valid}">
-            <h4>Coordonnées</h4>
+            <h4>CoordonnÃ©es</h4>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="firstname">Prénom<span class="required">*</span></label>
+                    <label for="firstname">PrÃ©nom<span class="required">*</span></label>
                     <input type="text" class="form-control" id="firstname" name="firstname"
                            ng-model="newCandidate.user.firstname" ng-required="true">
                 </div>
@@ -50,7 +50,7 @@
                            ng-model="newCandidate.user.lastname" ng-required="true">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="phone">Téléphone<span class="required">*</span></label>
+                    <label for="phone">TÃ©lÃ©phone<span class="required">*</span></label>
                     <input type="text" class="form-control" id="phone" name="phone"
                            ng-model="newCandidate.user.phone" ng-required="true" ng-pattern="/^[0-9 ]+$/" ng-minlength="10">
                 </div>
@@ -67,18 +67,18 @@
               ng-class="{'valid': documentsPartForm.$valid}">
             <h4>Documents</h4>
             <p>Uploader un CV est <strong>obligatoire</strong> si vous voulez participer aux entretiens,<br/>
-                celui-ci sera envoyé aux recruteurs concernés avant la journée JobForum. <em>Venez quand même avec quelques copies, cela peut toujours servir ;)</em></p>
+                celui-ci sera envoyÃ© aux recruteurs concernÃ©s avant la journÃ©e JobForum. <em>Venez quand mÃªme avec quelques copies, cela peut toujours servir ;)</em></p>
             <div class="row">
                 <div ngf-drop ng-model="form.documents" class="dropbox"
                      ngf-select="true" ngf-multiple="false" ngf-allow-dir="false">
                     <div class="help">
-                        <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
+                        <span ng-if="!form.documentIsBeingSent">Glissez-dÃ©posez vos documents ou<br> cliquez ici pour les sÃ©lectionner.</span>
                         <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
                     </div>
                 </div>
-                <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+                <div ngf-no-file-drop>Cette fonctionnalitÃ© n'est pas disponible sur votre navigateur</div>
                 <div id="documentsSent" ng-if="newCandidate.candidate.documents.length">
-                    <p><strong>Document(s) envoyé(s) :</strong></p>
+                    <p><strong>Document(s) envoyÃ©(s) :</strong></p>
                     <ul>
                         <li ng-repeat="document in newRecruiter.recruiter.documents">
                             {{ document.name }}  - <i class="fa fa-trash-o fa-fw text-danger" title="Supprimer ce document" ng-click="deleteDocument(document)"></i>
