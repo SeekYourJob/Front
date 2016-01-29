@@ -1,1 +1,56 @@
 <h2>Entretiens</h2>
+
+<div class="row" style="margin-bottom: 21px;">
+    <div class="col-md-3 col-md-offset-9">
+        <select class="form-control"
+                ng-model="selectedSlot"
+                ng-options="slot.begins_at_formatted + ' – ' + slot.ends_at_formatted for slot in slots track by slot.ido"
+                ng-change="displayLocationsWithInterviewsForSelectedSlot()">
+            <option value="">Choisir un horaire...</option>
+        </select>
+    </div>
+</div>
+
+<!--<pre>-->
+    <!--{{ locationWithInterviews | json }}-->
+<!--</pre>-->
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="width: 20%;">Emplacement</th>
+                <th style="width: 40%;">{{ locationWithInterviews.currentSlot.begins_at }} – {{ locationWithInterviews.currentSlot.ends_at }}</th>
+                <th style="width: 40%;">{{ locationWithInterviews.nextSlot.begins_at }} – {{ locationWithInterviews.nextSlot.ends_at }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="interview in locationWithInterviews.interviews" style="min-height: 42px;">
+                <td class="text-center" style="vertical-align: middle; font-size: 24px; padding-top: 3px;">
+                    <span class="label label-primary">Zone {{ interview.location.name }}</span>
+                </td>
+                <td>
+                    <p class="text-center" style="margin: 5px 0;">
+                        <span ng-if="interview.current">
+                            {{ interview.current.recruiter.firstname }} {{ interview.current.recruiter.lastname }} - {{ interview.current.recruiter.company.name }}<br />
+                            <em>avec</em> {{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }} {{ interview.current.candidate.grade }}
+                        </span>
+                        <span ng-if="!interview.current">–</span>
+                    </p>
+                </td>
+                <td>
+                    <p class="text-center" style="margin: 5px 0;">
+                        <span ng-if="interview.next">
+                            {{ interview.next.recruiter.firstname }} {{ interview.next.recruiter.lastname }} - {{ interview.next.recruiter.company.name }}<br />
+                            <em>avec</em> {{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} - {{ interview.next.candidate.grade }}
+                        </span>
+                        <span ng-if="!interview.next">–</span>
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
