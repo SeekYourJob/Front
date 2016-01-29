@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelper', '$q', '$localStorage', 'ENV', function($http, $rootScope, jwtHelper, $q, $localStorage, ENV) {
+angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelper', '$q', '$localStorage', 'ENV', '$pusher', function($http, $rootScope, jwtHelper, $q, $localStorage, ENV, $pusher) {
 
   var self = this;
 
@@ -14,6 +14,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
     }).success(function(data) {
         $localStorage.token = data.token;
         $rootScope.authenticated = true;
+        self.turnOnPusher();
         deferred.resolve(data.token);
     }).error(function() {
       deferred.reject('Bad credentials.');
@@ -147,6 +148,26 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
     });
 
     return deferred.promise;
+  };
+
+  self.turnOnPusher = function()
+  {
+    if (!self.check()) {
+      console.log('[PUSHER] Can NOT be turned ON (NOT authenticated)');
+      return ;
+    }
+
+    console.log('[PUSHER] Turned ON');
+    /* jshint strict: false, -W117 */
+    $rootScope.pusher = new Pusher('9b5860d837aa56e753e6', {
+      authEndpoint: ENV.apiEndpoint + "/authenticate/pusher-token",
+      disableStats: true,
+      auth: {
+        headers: {Authorization: "Bearer " + $localStorage.token}
+      }
+    });
+
+    $rootScope.pusherClient = $pusher($rootScope.pusher);
   };
 
 }]);

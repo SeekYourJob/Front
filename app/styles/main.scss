@@ -96,17 +96,21 @@ footer {
     display: none;
   }
 
+  @media (max-width: $screen-sm-max) {
+    display: none;
+  }
+
   .footer-banner {
     background-color: #2197bd;
     color: #d3eaf2;
     margin-left: 42px;
     min-height: 250px;
-    padding: 0 30px 30px;
+    padding: 0 30px;
     color: #FFFFFF;
 
     ul {
       list-style-type: none;
-      margin: 0 0 26px;
+      margin-left: 21px;
       padding: 0;
 
       li {
@@ -128,16 +132,24 @@ footer {
   }
 
   .footer-title {
-    margin: 0 0 22px;
+    margin: 0 0 14px;
     padding-top: 21px;
     font-size: 24px;
     line-height: 40px;
   }
 }
 
+#loginHeaderLink {
+  font-size: 16px;
+  color: $customLightBlue;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 #profiles {
   @extend .row;
-  margin-top: 35px;
+  margin-top: 0;
 
   .profile {
     @extend .col-md-4, .text-center;
@@ -166,8 +178,8 @@ footer {
 
     &:hover {
       cursor: pointer;
-      border: solid 1px $customDarkBlue;
-      border-radius: 3px;
+      //border: solid 1px $customDarkBlue;
+      //border-radius: 3px;
 
       h2 {
         color: $customLightBlue;
@@ -492,6 +504,8 @@ footer {
 }
 
 #account-display-interviews {
+  margin-top: 42px;
+
   .panel-body {
     padding-top: 4px;
     padding-bottom: 4px;
@@ -587,6 +601,10 @@ footer {
 
       table {
         margin-bottom: 0;
+
+        thead > tr > th {
+          text-align: center;
+        }
 
         tbody > tr > td {
           width: 12.5%;
@@ -685,5 +703,13 @@ footer {
       font-style: italic;
       font-weight: bold;
     }
+  }
+}
+
+#summaryCandidate {
+  td {
+    font-size: 12px;
+    text-align: center;
+    color: #8c8c8c;
   }
 }

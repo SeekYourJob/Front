@@ -1,7 +1,8 @@
-<h2>Recruiter Account</h2>
+<h2 class="text-center" style="margin-bottom: 0;"><img src="https://www.gravatar.com/avatar/{{ user.email_md5 }}.jpg?s=168&d=mm" class="img-circle" width="84px" height="84px"> &nbsp;&nbsp;Compte de {{ user.firstname }} {{ user.lastname }}</h2>
+<h3 class="text-center" style="margin-left: 90px; margin-top: -12px;">{{ user.recruiter.company.name }}</h3>
 
 <div id="account-display-interviews">
-    <h3>Mon planning</h3>
+    <h3>Entretiens prévus</h3>
     <hr/>
     <div class="panel panel-default">
         <div class="panel-body">
@@ -28,49 +29,98 @@
     </div>
 </div>
 
-<h3>Mes Documents:</h3>
-<hr/>
-<!-- Documents -->
-<form name="documentsPartForm" class="form-block" novalidate>
-    <p>Afin de correspondre au mieux aux profils des candidats, n'hésitez pas à envoyer des exemples d'annonces ici (formats .doc, .docx et .pdf acceptés).</p>
-    <div class="row">
-        <div class="col-md-6">
-        <div ngf-drop ng-model="form.documents" class="dropbox"
-             ngf-select="true" ngf-multiple="true" ngf-allow-dir="false">
-            <div class="help">
-                <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
-                <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Informations</h3>
+        <hr/>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Adresse e-mail :</label>
+                <div class="col-sm-7">
+                    <input type="email" class="form-control" ng-model="user.email" disabled="disabled">
+                </div>
             </div>
-        </div>
-        <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default" ng-show="documents.length">
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Documents</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="document in documents">
-                        <td>{{ document.name | limitTo: 30 }}{{document.name.length > 30 ? '...' : ''}} </td>
-                        <td class="pull-right">
-                            <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><span class="glyphicon glyphicon-edit"></span> Telecharger</button>
-                            <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Prénom :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" ng-model="user.firstname" disabled="disabled">
+                </div>
             </div>
-        </div>
-    </div>
-</form>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Nom :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" ng-model="user.lastname" disabled="disabled">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Téléphone :</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" ng-model="user.phone" disabled="disabled">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Notifications :</label>
+                <div class="col-sm-7">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="user.notifications.email" disabled="disabled">par email
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="user.notifications.email" disabled="disabled">par SMS (le jour de l'évènement)
+                        </label>
+                    </div>
+                </div>
+            </div>
 
-<pre>
-   {{ user | json }}
-</pre>
+            <p class="text-center" style="margin-top: 34px; display: none;">
+                <button class="btn btn-success" disabled="disabled">Enregistrer</button>
+            </p>
+
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h3>Fichiers envoyés</h3>
+        <hr/>
+        <form name="documentsPartForm" class="form-block" novalidate>
+            <p>Utilisez cet espace pour envoyer des offres que nous pourrons transmettre aux candidats (formats .doc, .docx et .pdf acceptés).</p>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-12">
+                    <div class="panel panel-default" ng-show="documents.length">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Documents</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="document in documents">
+                                <td style="vertical-align: middle">{{ document.name | limitTo: 30 }}{{document.name.length > 30 ? '...' : ''}} </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><i class="fa fa-download fa-fw"></i> Télécharger</button>
+                                    <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><i class="fa fa-trash-o fa-fw"></i> Supprimer</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div ngf-drop ng-model="form.documents" class="dropbox"
+                         ngf-select="true" ngf-multiple="true" ngf-allow-dir="false" ngf-accept="'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
+                        <div class="help">
+                            <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
+                            <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
+                        </div>
+                    </div>
+                    <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <script type="text/ng-template" id="popover.html">
      <p>

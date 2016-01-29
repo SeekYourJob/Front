@@ -4,16 +4,32 @@
 
 <div id="candidateInterviews">
 
-    <div class="col-md-7">
-        <h3>Planifier mes entretiens</h3><hr>
+    <div class="col-md-8 col-md-offset-2" style="margin-top: 21px; margin-bottom: 42px;" ng-if="user.candidate.canRegisterToInterviews">
+        <h3><i class="fa fa-calendar-check-o fa-fw"></i> Mes entretiens</h3><hr>
+        <p class="lead text-center" ng-if="!summary.count">
+            Aucun entretien de prévu
+        </p>
+        <table id="summaryCandidate" class="table" ng-if="summary.count">
+            <thead>
+            <tr>
+                <th style="width: {{ (1 / summary.summary.length) * 100 }}%;" ng-repeat="sum in summary.summary">{{ sum.slot.begins_at_formatted }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td ng-repeat="sum in summary.summary">
+                    <span ng-if="sum.interview">{{ sum.interview.company.name }}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-
+    <div class="col-md-8 col-md-offset-2" style="margin-top: 21px; margin-bottom: 42px;" ng-if="user.candidate.canRegisterToInterviews">
+        <h3><i class="fa fa-calendar-plus-o fa-fw"></i> Planifier mes entretiens</h3><hr>
         <div class="row">
-            <div class="col-md-6">
-                LIVE : <span class="label label-default">{{ pusherChannelMembers.count }} personne(s) connectée(s)</span>
-            </div>
-            <div class="col-md-6 text-right">
-                <div class="form-horizontal form-group">
+            <div class="col-md-6 col-md-offset-6 text-right">
+                <div class="form-horizontal form-group" style="margin-bottom: 20px;">
                     <div class="checkbox">
                         <label for="showAllCompanies">
                             <input type="checkbox" id="showAllCompanies" ng-model="showAllCompanies"> Déplier toutes les entreprises
@@ -23,17 +39,9 @@
             </div>
         </div>
 
-        <div class="showAllCompaniesWrapper">
-            <div class="form-group">
-                <div class="col-md-4 col-md-offset-8">
-
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="company" ng-repeat="company in companies">
-                <div class="panel panel-default">
+                <div class="panel {{ company.hasInterviewWithCandidate ? 'panel-success' : 'panel-default' }}">
                     <div ng-click="displayCompanies[$index] = !displayCompanies[$index]"
                          analytics-on="click" analytics-event="Toggled" analytics-category="Interviews" analytics-label="{{ company.company.name }}"
                          class="panel-heading"
@@ -68,6 +76,22 @@
                                 </td>
                             </tr>
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="{{ slots.length / 2 }}">
+                                    <small>
+                                        <span ng-repeat="(jobType, activated) in company.company.job_types" ng-class="{'text-success': activated, 'text-danger': !activated}">
+                                            <i class="fa fa-fw {{ activated ? 'fa-check' : 'fa-times' }}"></i> {{ jobType }} &nbsp;&nbsp;&nbsp;
+                                        </span>
+                                    </small>
+                                </td>
+                                <td colspan="{{ slots.length / 2 }}" class="text-right">
+                                    <small>
+                                        <a href="javascript:void(0);" ng-click="showOffersForCompany(company.company);">Télécharger le(s) offre(s) proposée(s) par {{ company.company.name }}</a>
+                                    </small>
+                                </td>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -75,23 +99,26 @@
         </div>
     </div>
 
-    <div class="col-md-5">
-        <h3>Mes informations</h3><hr>
-        <h4>Mon CV :</h4>
+    <div class="col-md-8 col-md-offset-2">
+        <h3><i class="fa fa-file-text-o fa-fw"></i> Mon CV</h3><hr>
         <!-- Documents -->
         <form name="documentsPartForm" class="form-block" novalidate>
-            <p>Un CV valide est nécessaire pour s'inscrire à des entretiens.</p>
+            <p>
+                <strong>Vous devez soumettre un CV valide avant de pouvoir vous inscrire à des entretiens.</strong><br>
+                Vous serez prévenu par email dès qu'il sera validé et pourrez dès lors procéder aux inscriptions.
+            </p><br />
             <div class="row">
                 <div class="col-md-12">
                     <div ngf-drop ng-model="form.documents" class="dropbox"
-                         ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ng-show="!documents.length">
+                         ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ngf-accept="'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document'" ng-if="!documents.length"
+                    >
                         <div class="help">
-                            <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou<br> cliquez ici pour le sélectionner.</span>
+                            <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou<br> cliquez ici pour le sélectionner...</span>
                             <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
                         </div>
                     </div>
                     <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
-                    <div class="panel panel-default" ng-show="documents.length">
+                    <div class="panel panel-default" ng-if="documents.length">
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
@@ -104,9 +131,9 @@
                             <tr ng-repeat="document in documents">
                                 <td style="vertical-align: middle;">{{ document.name | limitTo: 20 }}{{document.name.length > 20 ? '...' : ''}} </td>
                                 <td style="vertical-align: middle;" ng-switch="document.status">
-                                    <span ng-switch-when="ACCEPTED" class="label label-default">Accepté</span>
-                                    <span ng-switch-when="PENDING" class="label label-warning">En attente</span>
-                                    <span ng-switch-when="REJECTED" class="label label-alert">Refusé</span>
+                                    <span ng-switch-when="ACCEPTED" class="label label-success">ACCEPTÉ</span>
+                                    <span ng-switch-when="PENDING" class="label label-warning">EN ATTENTE DE VALIDATION</span>
+                                    <span ng-switch-when="REJECTED" class="label label-alert">REFUSÉ</span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-right">
                                     <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><i class="fa fa-download fa-fw"></i></button>
@@ -120,7 +147,28 @@
             </div>
         </form>
     </div>
-
-
 </div>
 
+<script type="text/ng-template" id="showCompanysOffers.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Offres de {{ offersModalComponents.company.name }}</h3>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 70%;">Intitulé</th>
+                <th style="width: 30%;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="offer in offersModalComponents.offers">
+                <td style="vertical-align: middle;">{{ offer.name }} <em>({{ offer.size_readable }})</em></td>
+                <td  style="vertical-align: middle; text-align: right;">
+                    <button class="btn btn-primary" ng-click="downloadDocument(offer);"><i class="fa fa-download fa-fw"></i> Télécharger</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
