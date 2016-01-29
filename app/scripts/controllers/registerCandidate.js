@@ -3,15 +3,24 @@
 angular.module('cvsApp').controller('RegisterCandidateCtrl',  ['$scope', '$http', 'Upload', 'AuthService', '$state', 'ENV', 'UploadService',
   function($scope, $http, Upload, AuthService, $state, ENV, UploadService) {
 
-    $scope.grades = ['L3','M1','M2'];
-
     $scope.newCandidate = {
       user: {},
       candidate: {
-        availability: '',
         grade: '',
         documents: []
       }
+    };
+
+    $scope.grades = ['L3','M1','M2'];
+    $scope.newCandidate.candidate.grade = $scope.grades[0];
+
+    $scope.form = {
+      others: '',
+      documents: false,
+      emailAlreadyExists: false,
+      documentIsBeingSent: false,
+      isBeingSubmitted: false,
+      isSubmitted: false
     };
 
     $scope.$watch('form.documents', function() {
@@ -67,8 +76,5 @@ angular.module('cvsApp').controller('RegisterCandidateCtrl',  ['$scope', '$http'
       return ($scope.credentialPartForm.$valid &&
       $scope.contactInfoPartForm.$valid);
     };
-
-
-  $scope.init();
 
 }]);
