@@ -5,7 +5,6 @@
         <div class="register-title" style="margin-bottom: 42px;">
             <h2>S'inscrire en tant que candidat</h2><br />
             <p>
-
                 Afin de procéder à votre inscription, <strong>merci de compléter tous les champs</strong>.<br />
             </p>
             <p>
@@ -39,22 +38,22 @@
               ng-class="{'valid': contactInfoPartForm.$valid}">
             <h4>Coordonnées</h4>
             <div class="row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="firstname">Prénom<span class="required">*</span></label>
                     <input type="text" class="form-control" id="firstname" name="firstname"
                            ng-model="newCandidate.user.firstname" ng-required="true">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="lastname">Nom<span class="required">*</span></label>
                     <input type="text" class="form-control" id="lastname" name="lastname"
                            ng-model="newCandidate.user.lastname" ng-required="true">
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="phone">Téléphone<span class="required">*</span></label>
+                <div class="form-group col-md-6">
+                    <label for="phone">Téléphone portable<span class="required">*</span></label>
                     <input type="text" class="form-control" id="phone" name="phone"
                            ng-model="newCandidate.user.phone" ng-required="true" ng-pattern="/^[0-9 ]+$/" ng-minlength="10">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label for="grade">Promotion<span class="required">*</span></label>
                     <select id="grade" class="form-control">
                         <option data-ng-model="newCandidate.candidate.grade" ng-repeat="grade in grades" value="{{grade}}">{{grade}}</option>
@@ -66,23 +65,31 @@
         <!-- Documents -->
         <form name="documentsPartForm" class="form-block" novalidate
               ng-class="{'valid': documentsPartForm.$valid}">
-            <h4>Documents</h4>
-            <p>Uploader un CV est <strong>obligatoire</strong> si vous voulez participer aux entretiens,<br/>
-                celui-ci sera envoyé aux recruteurs concernés avant la journée JobForum. <em>Venez quand même avec quelques copies, cela peut toujours servir ;)</em></p>
+            <h4>Curriculum</h4>
+            <p class="text-center" style="margin-top: 20px;">
+                <strong>Un CV est nécessaire pour vous inscrire à des entretiens.</strong><br />
+                Il sera <strong>validé par l'équipe</strong> puis <strong>transmis aux recruteurs</strong>.<br />
+            </p>
+            <p class="text-center">
+                Vous pouvez l'envoyer dès maintenant ou plus tard depuis votre compte.
+            </p>
+            <p class="text-center">
+                <em>Nous vous invitons à vous munir de quelques copies le Jour-J, elles pourront toujours servir ;)</em>
+            </p>
             <div class="row">
                 <div ngf-drop ng-model="form.documents" class="dropbox"
                      ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ng-if="!newCandidate.candidate.documents.length">
                     <div class="help">
-                        <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
+                        <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou<br> cliquez ici pour le sélectionner.</span>
                         <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
                     </div>
                 </div>
                 <div ngf-no-file-drop>Cette fonctionnalité n'est pas disponible sur votre navigateur</div>
                 <div id="documentsSent" ng-if="newCandidate.candidate.documents.length">
-                    <p><strong>Document(s) envoyé(s) :</strong></p>
+                    <p><strong>Curriculum envoyé :</strong></p>
                     <ul>
                         <li ng-repeat="document in newCandidate.candidate.documents">
-                            {{ document.name }}  - <i class="fa fa-trash-o fa-fw text-danger" title="Supprimer ce document" ng-click="deleteDocument(document)"></i>
+                            {{ document.name }}  - <i class="fa fa-trash-o fa-fw text-danger" title="Supprimer ce curriculum" ng-click="deleteDocument(document)"></i>
                         </li>
                     </ul>
                 </div>
@@ -96,11 +103,8 @@
                 <span ng-if="form.isBeingSubmitted && !form.isSubmitted"><i class="fa fa-cog fa-spin fa-fw"></i></span>
                 <span ng-if="form.isSubmitted"><i class="fa fa-check fa-2x"></i></span>
             </button>
-        <p class="text-center text-danger" ng-if="!formsAreValid()"><small>Certains champs ne sont pas valides !</small></p>
         </p>
+        <p class="text-center text-danger" ng-if="!formsAreValid()"><small>Certains champs ne sont pas valides !</small></p>
 
-    <pre>
-        {{newCandidate | json}}
-    </pre>
     </div>
 </div>

@@ -31,7 +31,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       }
 
       function getInterviews() {
-        Restangular.one("interviews/candidate/" + $scope.user.profile_ido).get().then(function(response) {
+        Restangular.one("interviews/candidate-by-company/" + $scope.user.profile_ido).get().then(function(response) {
           $scope.slots = response.slots;
           $scope.companies = response.companies;
         });
@@ -89,9 +89,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       );
 
       // Documents
-
       $scope.$watch('form.documents', function() {
-        console.log('upload documents triggered');
         $scope.uploadDocuments($scope.form.documents);
       });
 

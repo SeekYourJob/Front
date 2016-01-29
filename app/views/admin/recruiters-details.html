@@ -1,39 +1,6 @@
 <h2><strong>{{ recruiter.user.firstname }} {{ recruiter.user.lastname }}</strong></h2>
 
 <div class="row">
-    <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-12">
-                <table id="admin-display-interviews" class="table">
-                    <thead>
-                    <tr>
-                        <th style="width: 20%;">Créneau</th>
-                        <th style="width: 50%;">Candidat</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="interview in recruiterInterviews.interviews" class="interview interview-status-{{interview.status}}">
-                        <td>
-                            {{ interview.slot.begins_at }} <i class="fa fa-arrow-right fa-fw"></i> {{ interview.slot.ends_at }}
-                        </td>
-                        <td>
-                            <span ng-if="interview.status === 'taken'">
-                                <a ui-sref="app.admin.candidates.details({id: interview.candidate.ido})">{{ interview.candidate.firstname }} {{ interview.candidate.lastname }} – {{ interview.candidate.grade }}
-                            </span>
-                            <p ng-if="interview.status === 'free'" class="text-center"><button type="button" class="btn btn-sm btn-primary" ng-click="bookInterview(interview)"><i class="fa fa-sign-in fa-fw"></i> Inscrire un étudiant</button></p>
-                        </td>
-                        <td class="actions">
-                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'taken'" ng-click="freeInterview(interview)"><i class="fa fa-times fa-fw"></i> Désinscrire l'étudiant</button>
-                            <button type="button" class="btn btn-sm btn-danger" ng-if="interview.status === 'free'" ng-click="deleteInterview(interview)"><i class="fa fa-times fa-fw"></i> Marquer comme indisponible</button>
-                            <button type="button" class="btn btn-sm btn-success" ng-if="interview.status === 'unavailable'" ng-click="createInterview(interview)"><i class="fa fa-check-square-o fa-fw"></i> Marquer comme disponible</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
     <div class="col-md-4">
         <div class="row"  style="margin-top: 35px;">
             <div class="col-md-12">
@@ -74,8 +41,20 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-12">
-                <table id="admin-display-interviews-for-recruiter" class="table">
+                <table id="admin-display-interviews" class="table">
                     <thead>
+                    <tr>
+                        <th style="vertical-align: middle;">Tous les entretiens</th>
+                        <th>
+                            <select class="form-control"
+                                    ng-options="location.name for location in locations track by location.ido"
+                                    ng-model="newLocationForAllInterviews"
+                                    ng-change="updateLocationForAllInterviews()">
+                                <option value="">Aucune</option>
+                            </select>
+                        </th>
+                        <th colspan="2"></th>
+                    </tr>
                     <tr>
                         <th style="width: 20%;">Créneau</th>
                         <th style="width: 15%;">Zone</th>
@@ -107,21 +86,6 @@
                         </td>
                     </tr>
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <select class="form-control"
-                                    ng-options="location.name for location in locations track by location.ido"
-                                    ng-model="newLocationForAllInterviews"
-                                    ng-change="updateLocationForAllInterviews()">
-                                <option value="">Aucune</option>
-                            </select>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
@@ -290,17 +254,17 @@
 
         <table class="table" ng-if="selected.availableCandidate">
             <thead>
-                <tr>
-                    <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
-                </tr>
+            <tr>
+                <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td ng-repeat="slot in slots" ng-class="{selectedSlot: selected.slot.ido == slot.ido}">
-                        {{ selected.availableCandidate.registered_slots_obfuscated[slot.ido] }}
-                        <span ng-if="!selected.availableCandidate.registered_slots_obfuscated[slot.ido]" class="free">Libre</span>
-                    </td>
-                </tr>
+            <tr>
+                <td ng-repeat="slot in slots" ng-class="{selectedSlot: selected.slot.ido == slot.ido}">
+                    {{ selected.availableCandidate.registered_slots_obfuscated[slot.ido] }}
+                    <span ng-if="!selected.availableCandidate.registered_slots_obfuscated[slot.ido]" class="free">Libre</span>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

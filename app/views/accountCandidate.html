@@ -133,10 +133,10 @@
                                 <td style="vertical-align: middle;" ng-switch="document.status">
                                     <span ng-switch-when="ACCEPTED" class="label label-success">ACCEPTÉ</span>
                                     <span ng-switch-when="PENDING" class="label label-warning">EN ATTENTE DE VALIDATION</span>
-                                    <span ng-switch-when="REJECTED" class="label label-alert">REFUSÉ</span>
+                                    <span ng-switch-when="REJECTED" class="label label-danger">REFUSÉ</span>
                                 </td>
                                 <td style="vertical-align: middle;" class="text-right">
-                                    <button type="button" class="btn btn-success" ng-click="downloadDocument(document)"><i class="fa fa-download fa-fw"></i></button>
+                                    <button type="button" class="btn btn-primary" ng-click="downloadDocument(document)"><i class="fa fa-download fa-fw"></i></button>
                                     <button type="button" class="btn btn-danger" ng-click="deleteDocument(document)"><i class="fa fa-trash-o"></i></button>
                                 </td>
                             </tr>
