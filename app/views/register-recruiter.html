@@ -1,12 +1,12 @@
-<div id="register-recruiter" class="register-page">
+<div id="register-user" class="register-page">
 
     <div class="register-form">
 
         <div class="register-title" style="margin-bottom: 42px;">
             <h2>S'inscrire en tant que recruteur</h2><br />
             <p>
-                Vous souhaitez vous inscrire au Job Forum organisé par l'équipe SeekYourJob de la FGES et nous vous en remercions.
-                Afin de procéder à votre inscription, <strong>merci de compléter ces quelques champs qui, sauf mention contraire, sont tous requis</strong>.<br />
+                Vous souhaitez vous inscrire au Job Forum de l'équipe SeekYourJob de la FGES et nous vous en remercions.
+                Merci de compléter ces quelques champs qui, sauf mention contraire, <strong>sont tous requis</strong>.<br />
             </p>
             <p>
                 <small>Astuce : dès qu'une étape est validée sa couleur passe du <span class="customLabel blue">BLEUE</span> au <span class="customLabel green">VERT</span> !</small>
@@ -289,7 +289,7 @@
             <p>Afin de correspondre au mieux aux profils des candidats, n'hésitez pas à envoyer des exemples d'annonces ici (formats .doc, .docx et .pdf acceptés).</p>
             <div class="row">
                 <div ngf-drop ng-model="form.documents" class="dropbox"
-                     ngf-select="true" ngf-multiple="true" ngf-allow-dir="false">
+                     ngf-select="true" ngf-multiple="true" ngf-allow-dir="false" ngf-accept="'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document'">
                     <div class="help">
                         <span ng-if="!form.documentIsBeingSent">Glissez-déposez vos documents ou<br> cliquez ici pour les sélectionner.</span>
                         <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
@@ -314,7 +314,7 @@
                 <span ng-if="form.isBeingSubmitted && !form.isSubmitted"><i class="fa fa-cog fa-spin fa-fw"></i></span>
                 <span ng-if="form.isSubmitted"><i class="fa fa-check fa-2x"></i></span>
             </button>
-            <p class="text-center text-danger" ng-if="!formsAreValid()"><small>Certains champs ne sont pas valides !</small></p>
+            <p class="text-center text-danger" ng-if="!formsAreValid()"><small>Certains champs sont manquants ou invalides</small></p>
         </p>
 
     </div>

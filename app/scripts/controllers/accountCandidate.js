@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('cvsApp').controller('AccountCandidateCtrl',
-  ['$scope', 'Restangular', '$pusher', '$rootScope','UploadService','ENV',
-    function($scope, Restangular, $pusher, $rootScope, UploadService, ENV) {
+  ['$scope', 'Restangular', '$rootScope','UploadService','ENV', '$modal',
+    function($scope, Restangular, $rootScope, UploadService, ENV, $modal) {
 
-      var pusher = $pusher($rootScope.pusherClient);
-      var pusherChannel = pusher.subscribe('presence-interviews');
+      var pusherChannel = $rootScope.pusherClient.subscribe('presence-interviews');
+      var showOffersModal = false;
+
 
       $scope.user = $scope.$parent.user;
       $scope.slots = [];
@@ -13,8 +14,8 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
       $scope.isWaiting = false;
       $scope.displayCompanies = [];
       $scope.pusherChannelMembers = pusherChannel.members;
-
-      console.log($scope.user);
+      $scope.summary = {};
+      $scope.offersModalComponents = {};
 
       $scope.documents = [];
 
@@ -23,11 +24,19 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
         documentIsBeingSent: false
       };
 
+      function getCandidateSummary() {
+        Restangular.one("candidates/" + $scope.user.profile_ido + "/summary").get().then(function(response) {
+          $scope.summary = response.plain();
+        });
+      }
+
       function getInterviews() {
-        Restangular.one("interviews/candidate/" + $scope.user.ido).get().then(function(response) {
+        Restangular.one("interviews/candidate/" + $scope.user.profile_ido).get().then(function(response) {
           $scope.slots = response.slots;
           $scope.companies = response.companies;
         });
+
+        getCandidateSummary()
       }
       getInterviews();
 
@@ -104,7 +113,22 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
 
       $scope.downloadDocument = function(document) {
         Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-          window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+          //window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+          window.location.assign(ENV.apiEndpoint + '/documents/' + download.plain().token);
+        });
+      };
+
+      $scope.showOffersForCompany = function(company) {
+        Restangular.one("companies/" + company.ido + "/offers").get().then(function(response) {
+
+          $scope.offersModalComponents.company = company;
+          $scope.offersModalComponents.offers = response.plain();
+
+          showOffersModal = $modal.open({
+            animation: true,
+            templateUrl: 'showCompanysOffers.html',
+            scope: $scope
+          });
         });
       };
 

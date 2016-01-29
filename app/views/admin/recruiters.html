@@ -15,11 +15,10 @@
                 <th style="width: 20%">Entreprise</th>
                 <th style="width: 20%">Disponibilité</th>
                 <th style="width: 15%">Options</th>
-                <th style="width: 15%">Entretiens</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="recruiter in recruitersDisplayedCollection">
+            <tr ng-repeat="recruiter in recruitersDisplayedCollection | orderBy:['company.name','user.lastname']">
                 <td><a ui-sref="app.admin.recruiters.details({id: recruiter.ido})">{{recruiter.user.firstname}} {{ recruiter.user.lastname }}</a></td>
                 <td><a ui-sref="app.admin.companies.details({id: recruiter.company.ido})">{{recruiter.company.name}}</a></td>
                 <td>
@@ -30,9 +29,6 @@
                 <td>
                     <span class="label" ng-class="{'label-default': !recruiter.parking_option, 'label-success': recruiter.parking_option}">PARKING</span> &nbsp;
                     <span class="label" ng-class="{'label-default': !recruiter.lunch_option, 'label-success': recruiter.lunch_option}">REPAS</span>
-                </td>
-                <td>
-                    NaN
                 </td>
             </tr>
             </tbody>

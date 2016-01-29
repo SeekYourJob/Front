@@ -11,6 +11,9 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
     $scope.recruiterInterviews = {};
     $scope.documents = [];
 
+    $scope.locations = [];
+    $scope.newLocationForAllInterviews = {};
+
     $scope.slots = [];
     $scope.selected = {};
     $scope.availableCandidates = [];
@@ -20,14 +23,10 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
       documentIsBeingSent: false
     };
 
-
     function refreshInterviews() {
       Restangular.one('interviews/recruiter', $scope.recruiter.ido).get().then(function(recruiterInterviews) {
         $scope.recruiterInterviews = recruiterInterviews.plain();
       });
-      console.log($scope.user.ido);
-
-      console.log('Interviews refreshed');
     }
 
     // Documents
@@ -35,7 +34,15 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
       Restangular.one('documents/user',$scope.user.ido).get().then(function(documents) {
         $scope.documents = documents.plain();
       });
-    };
+    }
+
+    // Locations
+    function getLocations() {
+      Restangular.one('locations').get().then(function(locations) {
+        $scope.locations = locations.plain();
+      });
+    }
+    getLocations();
 
     // Recruiter details
     Restangular.one("recruiters", $state.params.id).get().then(function(recruiter) {
@@ -83,7 +90,8 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
   $scope.bookInterview = function(interview) {
     $scope.selected.slot = interview.slot;
 
-    Restangular.one('interviews/candidates-available-for-slot', interview.slot.ido).get()
+    Restangular.one('interviews/candidates-available-for-slot-and-company')
+      .get({idoSlot: interview.slot.ido, idoCompany: $scope.recruiter.company.ido})
       .then(function(availableCandidates) {
         $scope.availableCandidates = availableCandidates.plain().candidates;
         $scope.slots = availableCandidates.plain().slots;
@@ -111,26 +119,50 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
     });
   };
 
-    $scope.$watch('form.documents', function() {
-      $scope.uploadDocuments($scope.form.documents);
+  $scope.updateLocationForInterview = function(interview, previousInterview) {
+    previousInterview = JSON.parse(previousInterview);
+    Restangular.one("locations/update-interview/" + interview.ido).customPUT({
+      idoLocation: (interview.location) ? interview.location.ido : 'NONE'
+    }).then(function(response) {
+      refreshInterviews();
+    }, function(err) {
+      alert('Cet emplacement est déjà occupé !');
+      interview.location = previousInterview.location;
+      refreshInterviews();
     });
+  };
 
-    $scope.uploadDocuments = function(files) {
-      $scope.form.documentIsBeingSent = true;
-      UploadService.upload($scope.user,files,$scope.documents);
-      $scope.form.documentIsBeingSent = false;
-    };
+  $scope.updateLocationForAllInterviews = function() {
+    Restangular.one("locations/update-recruiter/" + $scope.recruiter.ido).customPUT({
+      idoLocation: ($scope.newLocationForAllInterviews) ? $scope.newLocationForAllInterviews.ido : 'NONE'
+    }).then(function(response) {
+      refreshInterviews();
+    }, function(err) {
+      alert('Certains emplacements sont déjà attribués !');
+      refreshInterviews();
+    });
+  };
 
-    $scope.deleteDocument = function(document) {
-      Restangular.one("documents", document.ido).remove().then(function() {
-        $scope.documents.splice($scope.documents.indexOf(document), 1);
-      });
-    };
+  $scope.$watch('form.documents', function() {
+    $scope.uploadDocuments($scope.form.documents);
+  });
 
-    $scope.downloadDocument = function(document) {
-      Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-        window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
-      });
-    };
+  $scope.uploadDocuments = function(files) {
+    $scope.form.documentIsBeingSent = true;
+    UploadService.upload($scope.user,files,$scope.documents);
+    $scope.form.documentIsBeingSent = false;
+  };
+
+  $scope.deleteDocument = function(document) {
+    Restangular.one("documents", document.ido).remove().then(function() {
+      $scope.documents.splice($scope.documents.indexOf(document), 1);
+    });
+  };
+
+  $scope.downloadDocument = function(document) {
+    Restangular.one("documents/request-token", document.ido).get().then(function(download) {
+      window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+    });
+  };
 
 }]);
