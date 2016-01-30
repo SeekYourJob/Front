@@ -1,6 +1,6 @@
 'use strict';
 
-var cvsApp = angular.module('cvsApp', ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular', 'ngSanitize', 'ui.select', 'oitozero.ngSweetAlert', 'pusher-angular', 'angulartics', 'angulartics.google.analytics']);
+var cvsApp = angular.module('cvsApp', ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular', 'ngSanitize', 'ui.select', 'oitozero.ngSweetAlert', 'pusher-angular']);
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = ['jwtHelper', '$http', 'config', '$window', '$localStorage', 'AuthService',

@@ -26,8 +26,6 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
     }).then(function(response) {
       $scope.locationWithInterviews = response.data;
       $scope.haveInterviews = true;
-    }, function(err) {
-
     })
   }
   getLocationsWithInterviewForCurrentSlot();

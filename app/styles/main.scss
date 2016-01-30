@@ -10,7 +10,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 // Fonts
 @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic|Lato:400,700);
 
 html {
   position: relative;
@@ -717,5 +717,133 @@ footer {
 .interview-per-zone {
   td {
     height: 72px;
+  }
+}
+
+
+
+
+#live {
+  @extend .container;
+  background: black;
+  width: 1920px;
+  height: 1080px;
+
+  #logo_and_clock_wrapper {
+    @extend .row;
+    font-family: 'Lato', sans-serif;
+    padding: 21px 21px 0 21px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    color: #fff;
+
+    .logo {
+      @extend .col-md-5, .text-center;
+
+      &.logo-left {
+        @extend .text-left;
+        padding-left: 10px;
+      }
+
+      &.logo-right {
+        @extend .text-right;
+        padding-right: 10px;
+      }
+
+      img {
+        height: 120px;
+      }
+
+    }
+
+    #clock {
+      @extend .col-md-2, .text-center;
+      font-size: 72px;
+    }
+  }
+
+  #interviews_wrapper {
+    @extend .row;
+    padding: 0 21px 21px 21px;
+    margin-top: -8px;
+
+    h4 {
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-size: 32px;
+      margin-top: 0;
+      margin-bottom: 42px;
+    }
+
+    .right.carousel-control, .left.carousel-control, .carousel-indicators {
+      display: none;
+    }
+
+    .interview_wrapper {
+      @extend .col-md-3;
+
+      code {
+        color: #1FACCE !important;
+        background-color: rgba(31, 172, 206, 0.1) !important;
+      }
+
+      .interview {
+        @extend .panel, .panel-default;
+        margin-bottom: 35px;
+
+        .panel-title {
+          @extend .text-center;
+          font-size: 30px;
+          font-weight: bold;
+        }
+
+        .panel-body {
+          @extend .text-center;
+
+          font-size: 26px;
+          padding-left: 22px;
+        }
+
+        .panel-footer {
+          font-size: 18px;
+          background: #fbfbfb;
+        }
+      }
+    }
+  }
+
+  #pagination_wrapper {
+    @extend .row;
+
+    #pagination {
+      @extend .col-md-12, .text-center;
+      font-size: 21px;
+      color: #fff;
+    }
+  }
+
+  &.animated-background {
+    background: linear-gradient(327deg, #20acce, #1e6787);
+    background-size: 400% 400%;
+
+    -webkit-animation: AnimationName 10s ease infinite;
+    -moz-animation: AnimationName 10s ease infinite;
+    animation: AnimationName 10s ease infinite;
+
+    @-webkit-keyframes AnimationName {
+      0%{background-position:11% 0%}
+      50%{background-position:90% 100%}
+      100%{background-position:11% 0%}
+    }
+    @-moz-keyframes AnimationName {
+      0%{background-position:11% 0%}
+      50%{background-position:90% 100%}
+      100%{background-position:11% 0%}
+    }
+    @keyframes AnimationName {
+      0%{background-position:11% 0%}
+      50%{background-position:90% 100%}
+      100%{background-position:11% 0%}
+    }
   }
 }

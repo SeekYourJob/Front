@@ -36,7 +36,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
           $scope.companies = response.companies;
         });
 
-        getCandidateSummary()
+        getCandidateSummary();
       }
       getInterviews();
 

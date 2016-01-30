@@ -120,7 +120,7 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('app.admin.live', {
       url: '/live',
-      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminCtrl'}}
+      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminLiveCtrl'}}
     })
     .state('app.admin.companies', {
       url: '/companies',

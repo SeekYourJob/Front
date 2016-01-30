@@ -1,3 +1,47 @@
-<div id="live">
+<div id="live" ng-class="{'animated-background': true}">
+    <div id="logo_and_clock_wrapper">
+        <div class="logo logo-left">
+            <img src="/images/live-syj-logo.png" />
+        </div>
+        <div id="clock">
+            {{ now | date:'HH : mm'}}
+        </div>
+        <div class="logo logo-right">
+            <img src="/images/live-rizomm-logo.png" />
+        </div>
+    </div>
+    <div id="interviews_wrapper" ng-if="apiInterviews.interviews.length">
+        <carousel interval="10000">
+            <slide ng-repeat="interviews in apiInterviews.interviewsPaginated">
+                <h4>{{ $index + 1}} sur {{ apiInterviews.interviewsPaginated.length }}</h4>
+                <div class="interview_wrapper"
+                     ng-repeat="interview in interviews"
+                     ng-if="interview.current || interview.next">
+                    <div class="interview">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ interview.current.recruiter.company.name }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <i class="fa fa-graduation-cap fa-fw"></i> <strong>{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }}</strong><br />
+                            <i class="fa fa-location-arrow fa-fw"></i>  Emplacement &nbsp;<code>&nbsp;{{ interview.location.name }}&nbsp;</code>
+                        </div>
+                        <div class="panel-footer">
+                            <span ng-if="interview.next"><strong>Suivant(e) :</strong>
+                                {{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} à {{ apiInterviews.nextSlot.begins_at }} – <code>&nbsp;{{ interview.location.name }}&nbsp;</code>
+                            </span>
+                            <span ng-if="!interview.next">&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+            </slide>
+        </carousel>
 
+        <div id="pagination_wrapper" ng-if="apiInterviews.interviews.length">
+            <div id="pagination">
+                Job Forum par l'équipe SeekYourJob de la FGES, Master IPII.<br />
+                Réalisation web Valentin Polo & Nicolas Ducom.
+            </div>
+        </div>
+
+    </div>
 </div>
