@@ -5,6 +5,7 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
   $scope.slots = [];
   $scope.locationWithInterviews = {};
   $scope.selectedSlot = {};
+  $scope.haveInterviews = false;
 
   function getAllSlots() {
     $http({
@@ -18,15 +19,28 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
   }
   getAllSlots();
 
+  function getLocationsWithInterviewForCurrentSlot() {
+    $http({
+      method: 'GET',
+      url: ENV.apiEndpoint + '/locations/interviews-for-current-slot/',
+    }).then(function(response) {
+      $scope.locationWithInterviews = response.data;
+      $scope.haveInterviews = true;
+    }, function(err) {
+
+    })
+  }
+  getLocationsWithInterviewForCurrentSlot();
+
   function getLocationsWithInterviewForSlot(slot) {
     $http({
       method: 'GET',
       url: ENV.apiEndpoint + '/locations/interviews-for-slot/' + slot.ido,
     }).then(function(response) {
       $scope.locationWithInterviews = response.data;
-      console.log($scope.locationWithInterviews);
+      $scope.haveInterviews = true;
     }, function(err) {
-      //TODO
+      alert('Could not getLocationsWithInterviewForSlot()');
     })
   }
 
