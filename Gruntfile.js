@@ -38,11 +38,11 @@ module.exports = function (grunt) {
     yeoman: appConfig,
 
     ngconstant: {
-      options: {
-        space: '  ',
-        wrap: '"use strict";\n\n {%= __ngModule %}',
-        name: 'config'
-      },
+          options: {
+            space: '  ',
+                wrap: '"use strict";\n\n {%= __ngModule %}',
+                name: 'config'
+          },
       // Environment targets
       development: {
         options: {

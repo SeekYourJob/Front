@@ -346,7 +346,7 @@ footer {
   }
 }
 
-#register-recruiter {
+#register-user {
   @extend .row;
 
   .icon {
@@ -478,7 +478,7 @@ footer {
   }
 }
 
-#admin-display-interviews-for-recruiter {
+#admin-display-interviews {
   tr {
     td {
       vertical-align: middle;
@@ -496,6 +496,9 @@ footer {
     &.interview-status-taken {
       background: $interview-taken;
       color: white;
+      a {
+        color: white;
+      }
     }
   }
 }
@@ -566,7 +569,7 @@ footer {
   }
 
   .company {
-    @extend .col-md-12;
+    @extend .col-md-6;
     margin-bottom: 6px;
 
     .panel {

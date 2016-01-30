@@ -118,12 +118,10 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/home.html', controller: 'AdminCtrl'}}
     })
-
     .state('app.admin.live', {
       url: '/live',
       views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminCtrl'}}
     })
-
     .state('app.admin.companies', {
       url: '/companies',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/companies.html', controller: 'AdminCompaniesCtrl'}}
@@ -132,7 +130,6 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/{id}',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/companies-details.html', controller: 'AdminCompaniesDetailsCtrl'}}
     })
-
     .state('app.admin.recruiters', {
       url: '/recruiters',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/recruiters.html', controller: 'AdminRecruitersCtrl'}}
@@ -141,15 +138,21 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       url: '/{id}',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/recruiters-details.html', controller: 'AdminRecruitersDetailsCtrl'}}
     })
-
     .state('app.admin.candidates', {
       url: '/candidates',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/candidates.html', controller: 'AdminCandidatesCtrl'}}
     })
-
+    .state('app.admin.candidates.details', {
+      url: '/{id}',
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/candidates-details.html', controller: 'AdminCandidatesDetailsCtrl'}}
+    })
     .state('app.admin.messaging', {
       url: '/messaging',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/messaging.html', controller: 'AdminMessagingCtrl'}}
+    })
+    .state('app.admin.documents', {
+      url: '/documents',
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/documents.html', controller: 'AdminDocumentsCtrl'}}
     })
     .state('app.admin.messaging.newEmail', {
       url: '/new-email',

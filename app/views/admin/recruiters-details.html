@@ -41,8 +41,20 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-12">
-                <table id="admin-display-interviews-for-recruiter" class="table">
+                <table id="admin-display-interviews" class="table">
                     <thead>
+                    <tr>
+                        <th style="vertical-align: middle;">Tous les entretiens</th>
+                        <th>
+                            <select class="form-control"
+                                    ng-options="location.name for location in locations track by location.ido"
+                                    ng-model="newLocationForAllInterviews"
+                                    ng-change="updateLocationForAllInterviews()">
+                                <option value="">Aucune</option>
+                            </select>
+                        </th>
+                        <th colspan="2"></th>
+                    </tr>
                     <tr>
                         <th style="width: 20%;">Créneau</th>
                         <th style="width: 15%;">Zone</th>
@@ -74,21 +86,6 @@
                         </td>
                     </tr>
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <select class="form-control"
-                                    ng-options="location.name for location in locations track by location.ido"
-                                    ng-model="newLocationForAllInterviews"
-                                    ng-change="updateLocationForAllInterviews()">
-                                <option value="">Aucune</option>
-                            </select>
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
@@ -257,17 +254,17 @@
 
         <table class="table" ng-if="selected.availableCandidate">
             <thead>
-                <tr>
-                    <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
-                </tr>
+            <tr>
+                <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td ng-repeat="slot in slots" ng-class="{selectedSlot: selected.slot.ido == slot.ido}">
-                        {{ selected.availableCandidate.registered_slots_obfuscated[slot.ido] }}
-                        <span ng-if="!selected.availableCandidate.registered_slots_obfuscated[slot.ido]" class="free">Libre</span>
-                    </td>
-                </tr>
+            <tr>
+                <td ng-repeat="slot in slots" ng-class="{selectedSlot: selected.slot.ido == slot.ido}">
+                    {{ selected.availableCandidate.registered_slots_obfuscated[slot.ido] }}
+                    <span ng-if="!selected.availableCandidate.registered_slots_obfuscated[slot.ido]" class="free">Libre</span>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
