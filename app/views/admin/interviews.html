@@ -1,5 +1,35 @@
 <h2>Entretiens</h2>
 
+<div class="row" ng-if="interviewsWithoutLocation.length > 0" style="margin-bottom: 21px">
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">
+            <p class="lead text-danger text-center" style="margin-bottom: 10px;">
+                <strong>Certains entretiens n'ont pas d'emplacement</strong>
+            </p>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <table class="table" style="margin-bottom: 0">
+                        <thead>
+                        <tr>
+                            <th>Horaire</th>
+                            <th>Entretien</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="interview in interviewsWithoutLocation">
+                            <td style="vertical-align: middle;">{{ interview.slot.begins_at }}</td>
+                            <td style="vertical-align: middle;">{{ interview.candidate.firstname | limitTo:1 }}. {{ interview.candidate.lastname }} avec {{ interview.recruiter.firstname | limitTo:1 }}. {{ interview.recruiter.lastname }} ({{ interview.recruiter.company }})</td>
+                            <td><a class="btn btn-primary btn-sm" ui-sref="app.admin.recruiters.details({id: interview.recruiter.ido})">Attribuer</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row" style="margin-bottom: 21px;">
     <div class="col-md-3 col-md-offset-9">
         <select class="form-control"
@@ -11,13 +41,8 @@
     </div>
 </div>
 
-<!--<pre>-->
-    <!--{{ locationWithInterviews | json }}-->
-<!--</pre>-->
-
 <div class="row">
     <div class="col-md-12">
-
         <p class="lead text-center" ng-if="!haveInterviews">
             Aucun entretien pour le moment...
         </p>
@@ -57,5 +82,4 @@
             </tbody>
         </table>
     </div>
-
 </div>

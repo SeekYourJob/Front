@@ -736,7 +736,38 @@ footer {
   }
 }
 
+#locationsBookingSummary {
+  margin-top: 21px;
 
+  .booking {
+    @extend .panel, .panel-default;
+
+    margin-bottom: 15px;
+  }
+
+  table {
+    td {
+      height: 42px;
+
+      &.free {
+        background: $btn-success-bg;
+      }
+      &.taken {
+        background: $btn-danger-bg;
+
+        p {
+          font-size: 9px;
+          text-align: center;
+          margin: 0;
+
+          a {
+            color: #fff !important;
+          }
+        }
+      }
+    }
+  }
+}
 
 
 #live {

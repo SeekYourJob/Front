@@ -176,6 +176,11 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/interviews.html', controller: 'AdminInterviewsCtrl'}}
     })
 
+    .state('app.admin.locations', {
+      url: '/locations',
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/locations.html', controller: 'AdminLocationsCtrl'}}
+    })
+
   ;
 
 });

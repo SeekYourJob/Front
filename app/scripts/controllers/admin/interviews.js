@@ -6,6 +6,7 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
   $scope.locationWithInterviews = {};
   $scope.selectedSlot = {};
   $scope.haveInterviews = false;
+  $scope.interviewsWithoutLocation = false;
 
   function getAllSlots() {
     $http({
@@ -41,6 +42,18 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
       alert('Could not getLocationsWithInterviewForSlot()');
     })
   }
+
+  function getInterviewsWithoutLocation() {
+    $http({
+      method: 'GET',
+      url: ENV.apiEndpoint + '/locations/missing',
+    }).then(function(response) {
+      $scope.interviewsWithoutLocation = response.data;
+    }, function(err) {
+      alert('Could not getInterviewsWithoutLocation()');
+    })
+  }
+  getInterviewsWithoutLocation();
 
   $scope.displayLocationsWithInterviewsForSelectedSlot = function() {
     if (!$scope.selectedSlot) {
