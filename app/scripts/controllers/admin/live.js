@@ -22,7 +22,6 @@ angular.module('cvsApp').controller('AdminLiveCtrl', ['$scope', '$http', 'ENV', 
       method: 'GET',
       url: ENV.apiEndpoint + '/locations/interviews-for-current-slot/',
     }).then(function(response) {
-      console.log('Interviews updated');
       $scope.apiInterviews = response.data;
     });
   }

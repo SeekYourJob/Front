@@ -14,7 +14,7 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
     }).then(function(response) {
       $scope.slots = response.data;
     }, function(err) {
-      console.log(err);
+      //FIXME
     })
   }
   getAllSlots();

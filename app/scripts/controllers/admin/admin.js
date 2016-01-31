@@ -10,7 +10,6 @@ angular.module('cvsApp').controller('AdminCtrl', ['$scope', 'Restangular', '$pus
     $scope.interviewsByCompanies = false;
     $scope.selectedInterview = false;
 
-    $scope.popover = {templateUrl: 'popover.html'};
     $scope.pusherChannelMembers = pusherChannel.members;
 
     function getInterviews() {

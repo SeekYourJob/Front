@@ -111,7 +111,6 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
 
       $scope.downloadDocument = function(document) {
         Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-          //window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
           window.location.assign(ENV.apiEndpoint + '/documents/' + download.plain().token);
         });
       };

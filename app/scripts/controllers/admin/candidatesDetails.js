@@ -27,9 +27,6 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
             Restangular.one('interviews/candidate', $scope.candidate.ido).get().then(function(candidateSlots) {
                 $scope.candidateSlots = candidateSlots.plain();
             });
-            console.log($scope.user.ido);
-
-            console.log('Interviews refreshed');
         }
 
         // Candidate details
@@ -60,7 +57,7 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
 
         $scope.downloadDocument = function(document) {
             Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-                window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+              window.location.assign(ENV.apiEndpoint + '/documents/' + download.plain().token);
             });
         };
 

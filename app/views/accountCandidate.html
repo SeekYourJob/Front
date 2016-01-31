@@ -4,7 +4,7 @@
 
 <div id="candidateInterviews">
 
-    <div class="col-md-8 col-md-offset-2" style="margin-top: 21px; margin-bottom: 42px;" ng-if="user.candidate.canRegisterToInterviews">
+    <div class="col-md-8 col-md-offset-2" style="margin-top: 21px;" ng-if="user.candidate.canRegisterToInterviews">
         <h3><i class="fa fa-calendar-check-o fa-fw"></i> Mes entretiens</h3><hr>
         <p class="lead text-center" ng-if="!summary.count">
             Aucun entretien de prévu
@@ -17,7 +17,7 @@
             </thead>
             <tbody>
             <tr>
-                <td ng-repeat="sum in summary.summary">
+                <td ng-repeat="sum in summary.summary" ng-class="{hasInterview: sum.interview}">
                     <span ng-if="sum.interview"><strong>{{ sum.interview.company.name }}</strong></span>
                 </td>
             </tr>
@@ -104,7 +104,7 @@
         <h3><i class="fa fa-file-text-o fa-fw"></i> Mon CV</h3><hr>
         <!-- Documents -->
         <form name="documentsPartForm" class="form-block" novalidate>
-            <p>
+            <p ng-if="!user.candidate.canRegisterToInterviews">
                 <strong>Vous devez soumettre un CV valide avant de pouvoir vous inscrire à des entretiens.</strong><br>
                 Vous serez prévenu par email dès qu'il sera validé et pourrez dès lors procéder aux inscriptions.
             </p><br />

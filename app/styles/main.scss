@@ -41,6 +41,15 @@ h3.panel-title {
   margin-bottom: 0 !important;
 }
 
+h3.popover-title {
+  margin-bottom: 0 !important;
+}
+
+code {
+  color: #1FACCE !important;
+  background-color: rgba(31, 172, 206, 0.1) !important;
+}
+
 p {
   font-size: 16px;
   font-weight: 300;
@@ -470,7 +479,7 @@ footer {
       &.interview-status-taken {
         background: $interview-taken;
 
-        i {
+        span > i {
           color: white;
         }
       }
@@ -707,10 +716,17 @@ footer {
 }
 
 #summaryCandidate {
+  th {
+    text-align: center;
+  }
   td {
     font-size: 12px;
     text-align: center;
-    color: #8c8c8c;
+    background: #efefef;
+
+    &.hasInterview {
+      background: #A5D6A7;
+    }
   }
 }
 
@@ -781,11 +797,6 @@ footer {
 
     .interview_wrapper {
       @extend .col-md-3;
-
-      code {
-        color: #1FACCE !important;
-        background-color: rgba(31, 172, 206, 0.1) !important;
-      }
 
       .interview {
         @extend .panel, .panel-default;
