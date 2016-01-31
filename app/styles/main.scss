@@ -748,6 +748,7 @@ footer {
   table {
     td {
       height: 42px;
+      vertical-align: middle;
 
       &.free {
         background: $btn-success-bg;
