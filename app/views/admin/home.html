@@ -16,7 +16,7 @@
     <table class="table">
         <thead>
         <tr>
-            <th></th>
+            <th style="width: 15%;"></th>
             <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
         </tr>
         </thead>
@@ -25,11 +25,11 @@
             <th colspan="{{ 1 + slots.length}}" class="company-name">{{ company.company.name }}</th>
         </tr>
         <tr ng-repeat="recruiter in company.recruiters">
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a ui-sref="app.admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname }} {{ recruiter.lastname }}</a></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;<a ui-sref="app.admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname | limitTo:1 }}. {{ recruiter.lastname }}</a></td>
             <td ng-repeat="interview in recruiter.interviews" class="interview interview-status-{{interview.status}}">
                 <span ng-if="interview.status === 'taken'"
                       ng-mouseenter="setSelectedInterview(interview)"
-                      popover-template="popover.templateUrl" popover-title="Interview" popover-trigger="mouseenter">
+                      popover-template="'popover.html'" popover-title="Entretien" popover-trigger="click">
                     <i class="fa fa-check-circle"></i>
                 </span>
             </td>
@@ -40,7 +40,8 @@
 </div>
 
 <script type="text/ng-template" id="popover.html">
-    <p>
-        <strong>{{ selectedInterview.candidate.firstname }} {{ selectedInterview.candidate.lastname }}</strong> ({{ selectedInterview.candidate.grade }})
+    <p style="margin-bottom: 0;">
+        <i class="fa fa-graduation-cap fa-fw"></i> <a ui-sref="app.admin.candidates.details({id: selectedInterview.candidate.ido})">{{ selectedInterview.candidate.firstname }} {{ selectedInterview.candidate.lastname }}</a><br />
+        <i class="fa fa-location-arrow fa-fw"></i> <strong ng-if="!selectedInterview.location">Inconnu</strong> <code ng-if="selectedInterview.location">&nbsp;{{ selectedInterview.location.name }}&nbsp;</code>
     </p>
 </script>

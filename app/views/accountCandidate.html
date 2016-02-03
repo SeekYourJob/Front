@@ -4,7 +4,7 @@
 
 <div id="candidateInterviews">
 
-    <div class="col-md-8 col-md-offset-2" style="margin-top: 21px; margin-bottom: 42px;" ng-if="user.candidate.canRegisterToInterviews">
+    <div class="col-md-8 col-md-offset-2" style="margin-top: 21px;" ng-if="user.candidate.canRegisterToInterviews">
         <h3><i class="fa fa-calendar-check-o fa-fw"></i> Mes entretiens</h3><hr>
         <p class="lead text-center" ng-if="!summary.count">
             Aucun entretien de prévu
@@ -17,15 +17,15 @@
             </thead>
             <tbody>
             <tr>
-                <td ng-repeat="sum in summary.summary">
-                    <span ng-if="sum.interview">{{ sum.interview.company.name }}</span>
+                <td ng-repeat="sum in summary.summary" ng-class="{hasInterview: sum.interview}">
+                    <span ng-if="sum.interview"><strong>{{ sum.interview.company.name }}</strong></span>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="col-md-8 col-md-offset-2" style="margin-top: 21px; margin-bottom: 42px;" ng-if="user.candidate.canRegisterToInterviews">
+    <div class="col-md-12" style="margin-top: 21px; margin-bottom: 42px;" ng-if="user.candidate.canRegisterToInterviews">
         <h3><i class="fa fa-calendar-plus-o fa-fw"></i> Planifier mes entretiens</h3><hr>
         <div class="row">
             <div class="col-md-6 col-md-offset-6 text-right">
@@ -40,59 +40,60 @@
         </div>
 
         <div class="row">
-            <div class="company" ng-repeat="company in companies">
-                <div class="panel {{ company.hasInterviewWithCandidate ? 'panel-success' : 'panel-default' }}">
-                    <div ng-click="displayCompanies[$index] = !displayCompanies[$index]"
-                         analytics-on="click" analytics-event="Toggled" analytics-category="Interviews" analytics-label="{{ company.company.name }}"
-                         class="panel-heading"
-                    >
-                        <h3 class="panel-title pull-left">{{ company.company.name }}</h3>
-                <span class="pull-right">
-                    <span class="label" ng-class="{'label-success': company.summary.remaining_percentage > 50, 'label-warning': company.summary.remaining_percentage > 0 && company.summary.remaining_percentage <= 50, 'label-danger': company.summary.remaining_percentage == 0}">
-                        DISPONIBILITÉ
-                    </span>
-                </span>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="panel-body" ng-show="displayCompanies[$index] || showAllCompanies">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td ng-repeat="interview in company.interviews"
-                                    ng-click="actOnInterview(company, interview)"
-                                    ng-class="{
+            <div ng-repeat="company in companies" ng-class="{clearfix: ($index - 1) % 2 == 0}">
+                <div class="company">
+                    <div class="panel {{ company.hasInterviewWithCandidate ? 'panel-success' : 'panel-default' }}">
+                        <div ng-click="displayCompanies[$index] = !displayCompanies[$index]"
+                             analytics-on="click" analytics-event="Toggled" analytics-category="Interviews" analytics-label="{{ company.company.name }}"
+                             class="panel-heading">
+                            <h3 class="panel-title pull-left">{{ company.company.name }}</h3>
+                            <span class="pull-right">
+                                <span class="label" ng-class="{'label-success': company.summary.remaining_percentage > 50, 'label-warning': company.summary.remaining_percentage > 0 && company.summary.remaining_percentage <= 50, 'label-danger': company.summary.remaining_percentage == 0}">
+                                    DISPONIBILITÉ
+                                </span>
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="panel-body" ng-show="displayCompanies[$index] || showAllCompanies">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th ng-repeat="slot in slots">{{ slot.begins_at_formatted }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td ng-repeat="interview in company.interviews"
+                                        ng-click="actOnInterview(company, interview)"
+                                        ng-class="{
                                         available: interview.free_slots > 0 && !interview.already_registered && !interview.interview,
                                         unavailable: interview.free_slots == 0,
                                         takenByMe: interview.interview,
                                         alreadyRegistered: interview.already_registered,
                                         waiting: interview.isWaiting}"
-                                >
-                                    <span ng-if="interview.already_registered">{{ interview.already_registered }}</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="{{ slots.length / 2 }}">
-                                    <small>
+                                    >
+                                        <span ng-if="interview.already_registered">{{ interview.already_registered }}</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="{{ slots.length / 2 }}">
+                                        <small>
                                         <span ng-repeat="(jobType, activated) in company.company.job_types" ng-class="{'text-success': activated, 'text-danger': !activated}">
                                             <i class="fa fa-fw {{ activated ? 'fa-check' : 'fa-times' }}"></i> {{ jobType }} &nbsp;&nbsp;&nbsp;
                                         </span>
-                                    </small>
-                                </td>
-                                <td colspan="{{ slots.length / 2 }}" class="text-right">
-                                    <small>
-                                        <a href="javascript:void(0);" ng-click="showOffersForCompany(company.company);">Télécharger le(s) offre(s) proposée(s) par {{ company.company.name }}</a>
-                                    </small>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
+                                        </small>
+                                    </td>
+                                    <td colspan="{{ slots.length / 2 }}" class="text-right">
+                                        <small>
+                                            <a href="javascript:void(0);" ng-click="showCompany(company.company);">En savoir plus sur {{ company.company.name }}...</a>
+                                        </small>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,7 +104,7 @@
         <h3><i class="fa fa-file-text-o fa-fw"></i> Mon CV</h3><hr>
         <!-- Documents -->
         <form name="documentsPartForm" class="form-block" novalidate>
-            <p>
+            <p ng-if="!user.candidate.canRegisterToInterviews">
                 <strong>Vous devez soumettre un CV valide avant de pouvoir vous inscrire à des entretiens.</strong><br>
                 Vous serez prévenu par email dès qu'il sera validé et pourrez dès lors procéder aux inscriptions.
             </p><br />
@@ -151,16 +152,27 @@
 
 <script type="text/ng-template" id="showCompanysOffers.html">
     <div class="modal-header">
-        <h3 class="modal-title">Offres de {{ offersModalComponents.company.name }}</h3>
+        <h3 class="modal-title">
+            {{ offersModalComponents.company.name }}
+        </h3>
     </div>
-    <div class="modal-body">
-        <table class="table">
-            <thead>
-            <tr>
-                <th style="width: 70%;">Intitulé</th>
-                <th style="width: 30%;"></th>
-            </tr>
-            </thead>
+    <div id="showCompanyModal" class="modal-body">
+
+        <img ng-if="offersModalComponents.company.logo_path"
+             ng-src="{{ offersModalComponents.company.logo_path }}" class="img-rounded pull-right" height="120px" />
+
+        <h4>Site internet</h4>
+        <p>
+            <a href="{{ offersModalComponents.company.website }}">{{ offersModalComponents.company.website }}</a>
+        </p>
+
+        <h4>Présentation</h4>
+        <p ng-if="offersModalComponents.company.description">Présentation ici...</p>
+        <p ng-if="!offersModalComponents.company.description">Aucune présentation.</p>
+
+        <h4>Offres proposées</h4>
+        <p ng-if="!offersModalComponents.offers.length">Aucune offre.</p>
+        <table class="table" ng-if="offersModalComponents.offers.length">
             <tbody>
             <tr ng-repeat="offer in offersModalComponents.offers">
                 <td style="vertical-align: middle;">{{ offer.name }} <em>({{ offer.size_readable }})</em></td>

@@ -25,7 +25,6 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
       // Documents
       $scope.uploadDocuments = function(files) {
         $scope.form.documentIsBeingSent = true;
-        console.log(files);
         UploadService.upload($scope.user,files,$scope.documents);
         $scope.form.documentIsBeingSent = false;
       };
@@ -42,7 +41,7 @@ angular.module('cvsApp').controller('AccountRecruiterCtrl',
 
       $scope.downloadDocument = function(document) {
         Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-          window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+          window.location.assign(ENV.apiEndpoint + '/documents/' + download.plain().token);
         });
       };
 

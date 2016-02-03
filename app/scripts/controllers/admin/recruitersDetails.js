@@ -115,7 +115,6 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
       selectStudentForInterviewModal.close();
     }, function(err) {
       alert(err); //TODO
-      console.log(err);
     });
   };
 
@@ -161,7 +160,7 @@ angular.module('cvsApp').controller('AdminRecruitersDetailsCtrl', ['$scope', '$s
 
   $scope.downloadDocument = function(document) {
     Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-      window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+      window.location.assign(ENV.apiEndpoint + '/documents/' + download.plain().token);
     });
   };
 

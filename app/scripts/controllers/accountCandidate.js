@@ -36,7 +36,7 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
           $scope.companies = response.companies;
         });
 
-        getCandidateSummary()
+        getCandidateSummary();
       }
       getInterviews();
 
@@ -111,16 +111,17 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
 
       $scope.downloadDocument = function(document) {
         Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-          //window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
           window.location.assign(ENV.apiEndpoint + '/documents/' + download.plain().token);
         });
       };
 
-      $scope.showOffersForCompany = function(company) {
+      $scope.showCompany = function(company) {
         Restangular.one("companies/" + company.ido + "/offers").get().then(function(response) {
 
           $scope.offersModalComponents.company = company;
           $scope.offersModalComponents.offers = response.plain();
+
+          console.log($scope.offersModalComponents);
 
           showOffersModal = $modal.open({
             animation: true,

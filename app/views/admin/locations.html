@@ -1,0 +1,28 @@
+<h2>Emplacements</h2>
+
+
+<div class="row">
+
+    <div id="locationsBookingSummary" class="col-md-6" ng-repeat="booking in bookings">
+        <div class="booking">
+            <div class="panel-heading"><code>&nbsp;{{ booking.name }}&nbsp;</code> &nbsp; {{ booking.description }}</div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th ng-repeat="slot in booking.bookings" style="width: {{(1/booking.bookings.length)*100}}%">{{ slot.begins_at }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td ng-repeat="interview in booking.bookings"
+                        ng-class="{free: !interview.interview, taken: interview.interview}">
+                        <p ng-if="interview.interview">
+                            <a ui-sref="app.admin.recruiters.details({id: interview.interview.recruiter.ido})">{{ interview.interview.recruiter.company }}</a>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

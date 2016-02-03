@@ -64,6 +64,11 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       }
     })
 
+    .state('app.accessMap', {
+      url: '/access-map',
+      views: {'content@': {templateUrl: 'views/access-map.html'}}
+    })
+
     .state('app.registerRecruiter', {
       url: '/register-recruiter',
       views: {'content@': {templateUrl: 'views/register-recruiter.html', controller: 'RegisterRecruiterCtrl'}}
@@ -120,7 +125,7 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('app.admin.live', {
       url: '/live',
-      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminCtrl'}}
+      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminLiveCtrl'}}
     })
     .state('app.admin.companies', {
       url: '/companies',
@@ -174,6 +179,11 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     .state('app.admin.interviews', {
       url: '/interviews',
       views: {'admin-content@app.admin': {templateUrl: 'views/admin/interviews.html', controller: 'AdminInterviewsCtrl'}}
+    })
+
+    .state('app.admin.locations', {
+      url: '/locations',
+      views: {'admin-content@app.admin': {templateUrl: 'views/admin/locations.html', controller: 'AdminLocationsCtrl'}}
     })
 
   ;

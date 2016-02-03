@@ -113,6 +113,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
     }).then(function (response) {
       console.log('TOKEN REFRESHED');
       $localStorage.token = response.data.token;
+      self.turnOnPusher();
       deferred.resolve(response.data.token);
     }, function () {
       console.log('TOKEN NOT REFRESHED');

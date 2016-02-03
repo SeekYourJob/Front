@@ -10,7 +10,6 @@ angular.module('cvsApp').controller('AdminDocumentsCtrl', ['$scope', 'Restangula
 
         Restangular.one('documents/candidates').get().then(function(documents) {
             $scope.documentsCollection = documents.plain();
-            console.log($scope.documentsCollection);
         });
 
         $scope.refuseDocument = function(document) {
@@ -27,7 +26,7 @@ angular.module('cvsApp').controller('AdminDocumentsCtrl', ['$scope', 'Restangula
 
         $scope.downloadDocument = function(document) {
             Restangular.one("documents/request-token", document.ido).get().then(function(download) {
-                window.open(ENV.apiEndpoint + '/documents/' + download.plain().token);
+              window.location.assign(ENV.apiEndpoint + '/documents/' + download.plain().token);
             });
         };
     }
