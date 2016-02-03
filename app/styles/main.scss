@@ -770,6 +770,15 @@ footer {
   }
 }
 
+#showCompanyModal {
+  p {
+    margin-bottom: 25px;
+
+    &:last-of-type {
+      margin-bottom: 10px;
+    }
+  }
+}
 
 #live {
   @extend .container;

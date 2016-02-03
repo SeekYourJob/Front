@@ -115,11 +115,13 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
         });
       };
 
-      $scope.showOffersForCompany = function(company) {
+      $scope.showCompany = function(company) {
         Restangular.one("companies/" + company.ido + "/offers").get().then(function(response) {
 
           $scope.offersModalComponents.company = company;
           $scope.offersModalComponents.offers = response.plain();
+
+          console.log($scope.offersModalComponents);
 
           showOffersModal = $modal.open({
             animation: true,
