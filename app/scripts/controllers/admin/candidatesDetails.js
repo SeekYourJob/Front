@@ -34,7 +34,7 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
         }
 
         $scope.updateCandidate = function() {
-            Restangular.candidate.put();
+            $scope.candidate.put();
         };
 
         // Candidate details
