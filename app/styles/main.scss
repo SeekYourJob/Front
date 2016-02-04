@@ -733,6 +733,13 @@ footer {
 .interview-per-zone {
   td {
     height: 72px;
+    padding-left: 15px !important;
+    p {
+      line-height: 1.7;
+    }
+    .statusToToggle {
+      cursor: pointer;
+    }
   }
 }
 
@@ -836,7 +843,7 @@ footer {
       @extend .col-md-3;
 
       .interview {
-        @extend .panel, .panel-default;
+        @extend .panel;
         margin-bottom: 35px;
 
         .panel-title {

@@ -58,24 +58,24 @@
             <tbody>
             <tr class="interview-per-zone" ng-repeat="interview in locationWithInterviews.interviews">
                 <td class="text-center" style="vertical-align: middle; font-size: 24px; padding-top: 3px;">
-                    <span class="label label-primary">Zone {{ interview.location.name }}</span>
+                    <a ui-sref="app.admin.locations"><span class="label label-primary">Zone {{ interview.location.name }}</span></a>
                 </td>
                 <td>
-                    <p class="text-center" style="margin: 5px 0; vertical-align: middle;">
-                        <span ng-if="interview.current">
-                            {{ interview.current.recruiter.firstname }} {{ interview.current.recruiter.lastname }} - {{ interview.current.recruiter.company.name }}<br />
-                            <em>avec</em> {{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }} {{ interview.current.candidate.grade }}
-                        </span>
-                        <span ng-if="!interview.current">–</span>
+                    <p style="margin-right: 6px;" class="pull-right">
+                        <span class="statusToToggle label label-success" ng-if="interview.current.status === 'IN_PROGRESS'" ng-click="toggleStatusInterview(interview.current)">EN COURS</span>
+                        <span class="statusToToggle label label-danger" ng-if="interview.current.status === 'COMPLETED'" ng-click="toggleStatusInterview(interview.current)">TERMINÉ</span>
+                    </p>
+                    <p style="margin: 5px 0; vertical-align: middle;" ng-if="interview.current">
+                        <i class="fa fa-building-o fa-fw"></i> <strong>{{ interview.current.recruiter.company.name }}</strong><br />
+                        <i class="fa fa-user fa-fw"></i> <a ui-sref="app.admin.recruiters.details({id: interview.current.recruiter.ido})">{{ interview.current.recruiter.firstname }} {{ interview.current.recruiter.lastname }}</a><br />
+                        <i class="fa fa-graduation-cap fa-fw"></i> <a ui-sref="app.admin.candidates.details({id: interview.current.candidate.ido})">{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }} ({{ interview.current.candidate.grade }})</a>
                     </p>
                 </td>
                 <td>
-                    <p class="text-center" style="margin: 5px 0;">
-                        <span ng-if="interview.next">
-                            {{ interview.next.recruiter.firstname }} {{ interview.next.recruiter.lastname }} - {{ interview.next.recruiter.company.name }}<br />
-                            <em>avec</em> {{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} - {{ interview.next.candidate.grade }}
-                        </span>
-                        <span ng-if="!interview.next">–</span>
+                    <p style="margin: 5px 0;"  ng-if="interview.next">
+                        <i class="fa fa-building-o fa-fw"></i> <strong>{{ interview.next.recruiter.company.name }}</strong><br />
+                        <i class="fa fa-user fa-fw"></i> <a ui-sref="app.admin.recruiters.details({id: interview.current.recruiter.ido})">{{ interview.next.recruiter.firstname }} {{ interview.next.recruiter.lastname }}</a><br />
+                        <i class="fa fa-graduation-cap fa-fw"></i> <a ui-sref="app.admin.candidates.details({id: interview.current.candidate.ido})">{{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} ({{ interview.next.candidate.grade }})</a>
                     </p>
                 </td>
             </tr>

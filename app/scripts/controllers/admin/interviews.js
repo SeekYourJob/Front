@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$http', function($scope, ENV, $http) {
+angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$http', '$rootScope', function($scope, ENV, $http, $rootScope) {
 
   $scope.slots = [];
   $scope.locationWithInterviews = {};
@@ -51,7 +51,7 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
       $scope.interviewsWithoutLocation = response.data;
     }, function(err) {
       alert('Could not getInterviewsWithoutLocation()');
-    })
+    });
   }
   getInterviewsWithoutLocation();
 
@@ -62,5 +62,20 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
 
     getLocationsWithInterviewForSlot($scope.selectedSlot);
   };
+
+  $scope.toggleStatusInterview = function(interview) {
+    $http({
+      method: 'POST',
+      url: ENV.apiEndpoint + '/interviews/' + interview.ido + '/toggle-status',
+    }).then(function() {
+      if (interview.status === 'IN_PROGRESS') {
+        interview.status = 'COMPLETED';
+      } else {
+        interview.status = 'IN_PROGRESS';
+      }
+    }, function(err) {
+      alert('Could not toggleStatusInterview()');
+    });
+  }
 
 }]);

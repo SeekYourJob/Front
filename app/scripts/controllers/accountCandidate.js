@@ -121,8 +121,6 @@ angular.module('cvsApp').controller('AccountCandidateCtrl',
           $scope.offersModalComponents.company = company;
           $scope.offersModalComponents.offers = response.plain();
 
-          console.log($scope.offersModalComponents);
-
           showOffersModal = $modal.open({
             animation: true,
             templateUrl: 'showCompanysOffers.html',

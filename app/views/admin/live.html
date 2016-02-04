@@ -17,13 +17,18 @@
                 <div class="interview_wrapper"
                      ng-repeat="interview in interviews"
                      ng-if="interview.current || interview.next">
-                    <div class="interview">
+                    <div class="interview" ng-class="{'panel-success': interview.current.status === 'IN_PROGRESS', 'panel-danger': interview.current.status === 'COMPLETED'}">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{ interview.current.recruiter.company.name }}</h3>
                         </div>
                         <div class="panel-body">
-                            <i class="fa fa-graduation-cap fa-fw"></i> <strong>{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }}</strong><br />
-                            <i class="fa fa-location-arrow fa-fw"></i>  Emplacement &nbsp;<code>&nbsp;{{ interview.location.name }}&nbsp;</code>
+                            <i class="fa fa-location-arrow fa-fw"></i> Zone &nbsp;<code>&nbsp;{{ interview.location.name }}&nbsp;</code><br />
+                            <span ng-if="interview.current.status === 'IN_PROGRESS'">
+                                <i class="fa fa-graduation-cap fa-fw"></i> <strong>{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }}</strong>
+                            </span>
+                            <span class="text-danger" ng-if="interview.current.status === 'COMPLETED'">
+                                <strong>LIBRE</strong>
+                            </span>
                         </div>
                         <div class="panel-footer">
                             <span ng-if="interview.next"><strong>Suivant(e) :</strong>

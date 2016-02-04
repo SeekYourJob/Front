@@ -1,7 +1,9 @@
-angular.module('cvsApp').controller('AdminLiveCtrl', ['$scope', '$http', 'ENV', '$interval', function($scope, $http, ENV, $interval) {
+angular.module('cvsApp').controller('AdminLiveCtrl', ['$scope', '$http', 'ENV', '$interval', '$rootScope', function($scope, $http, ENV, $interval, $rootScope) {
 
   $scope.now = new Date();
   $scope.apiInterviews = [];
+
+  var pusherChannel = $rootScope.pusherClient.subscribe('live-interviews');
 
   function clock() {
     $interval(function() {
@@ -26,5 +28,9 @@ angular.module('cvsApp').controller('AdminLiveCtrl', ['$scope', '$http', 'ENV', 
     });
   }
   getLocationsWithInterviewForCurrentSlot();
+
+  pusherChannel.bind('interviews-updated', function() {
+    getLocationsWithInterviewForCurrentSlot();
+  });
 
 }]);
