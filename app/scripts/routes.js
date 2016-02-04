@@ -64,6 +64,11 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       }
     })
 
+    .state('app.accessMap', {
+      url: '/access-map',
+      views: {'content@': {templateUrl: 'views/access-map.html'}}
+    })
+
     .state('app.registerRecruiter', {
       url: '/register-recruiter',
       views: {'content@': {templateUrl: 'views/register-recruiter.html', controller: 'RegisterRecruiterCtrl'}}

@@ -10,6 +10,7 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
         $scope.user = {};
         $scope.documents = [];
         $scope.candidateSlots = {};
+        $scope.grades = ['L3','M1','M2'];
 
         $scope.form = {
             documents: false,
@@ -28,6 +29,10 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
                 $scope.candidateSlots = candidateSlots.plain();
             });
         }
+
+        $scope.updateCandidate = function() {
+            $scope.candidate.put();
+        };
 
         // Candidate details
         Restangular.one("candidates", $state.params.id).get().then(function(candidate) {
