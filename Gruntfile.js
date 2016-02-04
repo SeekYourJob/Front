@@ -284,6 +284,15 @@ module.exports = function (grunt) {
       }
     },
 
+    uglify: {
+      options: {
+        compress: {
+          dead_code: true,
+          drop_console: true
+        }
+      }
+    },
+
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
@@ -316,17 +325,6 @@ module.exports = function (grunt) {
         ],
         patterns: {
           js: [[/(images\/[^''""]*\.(png|jpg|jpeg|gif|webp|svg))/g, 'Replacing references to images']]
-        }
-      }
-    },
-
-    uglify: {
-      options: {
-        compress: {
-          global_defs: {
-            "DEBUG": false
-          },
-          dead_code: true
         }
       }
     },
