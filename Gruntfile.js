@@ -323,7 +323,10 @@ module.exports = function (grunt) {
     uglify: {
       options: {
         compress: {
-          drop_console: true
+          global_defs: {
+            "DEBUG": false
+          },
+          dead_code: true
         }
       }
     },
