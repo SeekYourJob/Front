@@ -1,6 +1,6 @@
 'use strict';
 
-var cvsApp = angular.module('cvsApp', ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular', 'ngSanitize', 'ui.select', 'oitozero.ngSweetAlert', 'pusher-angular']);
+var cvsApp = angular.module('cvsApp', ['config', 'ui.router', 'angular-jwt', 'ngFileUpload', 'ui.bootstrap', 'ngStorage', 'smart-table', 'restangular', 'ngSanitize', 'ui.select', 'oitozero.ngSweetAlert', 'pusher-angular', 'angular-google-analytics']);
 
 cvsApp.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = ['jwtHelper', '$http', 'config', '$window', '$localStorage', 'AuthService',
@@ -31,9 +31,19 @@ cvsApp.config(function(uiSelectConfig) {
   uiSelectConfig.theme = 'bootstrap';
 });
 
+cvsApp.config(function(AnalyticsProvider) {
+  AnalyticsProvider.setAccount('UA-41931299-11');
+  AnalyticsProvider.trackPages(true);
+  AnalyticsProvider.useDisplayFeatures(true);
+  AnalyticsProvider.setPageEvent('$stateChangeSuccess');
+  AnalyticsProvider.useEnhancedLinkAttribution(true);
+});
 
 
-cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', 'AuthService', function($rootScope, $state, $localStorage, ENV, $window, AuthService) {
+
+cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', 'AuthService', 'Analytics', function($rootScope, $state, $localStorage, ENV, $window, AuthService, Analytics) {
+
+  Analytics.getUrl();
 
   AuthService.turnOnPusher();
 
