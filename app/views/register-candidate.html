@@ -55,8 +55,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="grade">Promotion<span class="required">*</span></label>
-                    <select id="grade" class="form-control">
-                        <option data-ng-model="newCandidate.candidate.grade" ng-repeat="grade in grades" value="{{grade}}">{{grade}}</option>
+                    <select id="grade" class="form-control" data-ng-model="newCandidate.candidate.grade">
+                        <option ng-repeat="grade in grades" value="{{grade}}">{{grade}}</option>
                     </select>
                 </div>
             </div>
@@ -108,3 +108,4 @@
 
     </div>
 </div>
+<pre>{{newCandidate | json}}</pre>
