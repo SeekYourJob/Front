@@ -29,7 +29,7 @@
             <td ng-repeat="interview in recruiter.interviews" class="interview interview-status-{{interview.status}}">
                 <span ng-if="interview.status === 'taken'"
                       ng-mouseenter="setSelectedInterview(interview)"
-                      popover-template="'popover.html'" popover-title="Entretien" popover-trigger="click">
+                      popover-template="'popover.html'" popover-title="Entretien" popover-trigger="mouseenter">
                     <i class="fa fa-check-circle"></i>
                 </span>
             </td>
@@ -41,7 +41,7 @@
 
 <script type="text/ng-template" id="popover.html">
     <p style="margin-bottom: 0;">
-        <i class="fa fa-graduation-cap fa-fw"></i> <a ui-sref="app.admin.candidates.details({id: selectedInterview.candidate.ido})">{{ selectedInterview.candidate.firstname }} {{ selectedInterview.candidate.lastname }}</a><br />
-        <i class="fa fa-location-arrow fa-fw"></i> <strong ng-if="!selectedInterview.location">Inconnu</strong> <code ng-if="selectedInterview.location">&nbsp;{{ selectedInterview.location.name }}&nbsp;</code>
+        <i class="fa fa-graduation-cap fa-fw"></i> {{ selectedInterview.candidate.firstname }} {{ selectedInterview.candidate.lastname }} ({{ selectedInterview.candidate.grade }})<br />
+        <i class="fa fa-location-arrow fa-fw"></i> <strong ng-if="!selectedInterview.location">Indéterminé</strong> <code ng-if="selectedInterview.location">&nbsp;{{ selectedInterview.location.name }}&nbsp;</code>
     </p>
 </script>
