@@ -55,8 +55,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="grade">Promotion<span class="required">*</span></label>
-                    <select id="grade" class="form-control">
-                        <option data-ng-model="newCandidate.candidate.grade" ng-repeat="grade in grades" value="{{grade}}">{{grade}}</option>
+                    <select id="grade" class="form-control" data-ng-model="newCandidate.candidate.grade">
+                        <option ng-repeat="grade in grades" value="{{grade}}">{{grade}}</option>
                     </select>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 Il sera <strong>validé par l'équipe</strong> puis <strong>transmis aux recruteurs</strong>.<br />
             </p>
             <p class="text-center">
-                Vous pouvez l'envoyer dès maintenant ou plus tard depuis votre compte.
+                Vous pouvez l'envoyer dès maintenant ou plus tard depuis votre compte (formats .doc, .docx et .pdf acceptés).
             </p>
             <p class="text-center">
                 <em>Nous vous invitons à vous munir de quelques copies le Jour-J, elles pourront toujours servir ;)</em>
