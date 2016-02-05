@@ -24,6 +24,9 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
     $http({
       method: 'GET',
       url: ENV.apiEndpoint + '/locations/interviews-for-current-slot/',
+      params: {
+        sortBy: 'LOCATION'
+      }
     }).then(function(response) {
       $scope.locationWithInterviews = response.data;
       $scope.haveInterviews = true;
@@ -35,6 +38,9 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
     $http({
       method: 'GET',
       url: ENV.apiEndpoint + '/locations/interviews-for-slot/' + slot.ido,
+      params: {
+        sortBy: 'LOCATION'
+      }
     }).then(function(response) {
       $scope.locationWithInterviews = response.data;
       $scope.haveInterviews = true;

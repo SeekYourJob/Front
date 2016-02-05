@@ -23,6 +23,9 @@ angular.module('cvsApp').controller('AdminLiveCtrl', ['$scope', '$http', 'ENV', 
     $http({
       method: 'GET',
       url: ENV.apiEndpoint + '/locations/interviews-for-current-slot/',
+      params: {
+        sortBy: 'COMPANY'
+      }
     }).then(function(response) {
       $scope.apiInterviews = response.data;
     });

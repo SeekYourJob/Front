@@ -58,7 +58,7 @@
             <tbody>
             <tr class="interview-per-zone" ng-repeat="interview in locationWithInterviews.interviews">
                 <td class="text-center" style="vertical-align: middle; font-size: 24px; padding-top: 3px;">
-                    <a ui-sref="app.admin.locations"><span class="label label-primary">Zone {{ interview.location.name }}</span></a>
+                    <a ui-sref="app.admin.locations"><span class="label label-primary">{{ interview.location.name }}</span></a>
                 </td>
                 <td>
                     <p style="margin-right: 6px;" class="pull-right">
@@ -68,14 +68,20 @@
                     <p style="margin: 5px 0; vertical-align: middle;" ng-if="interview.current">
                         <i class="fa fa-building-o fa-fw"></i> <strong>{{ interview.current.recruiter.company.name }}</strong><br />
                         <i class="fa fa-user fa-fw"></i> <a ui-sref="app.admin.recruiters.details({id: interview.current.recruiter.ido})">{{ interview.current.recruiter.firstname }} {{ interview.current.recruiter.lastname }}</a><br />
-                        <i class="fa fa-graduation-cap fa-fw"></i> <a ui-sref="app.admin.candidates.details({id: interview.current.candidate.ido})">{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }} ({{ interview.current.candidate.grade }})</a>
+
+                        <i class="fa fa-graduation-cap fa-fw"></i>
+                        <span ng-if="interview.current.candidate"><a ui-sref="app.admin.candidates.details({id: interview.current.candidate.ido})">{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }} ({{ interview.current.candidate.grade }})</a></span>
+                        <span ng-if="!interview.current.candidate" class="text-danger"><strong>LIBRE</strong></span>
                     </p>
                 </td>
                 <td>
                     <p style="margin: 5px 0;"  ng-if="interview.next">
                         <i class="fa fa-building-o fa-fw"></i> <strong>{{ interview.next.recruiter.company.name }}</strong><br />
                         <i class="fa fa-user fa-fw"></i> <a ui-sref="app.admin.recruiters.details({id: interview.current.recruiter.ido})">{{ interview.next.recruiter.firstname }} {{ interview.next.recruiter.lastname }}</a><br />
-                        <i class="fa fa-graduation-cap fa-fw"></i> <a ui-sref="app.admin.candidates.details({id: interview.current.candidate.ido})">{{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} ({{ interview.next.candidate.grade }})</a>
+
+                        <i class="fa fa-graduation-cap fa-fw"></i>
+                        <span ng-if="interview.next.candidate"><a ui-sref="app.admin.candidates.details({id: interview.next.candidate.ido})">{{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} ({{ interview.next.candidate.grade }})</a></span>
+                        <span ng-if="!interview.next.candidate" class="text-danger"><strong>LIBRE</strong></span>
                     </p>
                 </td>
             </tr>
