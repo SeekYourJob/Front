@@ -104,17 +104,19 @@
         <h3><i class="fa fa-file-text-o fa-fw"></i> Mon CV</h3><hr>
         <!-- Documents -->
         <form name="documentsPartForm" class="form-block" novalidate>
-            <p ng-if="!user.candidate.canRegisterToInterviews">
-                <strong>Vous devez soumettre un CV valide avant de pouvoir vous inscrire à des entretiens (formats .doc, .docx et .pdf acceptés).</strong><br>
-                Vous serez prévenu par email dès qu'il sera validé et pourrez dès lors procéder aux inscriptions.
-            </p><br />
+            <div class="alert alert-warning text-center" ng-if="!user.candidate.canRegisterToInterviews">
+                <p>
+                    <strong>Vous devez soumettre un CV valide avant de pouvoir vous inscrire à des entretiens.</strong><br>
+                    Vous serez prévenu par email dès qu'il sera validé et pourrez dès lors procéder aux inscriptions.
+                </p>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div ngf-drop ng-model="form.documents" class="dropbox"
                          ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ngf-accept="'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document'" ng-if="!documents.length"
                     >
                         <div class="help">
-                            <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou<br> cliquez ici pour le sélectionner...</span>
+                            <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou cliquez ici...<br/> (formats .doc, .docx et .pdf acceptés)</span>
                             <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
                         </div>
                     </div>
