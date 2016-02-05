@@ -35,7 +35,12 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
 
     .state('app.home', {
       url: '/',
-      views: {'content@': {templateUrl: 'views/home.html'}}
+      views: {'content@': {templateUrl: 'views/home.html',
+        controller: ['AuthService', '$state', function(AuthService, $state) {
+        if (AuthService.check()) {
+          $state.go('app.account');
+        }
+      }]}}
     })
     .state('app.login', {
       url: '/login',

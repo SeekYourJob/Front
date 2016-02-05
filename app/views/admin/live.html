@@ -17,19 +17,25 @@
                 <div class="interview_wrapper"
                      ng-repeat="interview in interviews"
                      ng-if="interview.current || interview.next">
-                    <div class="interview">
+                    <div class="interview" ng-class="{'panel-success': interview.current.status === 'IN_PROGRESS', 'panel-danger': interview.current.status === 'COMPLETED' || !interview.current.candidate}">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{ interview.current.recruiter.company.name }}</h3>
                         </div>
                         <div class="panel-body">
-                            <i class="fa fa-graduation-cap fa-fw"></i> <strong>{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }}</strong><br />
-                            <i class="fa fa-location-arrow fa-fw"></i>  Emplacement &nbsp;<code>&nbsp;{{ interview.location.name }}&nbsp;</code>
+                            <i class="fa fa-location-arrow fa-fw"></i>&nbsp;<code>&nbsp;{{ interview.location.name }}&nbsp;</code><br />
+                            <span ng-if="interview.current.status === 'IN_PROGRESS' && interview.current.candidate">
+                                <i class="fa fa-graduation-cap fa-fw"></i> <strong>{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }}</strong>
+                            </span>
+                            <span class="text-danger" ng-if="interview.current.status === 'COMPLETED' || !interview.current.candidate">
+                                <strong>LIBRE</strong>
+                            </span>
                         </div>
                         <div class="panel-footer">
-                            <span ng-if="interview.next"><strong>Suivant(e) :</strong>
-                                {{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} à {{ apiInterviews.nextSlot.begins_at }} – <code>&nbsp;{{ interview.location.name }}&nbsp;</code>
+                            <strong>Suivant(e) </strong> à {{ apiInterviews.nextSlot.begins_at }} :
+                            <span ng-if="interview.next.candidate">
+                                {{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }}
                             </span>
-                            <span ng-if="!interview.next">&nbsp;</span>
+                            <span ng-if="!interview.next.candidate" class="text-danger"><strong>LIBRE</strong></span>
                         </div>
                     </div>
                 </div>

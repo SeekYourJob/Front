@@ -16,7 +16,7 @@
         <form name="credentialPartForm" class="form-block" novalidate
               ng-class="{'valid': !form.emailAlreadyExists && credentialPartForm.$valid}">
             <h4>Identifiants</h4>
-            <p>Ces identifiants sont importants, ils vous permettront <strong>d'accéder à la platefome, et de visualiser les différentes offres proposées par les entreprises présentes le jour J.</strong>.</p>
+            <p>Ces identifiants sont importants, ils vous permettront <strong>d'accéder à la platefome, de visualiser les différentes offres proposées, de vous inscrire à des entretiens et au besoin d'en annuler</strong>.</p>
             <div class="row" style="margin-top: 15px;">
                 <div class="form-group col-md-6" ng-class="{'has-error': form.emailAlreadyExists}">
                     <label for="email">Adresse email<span class="required">*</span></label>
@@ -66,21 +66,23 @@
         <form name="documentsPartForm" class="form-block" novalidate
               ng-class="{'valid': documentsPartForm.$valid}">
             <h4>Curriculum</h4>
-            <p class="text-center" style="margin-top: 20px;">
-                <strong>Un CV est nécessaire pour vous inscrire à des entretiens.</strong><br />
-                Il sera <strong>validé par l'équipe</strong> puis <strong>transmis aux recruteurs</strong>.<br />
+            <div class="alert alert-warning text-center" style="margin-top: 20px;">
+                <p>
+                    <strong>Un CV est nécessaire pour vous inscrire à des entretiens.</strong><br />
+                    Il sera <strong>validé par l'équipe</strong> puis <strong>transmis aux recruteurs</strong>.
+                </p>
+            </div>
+            <p class="text-center">
+
             </p>
             <p class="text-center">
-                Vous pouvez l'envoyer dès maintenant ou plus tard depuis votre compte (formats .doc, .docx et .pdf acceptés).
-            </p>
-            <p class="text-center">
-                <em>Nous vous invitons à vous munir de quelques copies le Jour-J, elles pourront toujours servir ;)</em>
+                <small>L'impression des CVs étant laissée à l'appréciation des recruteurs,<br/>merci de vous munir de quelques exemplaires papier le Jour-J !</small>
             </p>
             <div class="row">
                 <div ngf-drop ng-model="form.documents" class="dropbox"
-                     ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ng-if="!newCandidate.candidate.documents.length">
+                     ngf-select="true" ngf-multiple="false" ngf-allow-dir="false" ngf-accept="'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document'" ng-if="!newCandidate.candidate.documents.length">
                     <div class="help">
-                        <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou<br> cliquez ici pour le sélectionner.</span>
+                        <span ng-if="!form.documentIsBeingSent">Glissez-déposez votre CV ou cliquez ici...<br />(formats .doc, .docx et .pdf acceptés)</span>
                         <span ng-if="form.documentIsBeingSent">Envoi en cours...</span>
                     </div>
                 </div>
@@ -99,12 +101,12 @@
         <p class="register-submit">
             <button type="button" class="btn btn-lg btn-success" style="transition:all 0.3s linear;"
                     ng-click="register()" ng-disabled="!formsAreValid() || form.isBeingSubmitted || form.isSubmitted">
-                <span ng-if="!form.isBeingSubmitted && !form.isSubmitted">Je m'inscris <i class="fa fa-chevron-right fa-fw"></i></span>
+                <span ng-if="!form.isBeingSubmitted && !form.isSubmitted">&nbsp;Je m'inscris <i class="fa fa-chevron-right fa-fw"></i></span>
                 <span ng-if="form.isBeingSubmitted && !form.isSubmitted"><i class="fa fa-cog fa-spin fa-fw"></i></span>
                 <span ng-if="form.isSubmitted"><i class="fa fa-check fa-2x"></i></span>
             </button>
         </p>
-        <p class="text-center text-danger" ng-if="!formsAreValid()"><small>Certains champs ne sont pas valides !</small></p>
+        <p class="text-center text-danger" ng-if="!formsAreValid()"><small>Certains champs sont manquants et/ou invalides !</small></p>
 
     </div>
 </div>
