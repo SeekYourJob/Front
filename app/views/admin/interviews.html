@@ -63,8 +63,8 @@
                 </p>
             </div>
             <div class="panel-footer">
-                <strong>Suivant(e) :</strong>
-                <span ng-if="interview.next.candidate"><a ui-sref="app.admin.candidates.details({id: interview.next.candidate.ido})">{{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }} ({{ interview.next.candidate.grade }})</a></span>
+                <strong>NXT :</strong>
+                <span ng-if="interview.next.candidate"><a ui-sref="app.admin.candidates.details({id: interview.next.candidate.ido})">{{ interview.next.candidate.firstname | limitTo:1 }}. {{ interview.next.candidate.lastname }} ({{ interview.next.candidate.grade }})</a></span>
                 <span ng-if="!interview.next.candidate" class="text-danger"><strong>LIBRE</strong></span>
             </div>
         </div>
