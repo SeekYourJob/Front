@@ -1,12 +1,18 @@
 'use strict';
 
-angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$http', '$rootScope', function($scope, ENV, $http, $rootScope) {
+angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$http', '$interval', function($scope, ENV, $http, $interval) {
 
   $scope.slots = [];
   $scope.locationWithInterviews = {};
   $scope.selectedSlot = {};
   $scope.haveInterviews = false;
   $scope.interviewsWithoutLocation = false;
+
+  $interval(function() {
+    if (!$scope.selectedSlot.ido) {
+      getLocationsWithInterviewForCurrentSlot();
+    }
+  }, 60000);
 
   function getAllSlots() {
     $http({
@@ -63,6 +69,7 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
 
   $scope.displayLocationsWithInterviewsForSelectedSlot = function() {
     if (!$scope.selectedSlot) {
+      $scope.selectedSlot = {};
       return ;
     }
 
