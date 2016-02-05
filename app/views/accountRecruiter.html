@@ -9,22 +9,20 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th ng-repeat="interwiew in user.recruiter.interviews">{{interwiew.slot.begins_at}}</th>
+                    <th ng-repeat="interwiew in user.recruiter.interviews" style="width:{{ (1 / user.recruiter.interviews.length) * 100 }}%;">{{interwiew.slot.begins_at}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td ng-repeat="interview in user.recruiter.interviews"
                         class="interview interview-status-{{interview.status}}">
-                  <span ng-if="interview.status === 'taken'"
-                        ng-mouseenter="setSelectedAccountInterview(interview)"
-                        popover-template="accountPopover.templateUrl" popover-title="Interview" popover-trigger="mouseenter">
-                            <i class="fa fa-check-circle"></i>
-                        </span>
+                        <a href="#" ng-if="interview.candidate.curriculum != ''" ng-click="downloadDocument(interview.candidate.curriculum)">{{interview.candidate.lastname}}</a>
+                        <div ng-if="interview.candidate.curriculum == ''">{{interview.candidate.lastname}}</div>
                     </td>
                 </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 </div>
