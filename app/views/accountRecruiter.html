@@ -16,8 +16,8 @@
                 <tr>
                     <td ng-repeat="interview in user.recruiter.interviews"
                         class="interview interview-status-{{interview.status}}">
-                        <a href="#" ng-if="interview.candidate.curriculum != ''" ng-click="downloadDocument(interview.candidate.curriculum)">{{interview.candidate.lastname}}</a>
-                        <div ng-if="interview.candidate.curriculum == ''">{{interview.candidate.lastname}}</div>
+                        <a href="javascript:void(0);" ng-if="interview.candidate && interview.candidate.curriculum != ''" ng-click="downloadDocument(interview.candidate.curriculum)">{{interview.candidate.firstname | limitTo:1}}. {{interview.candidate.lastname}}</a>
+                        <div ng-if="interview.candidate && interview.candidate.curriculum == ''">{{interview.candidate.firstname | limitTo:1}}. {{interview.candidate.lastname}}</div>
                     </td>
                 </tr>
                 </tbody>
