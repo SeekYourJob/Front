@@ -1,4 +1,4 @@
-<div id="live" ng-class="{'animated-background': true}">
+<div id="live" ng-class="{'animated-background': false}">
     <div id="logo_and_clock_wrapper">
         <div class="logo logo-left">
             <img src="/images/live-syj-logo.png" />
@@ -13,21 +13,24 @@
     <div id="interviews_wrapper" ng-if="apiInterviews.interviews.length">
         <carousel interval="10000">
             <slide ng-repeat="interviews in apiInterviews.interviewsPaginated">
-                <h4>{{ $index + 1}} sur {{ apiInterviews.interviewsPaginated.length }}</h4>
+                <!--<h4>{{ $index + 1}} sur {{ apiInterviews.interviewsPaginated.length }}</h4>-->
                 <div class="interview_wrapper"
                      ng-repeat="interview in interviews"
-                     ng-if="interview.current || interview.next">
-                    <div class="interview" ng-class="{'panel-success': interview.current.status === 'IN_PROGRESS', 'panel-danger': interview.current.status === 'COMPLETED' || !interview.current.candidate}">
+                     ng-if="interview.current">
+                    <div class="interview" ng-class="{'panel-success': interview.current.status === 'COMPLETED' || !interview.current.candidate, 'panel-danger': interview.current.status === 'IN_PROGRESS' && interview.current.candidate}">
                         <div class="panel-heading">
-                            <h3 class="panel-title">{{ interview.current.recruiter.company.name }}</h3>
+                            <h3 class="panel-title pull-left">{{ interview.current.recruiter.company.name }}</h3>
+                            <p class="pull-right">
+                                <code>&nbsp;{{ interview.location.name }}&nbsp;</code>
+                            </p>
+                            <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">
-                            <i class="fa fa-location-arrow fa-fw"></i>&nbsp;<code>&nbsp;{{ interview.location.name }}&nbsp;</code><br />
                             <span ng-if="interview.current.status === 'IN_PROGRESS' && interview.current.candidate">
-                                <i class="fa fa-graduation-cap fa-fw"></i> <strong>{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }}</strong>
+                                <strong>{{ interview.current.candidate.firstname }} {{ interview.current.candidate.lastname }}</strong>
                             </span>
-                            <span class="text-danger" ng-if="interview.current.status === 'COMPLETED' || !interview.current.candidate">
-                                <strong>LIBRE</strong>
+                            <span class="text-success" ng-if="interview.current.status === 'COMPLETED' || !interview.current.candidate">
+                                <i class="fa fa-exclamation-triangle fa-fw"></i> <strong>LIBRE</strong>
                             </span>
                         </div>
                         <div class="panel-footer">
@@ -35,7 +38,7 @@
                             <span ng-if="interview.next.candidate">
                                 {{ interview.next.candidate.firstname }} {{ interview.next.candidate.lastname }}
                             </span>
-                            <span ng-if="!interview.next.candidate" class="text-danger"><strong>LIBRE</strong></span>
+                            <span ng-if="!interview.next.candidate"><strong>LIBRE</strong></span>
                         </div>
                     </div>
                 </div>
@@ -44,8 +47,7 @@
 
         <div id="pagination_wrapper" ng-if="apiInterviews.interviews.length">
             <div id="pagination">
-                Job Forum par l'équipe SeekYourJob de la FGES, Master IPII.<br />
-                Réalisation web Valentin Polo & Nicolas Ducom.
+                &copy; SeekYourJob 2016 - Réalisation web Valentin Polo & Nicolas Ducom.
             </div>
         </div>
 

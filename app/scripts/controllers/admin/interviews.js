@@ -52,7 +52,7 @@ angular.module('cvsApp').controller('AdminInterviewsCtrl', ['$scope', 'ENV', '$h
       $scope.haveInterviews = true;
     }, function(err) {
       alert('Could not getLocationsWithInterviewForSlot()');
-    })
+    });
   }
 
   function getInterviewsWithoutLocation() {

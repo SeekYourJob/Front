@@ -817,7 +817,7 @@ footer {
 
 #live {
   @extend .container;
-  background: black;
+  background: #1e6787;
   width: 1920px;
   height: 1080px;
 
@@ -826,7 +826,7 @@ footer {
     font-family: 'Lato', sans-serif;
     padding: 21px 21px 0 21px;
     margin-top: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 42px; //6 with pagination
     color: #fff;
 
     .logo {
@@ -850,7 +850,8 @@ footer {
 
     #clock {
       @extend .col-md-2, .text-center;
-      font-size: 72px;
+      font-size: 95px;
+      margin-top: -14px;
     }
   }
 
@@ -882,6 +883,18 @@ footer {
           @extend .text-center;
           font-size: 30px;
           font-weight: bold;
+        }
+
+        .panel-heading {
+          p {
+            margin-top: -2px;
+            margin-bottom: 0;
+            font-size: 24px;
+
+            code {
+              background: rgba(255, 255, 255, 0.90) !important;
+            }
+          }
         }
 
         .panel-body {

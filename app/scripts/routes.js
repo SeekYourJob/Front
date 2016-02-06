@@ -130,7 +130,19 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
     })
     .state('app.admin.live', {
       url: '/live',
-      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminLiveCtrl'}}
+      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminLiveCtrl', resolve: {
+        selectedSlot: function() {
+          return false;
+        }
+      }}}
+    })
+    .state('app.admin.live.forSlot', {
+      url: '/{idSlot}',
+      views: {'@': {templateUrl: 'views/admin/live.html', controller: 'AdminLiveCtrl', resolve: {
+        selectedSlot: ['$stateParams', function($stateParams) {
+          return $stateParams.idSlot;
+        }]
+      }}}
     })
     .state('app.admin.companies', {
       url: '/companies',
