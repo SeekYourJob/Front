@@ -23,7 +23,6 @@ angular.module('cvsApp').controller('AdminLocationsCtrl', ['$scope', 'ENV', '$ht
       url: ENV.apiEndpoint + '/locations/bookings',
     }).then(function(response) {
       $scope.bookings = response.data;
-      console.log($scope.bookings);
     }, function(err) {
       alert('Could not getBookings()');
     })

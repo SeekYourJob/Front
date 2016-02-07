@@ -2,7 +2,7 @@ angular.module('cvsApp').controller('AdminLiveCtrl', ['$scope', '$http', 'ENV', 
 
   $scope.now = new Date();
   $scope.apiInterviews = [];
-  
+
   var pusherChannel = $rootScope.pusherClient.subscribe('live-interviews');
 
   pusherChannel.bind('interviews-updated', function() {

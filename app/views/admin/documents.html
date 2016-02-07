@@ -1,7 +1,12 @@
-<h2>CV à valider</h2>
+<h2>Curriculums</h2>
 <div class="row" st-table="documentsCollection">
     <div class="col-md-12">
-        <table class="table table-striped">
+
+        <div class="alert alert-success">
+            <p>Aucun document à valider pour le moment !</p>
+        </div>
+
+        <table class="table table-striped" ng-if="documentsCollection.length > 0">
             <thead>
             <tr>
                 <th style="width: 30%">Utilisateur</th>

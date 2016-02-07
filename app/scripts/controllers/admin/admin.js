@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cvsApp').controller('AdminCtrl', ['$scope', 'Restangular', '$pusher', '$rootScope',
-  function($scope, Restangular, $pusher, $rootScope) {
+  function($scope, Restangular, $pusher, $rootScope, $http) {
 
     var pusher = $pusher($rootScope.pusherClient);
     var pusherChannel = pusher.subscribe('presence-interviews');
@@ -9,6 +9,7 @@ angular.module('cvsApp').controller('AdminCtrl', ['$scope', 'Restangular', '$pus
     $scope.slots = false;
     $scope.interviewsByCompanies = false;
     $scope.selectedInterview = false;
+    $scope.stats = false;
 
     $scope.pusherChannelMembers = pusherChannel.members;
 
@@ -17,6 +18,13 @@ angular.module('cvsApp').controller('AdminCtrl', ['$scope', 'Restangular', '$pus
         $scope.interviewsByCompanies = interviewsByCompanies.plain();
       });
     }
+
+    function getStats() {
+      Restangular.one('stats/interviews').get().then(function(res) {
+        $scope.stats = res.plain();
+      });
+    }
+    getStats();
 
     Restangular.all('interviews/slots').getList().then(function(slots) {
       $scope.slots = slots.plain();

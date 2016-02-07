@@ -11,20 +11,22 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th style="width: 50%">Identité</th>
-                <th style="width: 40%">Promotion</th>
-                <th style="width: 10%">Entretiens</th>
+                <th style="width: 5%">Entretiens</th>
+                <th style="width: 5%">Promo</th>
+                <th style="width: 90%">Identité</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="candidate in candidatesDisplayedCollection | orderBy:['grade','user.lastname']">
-                <td><a ui-sref="app.admin.candidates.details({id: candidate.ido})">{{candidate.user.firstname}} {{ candidate.user.lastname }}</a></td>
-                <td>{{candidate.grade}}</td>
                 <td class="text-center">
                     <span ng-class="{'label label-danger': candidate.interviews.length == 0,'label label-warning': candidate.interviews.length < 3,'label label-success': candidate.interviews.length >= 3}">
                         {{candidate.interviews.length}}
                     </span>
                 </td>
+                <td>
+                    {{candidate.grade}}
+                </td>
+                <td><a ui-sref="app.admin.candidates.details({id: candidate.ido})">{{candidate.user.firstname}} {{ candidate.user.lastname }}</a></td>
             </tr>
             </tbody>
         </table>
