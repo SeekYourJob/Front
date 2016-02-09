@@ -11,7 +11,7 @@ angular.module('cvsApp').controller('RegisterCandidateCtrl',  ['$scope', '$http'
       }
     };
 
-    $scope.grades = ['L3','M1','M2'];
+    $scope.grades = ['L3','M1','M2','ISEN'];
     $scope.newCandidate.candidate.grade = $scope.grades[0];
 
     $scope.form = {

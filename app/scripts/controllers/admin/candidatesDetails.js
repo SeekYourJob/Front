@@ -10,7 +10,7 @@ angular.module('cvsApp').controller('AdminCandidatesDetailsCtrl', ['$scope', '$s
         $scope.user = {};
         $scope.documents = [];
         $scope.candidateSlots = {};
-        $scope.grades = ['L3','M1','M2'];
+        $scope.grades = ['L3','M1','M2','ISEN'];
 
         $scope.form = {
             documents: false,
