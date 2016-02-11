@@ -1,4 +1,4 @@
-<div id="live" ng-class="{'animated-background': false}">
+<div id="live" ng-class="{'animated-background': true}">
     <div id="logo_and_clock_wrapper">
         <div class="logo logo-left">
             <img src="/images/live-syj-logo.png" />
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div id="interviews_wrapper" ng-if="apiInterviews.interviews.length">
-        <carousel interval="10000">
+        <carousel interval="1000000000000">
             <slide ng-repeat="interviews in apiInterviews.interviewsPaginated">
                 <!--<h4>{{ $index + 1}} sur {{ apiInterviews.interviewsPaginated.length }}</h4>-->
                 <div class="interview_wrapper"

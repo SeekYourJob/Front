@@ -1,0 +1,20 @@
+<div id="participatingCompanies">
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <p class="text-center" style="font-size: 84px;">
+                Merci !
+            </p>
+            <p class="text-center lead">
+                Merci à toutes les entreprises qui ont accepté notre invitation et <br>qui participent à ce Job Forum 2016 organisé par la filière informatique de la FGES !
+            </p>
+        </div>
+    </div>
+
+    <div id="companiesLogos">
+        <p class="col-md-2" ng-repeat="company in companies" ng-if="company.logo_path" style="float:none; display:inline-block; vertical-align:middle;">
+            <a href="{{ company.website }}" target="_blank"><img ng-src="{{ company.logo_path }}" style="max-height: 142px; max-width: 100%;;" /></a>
+        </p>
+    </div>
+
+</div>

@@ -74,6 +74,16 @@ angular.module('cvsApp').config(function($stateProvider, $urlRouterProvider, $lo
       views: {'content@': {templateUrl: 'views/access-map.html'}}
     })
 
+    .state('app.participatingCompanies', {
+      url: '/entreprises-participantes',
+      views: {'content@': {templateUrl: 'views/participating-companies.html', controller: ['$scope', 'Restangular', function($scope, Restangular) {
+        console.log('okok');
+        Restangular.all('companies?short=true').getList().then(function(companies) {
+          $scope.companies = companies.plain();
+        });
+      }]}}
+    })
+
     .state('app.registerRecruiter', {
       url: '/register-recruiter',
       views: {'content@': {templateUrl: 'views/register-recruiter.html', controller: 'RegisterRecruiterCtrl'}}

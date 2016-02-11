@@ -815,6 +815,18 @@ footer {
   }
 }
 
+#participatingCompanies {
+  #companiesLogos {
+    @extend .row;
+
+    text-align: center;
+
+    p {
+      margin-bottom: 42px;
+    }
+  }
+}
+
 #live {
   @extend .container;
   background: #1e6787;
