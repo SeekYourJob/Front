@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('cvsApp').controller('AdminRecruitersCtrl', ['$scope', 'Restangular', '$state',
-  function($scope, Restangular, $state) {
+angular.module('cvsApp').controller('AdminRecruitersCtrl', ['$scope', 'Restangular', '$state', 'ENV', 'AuthService',
+  function($scope, Restangular, $state, ENV, AuthService) {
 
     Restangular.all('recruiters').getList().then(function(recruiters) {
       $scope.recruitersCollection = recruiters;
@@ -14,5 +14,11 @@ angular.module('cvsApp').controller('AdminRecruitersCtrl', ['$scope', 'Restangul
       }
     });
 
+    $scope.downloadRecruitersSchedules = function() {
+      AuthService.getToken().then(function(token) {
+        window.location.assign(ENV.apiEndpoint + '/recruiters/download-schedules?token=' + token);
+      });
+    }
+    
   }
 ]);
