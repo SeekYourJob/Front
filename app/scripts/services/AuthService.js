@@ -176,6 +176,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
   self.turnOnSmoosh = function(user) {
     Smooch.init({
       appToken: 'djm54vtnezwvrq3wpxdtfxhm8',
+      userId: user.ido,
       givenName: user.firstname,
       surname: user.lastname,
       email: user.email,
