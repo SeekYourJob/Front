@@ -33,6 +33,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
       delete $localStorage.user;
       delete $rootScope.user;
       $rootScope.authenticated = false;
+      Smooch.destroy();
       deferred.resolve();
     }).error(function() {
       deferred.reject('Error while logging out');
@@ -69,6 +70,7 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
       .success(function(data) {
         $localStorage.user = data.user;
         $rootScope.user = data.user;
+        self.turnOnSmoosh(data.user);
         deferred.resolve(data.user);
       })
       .error(function() {
@@ -169,6 +171,22 @@ angular.module('cvsApp').service('AuthService', ['$http', '$rootScope', 'jwtHelp
     });
 
     $rootScope.pusherClient = $pusher($rootScope.pusher);
+  };
+
+  self.turnOnSmoosh = function(user) {
+    Smooch.init({
+      appToken: 'djm54vtnezwvrq3wpxdtfxhm8',
+      givenName: user.firstname,
+      surname: user.lastname,
+      email: user.email,
+      customText: {
+        headerText: 'Besoin d\'aide ?',
+        inputPlaceholder: 'Tapez votre message ici...',
+        sendButtonText: 'Envoi',
+        introText: "L'équipe SeekYourJob se tient à votre disposition pour tout problème ou demande d'information.",
+        settingsText: 'You can leave us your email so that we can get back to you this way.'
+      }
+    });
   };
 
 }]);

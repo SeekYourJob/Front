@@ -41,6 +41,7 @@ module.exports = function(config) {
       'bower_components/pusher-angular/lib/pusher-angular.js',
       'bower_components/pusher/dist/pusher.js',
       'bower_components/angular-google-analytics/dist/angular-google-analytics.min.js',
+      'bower_components/smooch/dist/smooch.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

@@ -39,13 +39,17 @@ cvsApp.config(function(AnalyticsProvider) {
   AnalyticsProvider.useEnhancedLinkAttribution(true);
 });
 
-
-
 cvsApp.run(['$rootScope', '$state', '$localStorage', 'ENV', '$window', 'AuthService', 'Analytics', function($rootScope, $state, $localStorage, ENV, $window, AuthService, Analytics) {
 
   Analytics.getUrl();
 
   AuthService.turnOnPusher();
+
+  if (AuthService.check()) {
+    AuthService.getUser().then(function(user) {
+      AuthService.turnOnSmoosh(user);
+    });
+  }
 
   $rootScope.$on('$stateChangeStart', function(event, toState) {
     if (typeof $localStorage.user !== 'undefined') {
