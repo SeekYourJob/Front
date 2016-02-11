@@ -467,8 +467,14 @@ footer {
     }
 
     tr > td {
+      font-size: 12px;
+      vertical-align: middle;
+
       &.interview {
         text-align: center;
+        a {
+          color: #ffffff;
+        }
       }
       &.interview-status-free {
         background: $interview-free;

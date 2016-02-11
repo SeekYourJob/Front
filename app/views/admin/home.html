@@ -33,11 +33,12 @@
         <tr ng-repeat="recruiter in company.recruiters">
             <td>&nbsp;&nbsp;&nbsp;&nbsp;<a ui-sref="app.admin.recruiters.details({id: recruiter.ido})">{{ recruiter.firstname | limitTo:1 }}. {{ recruiter.lastname }}</a></td>
             <td ng-repeat="interview in recruiter.interviews" class="interview interview-status-{{interview.status}}">
-                <span ng-if="interview.status === 'taken'"
-                      ng-mouseenter="setSelectedInterview(interview)"
-                      popover-template="'popover.html'" popover-title="Entretien" popover-trigger="mouseenter">
-                    <i class="fa fa-check-circle"></i>
-                </span>
+                <a ng-if="interview.status === 'taken'"
+                   ui-sref="app.admin.candidates.details({id: interview.candidate.ido})"
+                   ng-mouseenter="setSelectedInterview(interview)"
+                   popover-template="'popover.html'" popover-title="Entretien" popover-trigger="mouseenter">
+                    {{ interview.candidate.firstname | limitTo:1 }}. {{ interview.candidate.lastname }}
+                </a>
             </td>
         </tr>
         </tbody>
@@ -47,7 +48,7 @@
 
 <script type="text/ng-template" id="popover.html">
     <p style="margin-bottom: 0;">
-        <i class="fa fa-graduation-cap fa-fw"></i> {{ selectedInterview.candidate.firstname }} {{ selectedInterview.candidate.lastname }} ({{ selectedInterview.candidate.grade }})<br />
+        <i class="fa fa-graduation-cap fa-fw"></i> {{ selectedInterview.candidate.grade }}<br />
         <i class="fa fa-location-arrow fa-fw"></i> <strong ng-if="!selectedInterview.location">Indéterminé</strong> <code ng-if="selectedInterview.location">&nbsp;{{ selectedInterview.location.name }}&nbsp;</code>
     </p>
 </script>
